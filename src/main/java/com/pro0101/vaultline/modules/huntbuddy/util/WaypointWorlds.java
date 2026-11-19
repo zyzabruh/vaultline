@@ -35,7 +35,9 @@ public final class WaypointWorlds {
                     if (world.getDimId() == World.OVERWORLD) return world;
                 }
             }
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+            // Xaero is not installed, or its world list is not where this version keeps it.
+        }
 
         return null;
     }

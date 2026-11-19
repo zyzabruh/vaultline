@@ -584,6 +584,7 @@ public class FlowESP extends Module {
             try {
                 return Integer.parseInt(key.substring(prefix.length())) >= components.size();
             } catch (NumberFormatException ignored) {
+                // A key without a numeric suffix is not one of ours, so it is dropped.
                 return true;
             }
         });
@@ -819,6 +820,7 @@ public class FlowESP extends Module {
         try {
             file = this.file();
         } catch (RuntimeException ignored) {
+            // No world is loaded yet, so there is no cache file to read.
             return;
         }
 

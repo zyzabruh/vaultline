@@ -919,7 +919,9 @@ public class Navigation extends Module {
             this.point = new BlockPos(px, py, pz);
             this.calculate();
 
-        } catch (NumberFormatException ignored) {}
+        } catch (NumberFormatException ignored) {
+            // The argument was not a coordinate; the point keeps the value it had.
+        }
     }
 
     private void queue() {

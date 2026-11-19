@@ -44,6 +44,7 @@ public final class ZioScale {
         try {
             return clamp(Float.parseFloat(trimmed));
         } catch (NumberFormatException ignored) {
+            // A malformed stored value falls back to the default zoom; the screen still opens.
             return DEFAULT;
         }
     }

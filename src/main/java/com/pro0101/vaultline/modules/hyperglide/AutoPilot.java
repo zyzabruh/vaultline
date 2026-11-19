@@ -1258,6 +1258,7 @@ public class AutoPilot extends Module {
             this.join = exact;
             return true;
         } catch (IllegalArgumentException ignored) {
+            // The command did not name a block position.
             return false;
         }
     }

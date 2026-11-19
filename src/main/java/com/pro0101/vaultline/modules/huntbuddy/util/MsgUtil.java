@@ -52,6 +52,7 @@ public final class MsgUtil {
             Text text = Text.literal(prefix + " " + Formatting.GRAY + msg).setStyle(style);
             mc.player.sendMessage(text, false);
         } catch (Exception ignored) {
+            // The player can leave between the null check and the send; nobody is left to tell.
         }
     }
 }
