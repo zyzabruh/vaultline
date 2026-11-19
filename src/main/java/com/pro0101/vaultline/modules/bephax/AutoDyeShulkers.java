@@ -187,6 +187,15 @@ public class AutoDyeShulkers extends Module {
         return occupied == 1 ? 2 : 1;
     }
 
+
+    private void finish(AbstractRecipeScreenHandler cs, String what) {
+        if (notified) return;
+        notified = true;
+        if (disableOnDone.get()) toggle();
+        if (closeOnDone.get() && cs instanceof CraftingScreenHandler) mc.player.closeHandledScreen();
+        if (pingOnDone.get()) mc.player.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, pingVolume.get().floatValue(), 1f);
+        MsgUtil.sendModuleMsg("Finished dyeing " + what + "§a..!", this.name);
+    }
     private <T extends AbstractRecipeScreenHandler> int getItemSlot(Item wanted, T cs, int invStart, int invEnd) {
         for (int n = invStart; n < invEnd; n++) {
             ItemStack stack = cs.getSlot(n).getStack();
@@ -267,13 +276,7 @@ public class AutoDyeShulkers extends Module {
                     } else if (hasDye && hasBundle && output.isEmpty()) {
                         timer = tickRate.get() - 1;
                     } else if (!hasShulk || !hasDye || !hasBundle) {
-                        if (!notified) {
-                            notified = true;
-                            if (disableOnDone.get()) toggle();
-                            if (closeOnDone.get() && cs instanceof CraftingScreenHandler) mc.player.closeHandledScreen();
-                            if (pingOnDone.get()) mc.player.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, pingVolume.get().floatValue(), 1f);
-                            MsgUtil.sendModuleMsg("Finished dyeing items§a..!", this.name);
-                        }
+                        finish(cs, "items");
                     }
                 }
             }
@@ -320,13 +323,7 @@ public class AutoDyeShulkers extends Module {
                     if (hasDye && hasShulk && output.isEmpty()) {
                         timer = tickRate.get() - 1;
                     } else if (!hasShulk || !hasDye) {
-                        if (!notified) {
-                            notified = true;
-                            if (disableOnDone.get()) toggle();
-                            if (closeOnDone.get() && cs instanceof CraftingScreenHandler) mc.player.closeHandledScreen();
-                            if (pingOnDone.get()) mc.player.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, pingVolume.get().floatValue(), 1f);
-                            MsgUtil.sendModuleMsg("Finished dyeing shulkers§a..!", this.name);
-                        }
+                        finish(cs, "shulkers");
                     }
                 }
             }
@@ -373,13 +370,7 @@ public class AutoDyeShulkers extends Module {
                     if (hasDye && hasBundle && output.isEmpty()) {
                         timer = tickRate.get() - 1;
                     } else if (!hasBundle || !hasDye) {
-                        if (!notified) {
-                            notified = true;
-                            if (disableOnDone.get()) toggle();
-                            if (closeOnDone.get() && cs instanceof CraftingScreenHandler) mc.player.closeHandledScreen();
-                            if (pingOnDone.get()) mc.player.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, pingVolume.get().floatValue(), 1f);
-                            MsgUtil.sendModuleMsg("Finished dyeing bundles§a..!", this.name);
-                        }
+                        finish(cs, "bundles");
                     }
                 }
             }
