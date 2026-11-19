@@ -2940,10 +2940,6 @@ public class ChunkRadar extends Module {
         alert(title, message, true);
     }
 
-    /**
-     * @param toDiscord false keeps it to chat and the feed, for the events that
-     *                  are information rather than news
-     */
     private void alert(String title, String message, boolean toDiscord) {
         info("%s: %s", title, message);
         writeEvent(title, message);
@@ -3016,7 +3012,6 @@ public class ChunkRadar extends Module {
         return String.format(Locale.ROOT, "%.0f blocks %s", Math.hypot(dx, dz), compass(dx, dz));
     }
 
-    /** Minecraft compass: -z is north, +x is east. */
     private static String compass(double dx, double dz) {
         String[] points = {"N", "NE", "E", "SE", "S", "SW", "W", "NW"};
         double angle = (Math.toDegrees(Math.atan2(dx, -dz)) + 360.0) % 360.0;

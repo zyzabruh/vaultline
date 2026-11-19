@@ -794,7 +794,6 @@ public class RocketBoost extends Module {
       }
    }
 
-   /** Hands Baritone back a vanilla boost. */
    private void restoreBaritoneBoost() {
       pushBaritoneSetting("elytraFireworkBoostMultiplier", VANILLA_SPEED);
       pushBaritoneSetting("elytraFireworkExtraBoostTicks", 0);

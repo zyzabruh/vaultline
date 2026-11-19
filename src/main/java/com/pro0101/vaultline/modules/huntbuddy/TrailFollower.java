@@ -689,12 +689,6 @@ public class TrailFollower extends Module {
             && (!FlightGear.isNether(this.mc.world) || this.netherElytra.get());
     }
 
-    /**
-     * Hands the goal to Baritone's elytra process.
-     *
-     * @param x goal x
-     * @param z goal z
-     */
     private void flyTo(int x, int z) {
         IBaritone baritone = BaritoneAPI.getProvider().getPrimaryBaritone();
 
@@ -724,8 +718,6 @@ public class TrailFollower extends Module {
     /**
      * Hands the goal to normal pathing, dropping any elytra destination first.
      *
-     * @param x goal x
-     * @param z goal z
      */
     private void walkTo(int x, int z) {
         IBaritone baritone = BaritoneAPI.getProvider().getPrimaryBaritone();

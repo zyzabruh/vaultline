@@ -55,7 +55,6 @@ public class ElytraMace extends Module {
         Idle,
         /** Gliding towards the target and gaining the height the dive needs. */
         Approach,
-        /** Diving on the target with the mace ready. */
         Dive,
         /** The hit landed; the elytra is going back on. */
         Escape

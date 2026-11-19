@@ -204,18 +204,11 @@ public class InventoryCleaner extends Module {
         return -1;
     }
 
-    /**
-     * Checks whether a stack should be thrown out.
-     *
-     * @param stack stack to check
-     * @return true when the stack matches the mode
-     */
     private boolean throwable(ItemStack stack) {
         boolean listed = this.whitelist.get().contains(stack.getItem());
         return this.mode.get() == Mode.Whitelist ? !listed : listed;
     }
 
-    /** How the list is read. */
     public enum Mode {
         Whitelist,
         Blacklist

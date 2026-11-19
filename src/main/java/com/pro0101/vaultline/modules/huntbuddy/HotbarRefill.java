@@ -237,11 +237,6 @@ public class HotbarRefill extends Module {
         this.waitTicks = 0;
     }
 
-    /**
-     * Reports how many top-ups are still queued.
-     *
-     * @return queue size, or null when nothing is waiting
-     */
     @Override
     public String getInfoString() {
         int queued = this.pendingMoves.size();
@@ -342,7 +337,6 @@ public class HotbarRefill extends Module {
     /**
      * Checks whether a stack is one of the kinds the option asks for.
      *
-     * @param stack stack to classify
      * @return true when the stack may be refilled
      */
     private boolean isConcerned(ItemStack stack) {
@@ -372,25 +366,11 @@ public class HotbarRefill extends Module {
         return this.wantPotions.get() && item instanceof PotionItem;
     }
 
-    /**
-     * Checks whether an item is a tool.
-     *
-     * @param item item to check
-     * @param path registry path of the item
-     * @return true when the item is a tool
-     */
     private boolean isTool(Item item, String path) {
         return item instanceof ShovelItem || item instanceof AxeItem
             || item instanceof HoeItem || path.contains("pickaxe");
     }
 
-    /**
-     * Checks whether an item is a weapon.
-     *
-     * @param item item to check
-     * @param path registry path of the item
-     * @return true when the item is a weapon
-     */
     private boolean isWeapon(Item item, String path) {
         return path.contains("sword") || item instanceof BowItem || item instanceof CrossbowItem;
     }
@@ -428,13 +408,6 @@ public class HotbarRefill extends Module {
         return this.moveToHotbar(source, slot);
     }
 
-    /**
-     * Moves one inventory stack into a hotbar slot.
-     *
-     * @param source inventory slot to take from
-     * @param slot hotbar slot to fill
-     * @return true when the move was started
-     */
     private boolean moveToHotbar(int source, int slot) {
         if (!this.shiftMove.get()) {
             if (!QuietClicks.readyOrSettle()) return false;
@@ -456,11 +429,6 @@ public class HotbarRefill extends Module {
         return true;
     }
 
-    /**
-     * Sends a shift-click on an inventory slot.
-     *
-     * @param source inventory slot to move
-     */
     private void quickMove(int source) {
         this.mc.interactionManager.clickSlot(
             this.mc.player.playerScreenHandler.syncId, source, 0,
@@ -480,8 +448,6 @@ public class HotbarRefill extends Module {
     /**
      * Returns the display name of a stack, custom name first.
      *
-     * @param stack stack to name
-     * @return display name
      */
     private String displayName(ItemStack stack) {
         Text custom = stack.get(DataComponentTypes.CUSTOM_NAME);
@@ -515,13 +481,6 @@ public class HotbarRefill extends Module {
         return best;
     }
 
-    /**
-     * Compares two source stacks under the chosen preference.
-     *
-     * @param count candidate stack size
-     * @param bestCount size of the current best stack
-     * @return true when the candidate is preferred
-     */
     private boolean isBetter(int count, int bestCount) {
         return switch (this.sourcePick.get()) {
             case FullStacks -> count > bestCount;
