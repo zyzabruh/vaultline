@@ -1424,7 +1424,7 @@ public class ZioScreen extends TabScreen {
         String title = row.module.title;
 
         drawScrolledText(context, panel, y, title, panel.x + 3, textY,
-            fade(active ? TEXT_ENABLED : TEXT, alpha), row.textScroll(ZioFontRenderer.widthF(title)));
+            fade(active ? TEXT_ENABLED : TEXT, alpha), row.textScroll.offset(ZioFontRenderer.widthF(title), row.hovered));
 
         // The bind, in the copied client's half sized brackets right after the name.
         if (row.module.keybind.isSet()) {
@@ -1546,7 +1546,7 @@ public class ZioScreen extends TabScreen {
             Keybind bind = keybindSetting.get();
 
             drawScrolledText(context, panel, y, setting.title, panel.x + 4, textY, colour,
-                row.textScroll(ZioFontRenderer.widthF(setting.title)));
+                row.textScroll.offset(ZioFontRenderer.widthF(setting.title), row.hovered));
 
             // The mode and the key after the name, as the copied client's keybind line writes them,
             // in its half sized brackets.
@@ -1563,7 +1563,7 @@ public class ZioScreen extends TabScreen {
 
             text(context, indicator, panel.x + PANEL_WIDTH - 4 - textWidth(indicator), textY, colour);
             drawScrolledText(context, panel, y, label, panel.x + 4, textY, colour,
-                row.textScroll(ZioFontRenderer.widthF(label)));
+                row.textScroll.offset(ZioFontRenderer.widthF(label), row.hovered));
             return;
         }
 
@@ -1591,7 +1591,7 @@ public class ZioScreen extends TabScreen {
             String label = setting.title;
 
             drawScrolledText(context, panel, y, label, panel.x + 4, textY, colour,
-                row.textScroll(ZioFontRenderer.widthF(label)));
+                row.textScroll.offset(ZioFontRenderer.widthF(label), row.hovered));
             return;
         }
 
@@ -1649,7 +1649,7 @@ public class ZioScreen extends TabScreen {
         }
 
         drawScrolledText(context, panel, y, text, panel.x + 4, textY, colour,
-            row.textScroll(ZioFontRenderer.widthF(text)));
+            row.textScroll.offset(ZioFontRenderer.widthF(text), row.hovered));
     }
 
     /**
@@ -3150,6 +3150,39 @@ public class ZioScreen extends TabScreen {
         }
     }
 
+    /**
+     * A line too wide for its panel: nothing while it fits, then, after 750 ms under the pointer, a
+     * 500 ms slide to the left edge of its overflow, and back when the pointer leaves.
+     */
+    private static final class TextScroll {
+        private final ZioAnim.Timed anim = new ZioAnim.Timed(0f);
+        private long hoveredAt;
+        private boolean wasHovered;
+
+        private float offset(float width, boolean hovered) {
+            long now = System.currentTimeMillis();
+            float available = PANEL_WIDTH - 4;
+
+            if (width <= available) {
+                anim.set(now, 0f);
+                wasHovered = hovered;
+
+                return 0f;
+            }
+
+            if (hovered) {
+                if (!wasHovered) hoveredAt = now;
+                if (now > hoveredAt + 750L) anim.setTarget(now, width - available, 500L);
+            } else {
+                anim.setTarget(now, 0f, 500L);
+            }
+
+            wasHovered = hovered;
+
+            return anim.value(now);
+        }
+    }
+
     private final class Row {
         private final Module module;
         private final Panel panel;
@@ -3175,37 +3208,12 @@ public class ZioScreen extends TabScreen {
         /** The hover lift, one layout pixel up over 65 ms. */
         private final ZioAnim.Timed hoverAnim = new ZioAnim.Timed(0f);
         /** The sideways scroll of a name too long for the panel, under the pointer. */
-        private final ZioAnim.Timed textScrollAnim = new ZioAnim.Timed(0f);
-        private long textHoveredAt;
-        private boolean textWasHovered;
+        private final TextScroll textScroll = new TextScroll();
 
         /**
          * How far a line has to slide to be read whole: nothing while it fits, then, after 750 ms of
          * hover, a 500 ms scroll to the left edge of its overflow, and back when the pointer leaves.
          */
-        private float textScroll(float width) {
-            long now = System.currentTimeMillis();
-            float available = PANEL_WIDTH - 4;
-
-            if (width <= available) {
-                textScrollAnim.set(now, 0f);
-                textWasHovered = hovered;
-
-                return 0f;
-            }
-
-            if (hovered) {
-                if (!textWasHovered) textHoveredAt = now;
-                if (now > textHoveredAt + 750L) textScrollAnim.setTarget(now, width - available, 500L);
-            } else {
-                textScrollAnim.setTarget(now, 0f, 500L);
-            }
-
-            textWasHovered = hovered;
-
-            return textScrollAnim.value(now);
-        }
-
         private double offset;
 
         private Row(Module module, Panel panel) {
@@ -3410,34 +3418,9 @@ public class ZioScreen extends TabScreen {
         private double hover;
         private double offset;
         private final ZioAnim.Timed hoverAnim = new ZioAnim.Timed(0f);
-        private final ZioAnim.Timed textScrollAnim = new ZioAnim.Timed(0f);
-        private long textHoveredAt;
-        private boolean textWasHovered;
+        private final TextScroll textScroll = new TextScroll();
 
         /** The same 750 ms, then 500 ms, sideways scroll a module name gets. */
-        private float textScroll(float width) {
-            long now = System.currentTimeMillis();
-            float available = PANEL_WIDTH - 4;
-
-            if (width <= available) {
-                textScrollAnim.set(now, 0f);
-                textWasHovered = hovered;
-
-                return 0f;
-            }
-
-            if (hovered) {
-                if (!textWasHovered) textHoveredAt = now;
-                if (now > textHoveredAt + 750L) textScrollAnim.setTarget(now, width - available, 500L);
-            } else {
-                textScrollAnim.setTarget(now, 0f, 500L);
-            }
-
-            textWasHovered = hovered;
-
-            return textScrollAnim.value(now);
-        }
-
         private SettingRow(Row owner, Setting<?> setting) {
             this.panel = owner.panel;
             this.module = owner.module;
