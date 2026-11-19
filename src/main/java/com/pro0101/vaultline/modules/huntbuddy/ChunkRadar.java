@@ -2215,6 +2215,7 @@ public class ChunkRadar extends Module {
         try {
             Integer.parseInt(parts[1]);
         } catch (NumberFormatException e) {
+            // The middle token is the sighting number; when it is not one, the name is something else.
             return false;
         }
 

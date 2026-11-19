@@ -22,9 +22,11 @@ public final class BaritoneNextRotation {
             if (method == null) method = lookBehavior.getClass().getMethod("hunterbuddyNextRotation");
             return (float[]) method.invoke(lookBehavior);
         } catch (NoSuchMethodException | LinkageError e) {
+            // The method only exists in the patched Baritone: remember it is missing and stop asking.
             unavailable = true;
             return null;
         } catch (ReflectiveOperationException | RuntimeException e) {
+            // The call itself failed this tick; the next one asks again.
             return null;
         }
     }

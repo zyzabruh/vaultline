@@ -291,6 +291,7 @@ public final class StashSessionStore {
         try {
             return StashPhase.valueOf(phase).resumable;
         } catch (IllegalArgumentException e) {
+            // A phase name this build does not know is simply not resumable.
             return false;
         }
     }

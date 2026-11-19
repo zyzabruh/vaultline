@@ -31,6 +31,7 @@ public class BaritoneHelper {
             if (baritone == null) return null;
             return hasElytraProcess() ? BaritoneGoalReader.readWithElytra(baritone) : BaritoneGoalReader.readCustomGoal(baritone);
         } catch (Throwable failure) {
+            // Baritone can be mid-reload or half unloaded; "no goal" is the honest answer then.
             return null;
         }
     }
@@ -79,6 +80,7 @@ public class BaritoneHelper {
             Class.forName(name);
             return true;
         } catch (Throwable failure) {
+            // A class that will not load is exactly what "Baritone is not installed" looks like.
             return false;
         }
     }
@@ -88,6 +90,7 @@ public class BaritoneHelper {
             Class.forName(BARITONE_INTERFACE).getMethod(ELYTRA_GETTER);
             return true;
         } catch (Throwable failure) {
+            // The getter is optional: its absence means this Baritone has no elytra process.
             return false;
         }
     }

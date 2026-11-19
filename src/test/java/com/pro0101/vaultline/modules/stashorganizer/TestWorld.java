@@ -25,6 +25,7 @@ final class TestWorld {
             Bootstrap.initialize();
             bootstrapped = true;
         } catch (Throwable e) {
+            // The flag is the result: the caller asserts on it, and a failed bootstrap is a skipped test.
             bootstrapped = false;
         }
 

@@ -28,6 +28,7 @@ public final class XaeroCompat {
             Class.forName(className, false, XaeroCompat.class.getClassLoader());
             return true;
         } catch (Throwable t) {
+            // Absent is the answer this probe exists to give.
             return false;
         }
     }

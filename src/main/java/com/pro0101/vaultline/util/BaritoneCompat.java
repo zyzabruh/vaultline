@@ -37,6 +37,7 @@ public final class BaritoneCompat {
             Class.forName(className, false, BaritoneCompat.class.getClassLoader());
             return true;
         } catch (Throwable t) {
+            // Absent is the answer this probe exists to give.
             return false;
         }
     }

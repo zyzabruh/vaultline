@@ -63,6 +63,7 @@ public final class ZioHudMarginStore {
         try {
             return clamp(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
         } catch (NumberFormatException garbage) {
+            // A pair that does not parse is treated like a missing file: the default margins apply.
             return clamp(ZioHudMargins.DEFAULT_SAFE_X, ZioHudMargins.DEFAULT_SAFE_Y);
         }
     }
