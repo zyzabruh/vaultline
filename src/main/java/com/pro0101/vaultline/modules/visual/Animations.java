@@ -41,31 +41,18 @@ public class Animations extends Module {
         super(VaultlineAddon.VISUALS, "animations", "Replaces the hand swing motion and scales how long a swing lasts.");
     }
 
-    /**
-     * Returns the multiplier applied to the swing duration.
-     *
-     * @return multiplier, clamped away from zero
-     */
     public double multiplier() {
         return Math.max(0.05, this.multiplier.get());
     }
 
-    /**
-     * Returns the swing motion to draw.
-     *
-     * @return selected swing
-     */
     public Swing swing() {
         return this.swing.get();
     }
 
     /** Motion applied to the held item during a swing. */
     public enum Swing {
-        /** The game's own animation. */
         Vanilla,
-        /** Wide arc that drops into the hit. */
         Pop,
-        /** Narrower arc, closer to the vanilla motion. */
         Smooth,
         /** Long horizontal sweep that turns into a block when holding a sword. */
         BlockSword

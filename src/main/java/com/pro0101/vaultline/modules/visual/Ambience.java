@@ -138,11 +138,6 @@ public class Ambience extends Module {
         return (int) ((ticks + 18000L) % 24000L);
     }
 
-    /**
-     * Reports whether the fog should be replaced.
-     *
-     * @return true when the fog option is on
-     */
     public boolean fogEnabled() {
         return this.fog.get();
     }
@@ -150,7 +145,6 @@ public class Ambience extends Module {
     /**
      * Returns the fog colour to hand to the renderer.
      *
-     * @return fog colour
      */
     public SettingColor fog() {
         return this.fogColor.get();
@@ -186,11 +180,6 @@ public class Ambience extends Module {
         return this.horizonBand.get();
     }
 
-    /**
-     * Reports whether the sky colour should be replaced.
-     *
-     * @return true when the sky option is on
-     */
     public boolean skyEnabled() {
         return this.sky.get();
     }
@@ -198,7 +187,6 @@ public class Ambience extends Module {
     /**
      * Returns the sky colour as a packed ARGB value.
      *
-     * @return sky colour
      */
     public int skyColor() {
         SettingColor color = this.skyColor.get();

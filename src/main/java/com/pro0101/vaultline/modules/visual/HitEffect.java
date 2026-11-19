@@ -84,11 +84,6 @@ public class HitEffect extends Module {
         super(VaultlineAddon.VISUALS, "hit-effect", "Marks each hit with a short burst at the crosshair.");
     }
 
-    /**
-     * Starts the animation on a hit.
-     *
-     * @param event attack event
-     */
     @EventHandler
     private void onAttack(AttackEntityEvent event) {
         this.hitTime = System.currentTimeMillis();
@@ -102,7 +97,6 @@ public class HitEffect extends Module {
     /**
      * Draws the four lines while the marker is alive.
      *
-     * @param event 2D render event
      */
     @EventHandler
     private void onRender(Render2DEvent event) {

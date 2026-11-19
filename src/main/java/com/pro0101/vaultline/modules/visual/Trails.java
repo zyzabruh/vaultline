@@ -127,11 +127,6 @@ public class Trails extends Module {
         for (UUID uuid : this.stale) this.trails.remove(uuid);
     }
 
-    /**
-     * Draws every stored point, older ones dimmer.
-     *
-     * @param event world render event
-     */
     @EventHandler
     private void onRender(Render3DEvent event) {
         if (this.trails.isEmpty()) return;

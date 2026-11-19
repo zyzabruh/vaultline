@@ -59,13 +59,11 @@ import java.util.Set;
  * does not lose a find.
  */
 public class FlowESP extends Module {
-    /** The fluid a flow is made of. */
     public enum Kind {
         Water,
         Lava
     }
 
-    /** What the maturity gradient uses. */
     public enum Gradient {
         None,
         Age,
@@ -73,7 +71,6 @@ public class FlowESP extends Module {
         Both
     }
 
-    /** What is drawn for a flow. */
     public enum Draw {
         Box,
         Column,
@@ -83,7 +80,6 @@ public class FlowESP extends Module {
     /** Safety bound for one flood fill, so a flow running into an ocean cannot fill memory. */
     private static final int MAX_COMPONENT = 8192;
 
-    /** One connected fluid flow. */
     private static class Flow {
         private final String dimension;
         private final int chunkX;
@@ -134,7 +130,6 @@ public class FlowESP extends Module {
         }
     }
 
-    /** A connected group found during one chunk scan. */
     private record Component(
         int minX, int minY, int minZ,
         int maxX, int maxY, int maxZ,
@@ -466,10 +461,6 @@ public class FlowESP extends Module {
     /**
      * Finds every connected flow in one chunk and replaces that chunk's old records.
      *
-     * @param chunk chunk to scan
-     * @param chunkX chunk x
-     * @param chunkZ chunk z
-     * @param dimension dimension id
      * @param nether whether this is the Nether
      */
     private void scanChunk(WorldChunk chunk, int chunkX, int chunkZ, String dimension, boolean nether) {
@@ -598,16 +589,6 @@ public class FlowESP extends Module {
         });
     }
 
-    /**
-     * Tests one block for the fluid being scanned.
-     *
-     * @param chunk chunk holding the block
-     * @param x world x
-     * @param y world y
-     * @param z world z
-     * @param tag fluid tag to match
-     * @return true when the block holds that fluid
-     */
     private FluidState fluidAt(WorldChunk chunk, int x, int y, int z, TagKey<Fluid> tag) {
         BlockState state = chunk.getBlockState(this.mutable.set(x, y, z));
         FluidState fluid = state.getFluidState();
@@ -615,11 +596,6 @@ public class FlowESP extends Module {
         return !fluid.isEmpty() && fluid.isIn(tag) ? fluid : null;
     }
 
-    /**
-     * Draws the cached flows and their columns.
-     *
-     * @param event render event
-     */
     @EventHandler
     private void onRender(Render3DEvent event) {
         if (!this.draw.get() || this.mc.world == null || this.mc.player == null || this.flows.isEmpty()) return;
@@ -698,10 +674,7 @@ public class FlowESP extends Module {
     /**
      * Returns the alpha multiplier for a flow at a given distance.
      *
-     * @param flow flow being drawn
      * @param distanceSquared squared distance from the player
-     * @param limit render distance
-     * @param now current time
      * @return multiplier between zero and one
      */
     private double visibility(Flow flow, double distanceSquared, double limit, long now) {
@@ -721,10 +694,6 @@ public class FlowESP extends Module {
     /**
      * Picks the side colour for a flow, applying the maturity gradient when enabled.
      *
-     * @param flow flow being drawn
-     * @param now current time
-     * @param visibility alpha multiplier
-     * @return colour to draw
      */
     private Color colour(Flow flow, long now, double visibility) {
         SettingColor base = flow.kind == Kind.Water ? this.waterColor.get() : this.lavaColor.get();
@@ -746,13 +715,6 @@ public class FlowESP extends Module {
         return new Color(r, g, b, clamp((int) Math.round(a * visibility)));
     }
 
-    /**
-     * Blends an existing colour with the visibility multiplier.
-     *
-     * @param setting source colour
-     * @param visibility alpha multiplier
-     * @return faded colour
-     */
     private Color colour(SettingColor setting, double visibility) {
         return new Color(setting.r, setting.g, setting.b, clamp((int) Math.round(setting.a * visibility)));
     }
@@ -760,9 +722,6 @@ public class FlowESP extends Module {
     /**
      * Returns how mature a flow is, between zero and one.
      *
-     * @param flow flow being measured
-     * @param now current time
-     * @return maturity fraction
      */
     private double maturity(Flow flow, long now) {
         double age = clamp01((now - flow.firstSeen) / (this.gradientAge.get() * 1000.0));
@@ -794,7 +753,6 @@ public class FlowESP extends Module {
         for (int i = 0; i < remove; i++) this.flows.remove(sorted.get(i).key());
     }
 
-    /** Returns the current dimension id. */
     private String dimension() {
         return this.mc.world.getRegistryKey().getValue().toString();
     }
@@ -812,7 +770,6 @@ public class FlowESP extends Module {
         return new File(new File(new File(MeteorClient.FOLDER, "flow-esp"), Utils.getFileWorldName()), "flows.txt");
     }
 
-    /** Writes every cached flow to disk. */
     private void save() {
         if (this.mc.world == null) return;
 
@@ -856,7 +813,6 @@ public class FlowESP extends Module {
         }
     }
 
-    /** Reads the cache written by a previous run. */
     private void load() {
         File file;
 
@@ -915,11 +871,6 @@ public class FlowESP extends Module {
         return Integer.toString(this.flows.size());
     }
 
-    /**
-     * Saves the cache when the connection ends.
-     *
-     * @param event game left event
-     */
     @EventHandler
     private void onGameLeft(GameLeftEvent event) {
         if (this.save.get()) this.save();

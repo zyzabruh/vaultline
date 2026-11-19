@@ -43,13 +43,9 @@ import net.minecraft.entity.vehicle.MinecartEntity;
 public class Shaders extends Module {
     /** Presets that decide which of the three layers are drawn. */
     public enum Mode {
-        /** Solid rim only. */
         Outline,
-        /** Soft halo only. */
         Glow,
-        /** Translucent body only, the see-through look. */
         Chams,
-        /** Rim, halo and body together. */
         Full,
         /** Wide bright rim, tight halo and a faint body, for a neon sign look. */
         Neon,
@@ -59,7 +55,6 @@ public class Shaders extends Module {
         Aura,
         /** Very wide halo with a white-hot body, drawn with the Bloom chain shader. */
         Bloom,
-        /** The individual switches below decide. */
         Custom
     }
 
@@ -284,20 +279,10 @@ public class Shaders extends Module {
         super(VaultlineAddon.CATEGORY, "shaders", "Outlines players, mobs and storage entities through walls, with a glow, a rim and a fill.");
     }
 
-    /**
-     * Returns the active preset.
-     *
-     * @return shader mode
-     */
     public Mode mode() {
         return this.mode.get();
     }
 
-    /**
-     * Returns the player outline colour, for previews.
-     *
-     * @return player colour
-     */
     public SettingColor playerColor() {
         return this.playersColor.get();
     }
@@ -309,7 +294,6 @@ public class Shaders extends Module {
      * its shader setting is hidden while it is selected. Every other preset keeps the shader
      * chosen in the setting, so switching to Bloom and back leaves the old choice intact.
      *
-     * @return chain style
      */
     public ChamsChain.Style chainStyle() {
         if (this.mode.get() == Mode.Bloom) return ChamsChain.Style.Bloom;
@@ -418,12 +402,6 @@ public class Shaders extends Module {
         return this.fillBrightness.get().floatValue();
     }
 
-    /**
-     * Reports whether this entity should own an outline.
-     *
-     * @param entity entity about to be rendered
-     * @return true when the module targets it
-     */
     public boolean shouldGlow(Entity entity) {
         return this.kindOf(entity) != null;
     }
@@ -449,7 +427,6 @@ public class Shaders extends Module {
      * <p>The offset per entity id keeps neighbouring players from sharing the exact same colour,
      * which is what makes two overlapping outlines readable.
      *
-     * @param entity entity being drawn
      * @return hue in the range {@code [0, 1)}
      */
     private float hue(Entity entity) {
@@ -460,7 +437,6 @@ public class Shaders extends Module {
     /**
      * Returns the colour to use when the game picks the outline tint itself.
      *
-     * @return packed ARGB colour
      */
     public int fallback() {
         SettingColor color = this.fallbackColor.get();
@@ -497,7 +473,6 @@ public class Shaders extends Module {
             || current == Mode.Aura || current == Mode.Bloom;
     }
 
-    /** Categories the module knows how to outline. */
     private enum Kind {
         Player,
         Monster,
@@ -512,7 +487,6 @@ public class Shaders extends Module {
     /**
      * Classifies an entity against the enabled categories and the distance limit.
      *
-     * @param entity entity to classify
      * @return its category, or null when it is not targeted
      */
     private Kind kindOf(Entity entity) {
@@ -546,12 +520,6 @@ public class Shaders extends Module {
         return null;
     }
 
-    /**
-     * Maps a category to its configured colour.
-     *
-     * @param kind category, may be null
-     * @return colour, or null when there is nothing to draw
-     */
     private SettingColor colorOf(Kind kind) {
         if (kind == null) return null;
 

@@ -19,10 +19,8 @@ public class HandShader extends Module {
     /** Module id as it appears in the config and in the module list. */
     public static final String ID = "hand-shader";
 
-    /** Setting name of the fill toggle. */
     public static final String HAND_FILL = "hand-fill";
 
-    /** Setting name of the outline toggle. */
     public static final String HAND_OUTLINE = "hand-outline";
 
     private final SettingGroup general = this.settings.getDefaultGroup();
@@ -41,27 +39,14 @@ public class HandShader extends Module {
         .build()
     );
 
-    /**
-     * Builds the module.
-     */
     public HandShader() {
         super(VaultlineAddon.VISUALS, ID, "Draws the first-person hands with the mod's fill and outline instead of vanilla.");
     }
 
-    /**
-     * Whether the hands take the tinted fill.
-     *
-     * @return the hand-fill setting
-     */
     public boolean handFill() {
         return this.handFill.get();
     }
 
-    /**
-     * Whether the hands take the rim.
-     *
-     * @return the hand-outline setting
-     */
     public boolean handOutline() {
         return this.handOutline.get();
     }
@@ -72,7 +57,6 @@ public class HandShader extends Module {
      * <p>Both toggles off still gives the module a visible look: an enabled module that draws
      * nothing would be a setting the user has to guess.
      *
-     * @return current hand settings
      */
     public HandFx.Settings current() {
         return new HandFx.Settings(handFill(), handOutline());

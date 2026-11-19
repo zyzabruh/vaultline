@@ -84,65 +84,30 @@ public class RenderOptimizer extends Module {
         super(VaultlineAddon.VISUALS, "render-optimizer", "Turns off the fire overlay, the hurt camera, particles, weather and the HUD overlays you do not need.");
     }
 
-    /**
-     * Reports whether the fire overlay should be skipped.
-     *
-     * @return true when the overlay is off
-     */
     public boolean noFireOverlay() {
         return this.isActive() && this.fireOverlay.get();
     }
 
-    /**
-     * Reports whether the hurt tilt should be skipped.
-     *
-     * @return true when the tilt is off
-     */
     public boolean noHurtCam() {
         return this.isActive() && this.hurtCam.get();
     }
 
-    /**
-     * Reports whether particles should be dropped.
-     *
-     * @return true when particles are off
-     */
     public boolean noParticles() {
         return this.isActive() && this.particles.get();
     }
 
-    /**
-     * Reports whether the weather pass should be skipped.
-     *
-     * @return true when weather is off
-     */
     public boolean noWeather() {
         return this.isActive() && this.weather.get();
     }
 
-    /**
-     * Reports whether the scoreboard should be skipped.
-     *
-     * @return true when the scoreboard is off
-     */
     public boolean noScoreboard() {
         return this.isActive() && this.scoreboard.get();
     }
 
-    /**
-     * Reports whether titles should be skipped.
-     *
-     * @return true when titles are off
-     */
     public boolean noTitle() {
         return this.isActive() && this.title.get();
     }
 
-    /**
-     * Reports whether the action bar should be skipped.
-     *
-     * @return true when the action bar is off
-     */
     public boolean noOverlayMessage() {
         return this.isActive() && this.overlayMessage.get();
     }
@@ -156,11 +121,6 @@ public class RenderOptimizer extends Module {
         return this.isActive() && this.fullBright.get();
     }
 
-    /**
-     * Reports whether the screen background should be skipped.
-     *
-     * @return true when the screen background is off
-     */
     public boolean noGuiBackground() {
         return this.isActive() && this.guiBackground.get();
     }

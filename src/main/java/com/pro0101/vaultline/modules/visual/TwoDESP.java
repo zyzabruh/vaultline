@@ -97,7 +97,6 @@ public class TwoDESP extends Module {
         .build()
     );
 
-    /** Screen rectangle of one projected player. */
     private record Rect(double left, double top, double width, double height, double health) {
     }
 
@@ -116,7 +115,6 @@ public class TwoDESP extends Module {
      * the world pass left behind, and by the time 2D is drawn they are gone. The rectangles are
      * therefore computed here and only painted later.
      *
-     * @param event world render event
      */
     @EventHandler
     private void onProject(Render3DEvent event) {
@@ -144,11 +142,6 @@ public class TwoDESP extends Module {
         }
     }
 
-    /**
-     * Paints the rectangles the projection stored.
-     *
-     * @param event 2D render event
-     */
     @EventHandler
     private void onRender(Render2DEvent event) {
         if (this.rects.isEmpty()) return;

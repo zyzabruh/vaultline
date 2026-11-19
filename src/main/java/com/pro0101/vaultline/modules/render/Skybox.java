@@ -21,7 +21,6 @@ import meteordevelopment.meteorclient.utils.render.color.SettingColor;
  * than a setting inside one.
  */
 public class Skybox extends Module {
-    /** Available sky looks, one fragment shader each. */
     public enum Mode {
         Aurora,
         Nebula,
@@ -154,11 +153,6 @@ public class Skybox extends Module {
         );
     }
 
-    /**
-     * Reports the active mode in the module list.
-     *
-     * @return mode name
-     */
     @Override
     public String getInfoString() {
         return this.mode.get().name();
@@ -173,9 +167,6 @@ public class Skybox extends Module {
         if (this.mode.get() == Mode.Image) SkyboxImage.get(this.imageFile.get());
     }
 
-    /**
-     * Draws the sky for the current settings.
-     */
     public void draw() {
         SettingColor color = this.tint.get();
 
@@ -211,11 +202,6 @@ public class Skybox extends Module {
         return scale;
     }
 
-    /**
-     * Returns the active preset.
-     *
-     * @return sky mode
-     */
     public Mode mode() {
         return this.mode.get();
     }
@@ -223,7 +209,6 @@ public class Skybox extends Module {
     /**
      * Returns the tint applied to the sky, for previews.
      *
-     * @return tint colour
      */
     public SettingColor tintColor() {
         return this.tint.get();
@@ -241,7 +226,6 @@ public class Skybox extends Module {
     /**
      * Returns the fog colour used in the dark dimensions.
      *
-     * @return fog colour
      */
     public SettingColor fog() {
         return this.fog.get();
@@ -286,11 +270,6 @@ public class Skybox extends Module {
         return this.celestial.get();
     }
 
-    /**
-     * Reports whether the vanilla clouds should be cancelled.
-     *
-     * @return true when the clouds are hidden
-     */
     public boolean hideClouds() {
         return this.hideClouds.get();
     }

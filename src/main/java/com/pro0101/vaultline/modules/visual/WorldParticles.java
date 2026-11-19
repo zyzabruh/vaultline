@@ -28,23 +28,14 @@ import net.minecraft.util.math.Vec3d;
  * without a resource pack.
  */
 public class WorldParticles extends Module {
-    /** Particle looks. */
     public enum Kind {
-        /** Small white petals, the pale garden look. */
         PaleOak,
-        /** Pink cherry petals. */
         Cherry,
-        /** White flakes from the basalt deltas. */
         WhiteAsh,
-        /** Tiny white spores. */
         SporeBlossom,
-        /** White snowflakes. */
         Snowflake,
-        /** Soft white sparks that drift upward. */
         EndRod,
-        /** Short cyan sparks. */
         ElectricSpark,
-        /** Small glowing dots. */
         Glow
     }
 
@@ -97,11 +88,6 @@ public class WorldParticles extends Module {
         this.pending = 0.0;
     }
 
-    /**
-     * Spawns the particles earned by the current rate.
-     *
-     * @param event post-tick event
-     */
     @EventHandler
     private void onTick(TickEvent.Post event) {
         if (this.mc.world == null || this.mc.player == null) return;
@@ -142,11 +128,6 @@ public class WorldParticles extends Module {
         }
     }
 
-    /**
-     * Returns the particle type selected in the settings.
-     *
-     * @return selected particle
-     */
     private ParticleEffect effect() {
         return switch (this.kind.get()) {
             case PaleOak -> ParticleTypes.PALE_OAK_LEAVES;

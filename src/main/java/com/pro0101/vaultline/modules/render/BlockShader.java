@@ -44,15 +44,11 @@ import java.util.Map;
  * clock, which is what makes the difference between a flat ESP and the animated shader look.
  */
 public class BlockShader extends Module {
-    /** How the boxes are coloured. */
     public enum Style {
-        /** The configured colours, unchanged. */
         Solid,
-        /** Hue cycles with time and position. */
         Rainbow,
         /** Fades from the near colour to the far colour with distance. */
         Gradient,
-        /** Brightness pulses from each box's distance. */
         Pulse
     }
 
@@ -157,18 +153,12 @@ public class BlockShader extends Module {
     /**
      * Drops the scan when the world changes, so positions from the old world are not drawn.
      *
-     * @param event world leave event
      */
     @EventHandler
     private void onGameLeft(GameLeftEvent event) {
         this.clear();
     }
 
-    /**
-     * Rescans a few chunks per tick, nearest first.
-     *
-     * @param event post-tick event
-     */
     @EventHandler
     private void onTick(TickEvent.Post event) {
         if (this.mc.world == null || this.mc.player == null) return;
@@ -182,11 +172,6 @@ public class BlockShader extends Module {
         for (int i = 0; i < count; i++) this.scan(this.queue.get(this.cursor++));
     }
 
-    /**
-     * Draws every box that is still in range.
-     *
-     * @param event world render event
-     */
     @EventHandler
     private void onRender(Render3DEvent event) {
         if (this.mc.player == null || this.chunks.isEmpty()) return;
@@ -242,11 +227,6 @@ public class BlockShader extends Module {
         });
     }
 
-    /**
-     * Rescans one chunk and replaces its previous result.
-     *
-     * @param pos chunk to scan
-     */
     private void scan(ChunkPos pos) {
         if (this.mc.world == null) return;
 
@@ -290,14 +270,6 @@ public class BlockShader extends Module {
         else this.chunks.put(pos, found);
     }
 
-    /**
-     * Fills the reusable colours for one box.
-     *
-     * @param pos block being drawn
-     * @param distance distance from the camera
-     * @param limit configured range, zero when unlimited
-     * @param time seconds, for the animated styles
-     */
     private void colour(BlockPos pos, double distance, double limit, double time) {
         SettingColor near = this.sideColor.get();
         SettingColor stroke = this.lineColor.get();

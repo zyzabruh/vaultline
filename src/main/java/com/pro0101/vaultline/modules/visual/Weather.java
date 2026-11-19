@@ -32,15 +32,10 @@ import java.util.List;
  * expire, which keeps the density constant without ever rebuilding the whole set.
  */
 public class Weather extends Module {
-    /** Weather looks. */
     public enum Mode {
-        /** Fast vertical streaks falling down. */
         Rain,
-        /** Slow drifting flakes. */
         Snow,
-        /** Dim yellow points that blink in place. */
         Fireflies,
-        /** Small orange points rising and fading. */
         Embers
     }
 
@@ -94,7 +89,6 @@ public class Weather extends Module {
         .build()
     );
 
-    /** One flake, drawn every frame. */
     private static final class Flake {
         private final Vec3d velocity;
         private final float lifetime;
@@ -127,11 +121,6 @@ public class Weather extends Module {
         this.centre = null;
     }
 
-    /**
-     * Advances the flakes and draws them.
-     *
-     * @param event world render event
-     */
     @EventHandler
     private void onRender(Render3DEvent event) {
         if (this.mc.world == null || this.mc.player == null) return;

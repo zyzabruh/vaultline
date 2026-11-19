@@ -106,11 +106,6 @@ public class NameTags extends Module {
         super(VaultlineAddon.VISUALS, "name-tags", "Adds health, distance and held items to the name tags of other players.");
     }
 
-    /**
-     * Draws one tag per visible player.
-     *
-     * @param event world render event
-     */
     @EventHandler
     private void onRender(Render3DEvent event) {
         if (this.mc.world == null || this.mc.player == null) return;
