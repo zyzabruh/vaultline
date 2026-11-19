@@ -26,7 +26,6 @@ public final class ZioSecretSequence {
     private ZioSecretSequence() {
     }
 
-    /** How many keys the sequence takes. */
     public static int length() {
         return KEYS.length;
     }
@@ -41,7 +40,6 @@ public final class ZioSecretSequence {
         return KEYS[progress] == key ? progress + 1 : 0;
     }
 
-    /** Whether the sequence has been typed in full. */
     public static boolean complete(int progress) {
         return progress >= KEYS.length;
     }

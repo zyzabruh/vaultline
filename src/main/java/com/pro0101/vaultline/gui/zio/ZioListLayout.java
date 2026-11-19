@@ -18,7 +18,6 @@ public final class ZioListLayout {
     /** An unfolded colour picker: padding, square, hue bar, alpha bar, padding. */
     public static final int COLOUR_PICKER_HEIGHT = 3 + 93 + 3 + 6 + 3 + 6 + 3;
 
-    /** Choices shown at once in an unfolded list. */
     public static final int LIST_ROWS = 6;
 
     /** An unfolded list: padding, search field, padding, the entries, padding. */

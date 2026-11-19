@@ -43,7 +43,6 @@ public final class ZioEnumBox {
         return ZioAnim.approach(current, target, 2.0, fps);
     }
 
-    /** A rectangle in screen pixels. */
     public record Rect(int left, int top, int right, int bottom) {
     }
 }

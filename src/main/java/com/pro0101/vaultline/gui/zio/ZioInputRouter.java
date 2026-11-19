@@ -34,7 +34,6 @@ public final class ZioInputRouter {
         }
     }
 
-    /** What a key press does. */
     public enum KeyAction {
         /** Not this screen's key: let it go through untouched. */
         PASS,
@@ -52,14 +51,12 @@ public final class ZioInputRouter {
         SCREEN_SEARCH_CLOSE,
         SCREEN_SEARCH_BACKSPACE,
         SCREEN_SEARCH_CONFIRM,
-        /** Tab: take the completion the query is showing. */
         SCREEN_SEARCH_COMPLETE,
         OPEN_SCREEN_SEARCH,
         /** Escape: fold an open list if there is one, otherwise leave the screen. */
         ESCAPE
     }
 
-    /** Where a typed character goes. */
     public enum CharAction {
         PASS,
         LIST_SEARCH,
@@ -67,7 +64,6 @@ public final class ZioInputRouter {
         SCREEN_SEARCH
     }
 
-    /** What the wheel moves. */
     public enum ScrollDecision {
         LIST,
         PANEL

@@ -116,7 +116,6 @@ final class ZioTextBatch {
             new ZioTextRenderState(run, quadsInRun, scissor, RenderPipelines.GUI_TEXTURED, texture));
     }
 
-    /** Closes the batch. */
     static void end() {
         flush();
         active = false;

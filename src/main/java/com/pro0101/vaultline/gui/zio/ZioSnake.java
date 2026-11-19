@@ -55,7 +55,6 @@ public final class ZioSnake extends ZioGridGame {
         }
     }
 
-    /** One segment of the snake, head first. */
     public record Segment(int x, int y) {
     }
 

@@ -13,15 +13,11 @@ package com.pro0101.vaultline.gui.zio;
 public final class ZioCursorRule {
     /** What the pointer is over, in the screen's own terms. */
     public enum Zone {
-        /** Empty space: the arrow. */
         NONE,
-        /** A panel's title bar: drags and folds. */
         PANEL_HEADER,
-        /** A module's line: toggles the module. */
         MODULE_ROW,
         /** A setting's line, chip, slider or list choice. */
         SETTING_ROW,
-        /** A button, a list or the size controls. */
         BUTTON,
         /** A field taking typed text, or a key being bound. */
         FIELD

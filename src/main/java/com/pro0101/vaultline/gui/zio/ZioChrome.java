@@ -78,7 +78,6 @@ public final class ZioChrome {
             FX_BUTTON_WIDTH, ZioListLayout.ROW_HEIGHT);
     }
 
-    /** Whether a control is fully on screen. */
     public static boolean inside(Rect rect, int viewWidth, int viewHeight) {
         return rect.x() >= 0 && rect.y() >= 0 && rect.right() <= viewWidth && rect.bottom() <= viewHeight;
     }

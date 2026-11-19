@@ -67,13 +67,11 @@ public final class ZioMinesweeper extends ZioGridGame {
             return initialScore;
         }
 
-        /** The next difficulty the header cycles to. */
         public Level next() {
             return values()[(ordinal() + 1) % values().length];
         }
     }
 
-    /** What a cell hides. */
     public enum Content {
         BOMB,
         NUMBER_0,
@@ -95,7 +93,6 @@ public final class ZioMinesweeper extends ZioGridGame {
         }
     }
 
-    /** What a cell shows. */
     public enum State {
         COVERED,
         FLAGGED,
@@ -192,7 +189,6 @@ public final class ZioMinesweeper extends ZioGridGame {
         return level.mines() - flags;
     }
 
-    /** Whether the board has been won or lost. */
     public boolean finished() {
         return won || lost;
     }
@@ -203,7 +199,6 @@ public final class ZioMinesweeper extends ZioGridGame {
         return generated && !won && !lost;
     }
 
-    /** A point a second, down to zero. */
     @Override
     protected void onTick() {
         setScore(Math.max(score() - 1, 0));

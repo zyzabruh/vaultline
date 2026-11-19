@@ -19,7 +19,6 @@ package com.pro0101.vaultline.gui.zio;
  * distance and the shape of the three cases are unchanged.
  */
 public final class ZioHudLayout {
-    /** The distance the copied client snaps at. */
     public static final int SNAP_DISTANCE = 5;
 
     /** How close to a corner the resize handle reaches. */
@@ -75,7 +74,6 @@ public final class ZioHudLayout {
         return clamp(new Rect(x, y, start.width(), start.height()), screenWidth, screenHeight);
     }
 
-    /** The element kept fully on screen. */
     public static Rect clamp(Rect rect, int screenWidth, int screenHeight) {
         int x = Math.max(0, Math.min(rect.x(), screenWidth - rect.width()));
         int y = Math.max(0, Math.min(rect.y(), screenHeight - rect.height()));
@@ -152,7 +150,6 @@ public final class ZioHudLayout {
         return (int) Math.round(10 * (1 - visible) * direction);
     }
 
-    /** The label's alpha as it fades in. */
     public static int labelAlpha(double opacity) {
         return (int) Math.round(255 * Math.min(1, Math.max(0, opacity)));
     }

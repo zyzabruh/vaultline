@@ -474,7 +474,6 @@ public abstract class PresetTheme extends GuiTheme {
         return new SettingColor(color.r, color.g, color.b, 115);
     }
 
-    /** Returns the corner radius of windows and buttons. */
     public double cornerRadius() {
         return cornerRadius.get();
     }

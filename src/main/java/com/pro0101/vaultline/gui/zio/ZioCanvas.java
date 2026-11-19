@@ -10,7 +10,6 @@ package com.pro0101.vaultline.gui.zio;
  * DrawContext}.
  */
 public interface ZioCanvas {
-    /** A flat rectangle, edges included. */
     void fill(int x1, int y1, int x2, int y2, int argb);
 
     /** A rectangle from one colour at its top edge to another at its bottom edge. */

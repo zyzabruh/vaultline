@@ -99,7 +99,6 @@ public final class ZioAnim {
             return target;
         }
 
-        /** Jumps to a value with no animation. */
         public void set(long nowMillis, float value) {
             start = value;
             target = value;

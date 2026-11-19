@@ -35,7 +35,6 @@ public final class ZioTetrisPiece {
         {{1, -1}, {0, -1}, {0, 0}, {0, 1}}
     };
 
-    /** The four blocks of a piece. */
     public static final int BLOCKS = 4;
 
     private final int[][] coordinates = new int[BLOCKS][2];

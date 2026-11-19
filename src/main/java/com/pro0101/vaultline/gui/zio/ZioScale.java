@@ -48,7 +48,6 @@ public final class ZioScale {
         }
     }
 
-    /** The text written to the saved file. */
     public static String format(float value) {
         return Float.toString(clamp(value));
     }

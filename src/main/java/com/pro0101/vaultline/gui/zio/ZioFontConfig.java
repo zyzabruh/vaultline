@@ -8,7 +8,6 @@ package com.pro0101.vaultline.gui.zio;
  * frame rebuilds it.
  */
 public final class ZioFontConfig {
-    /** The family the copied client defaults to. */
     public static final String DEFAULT_NAME = "Arial";
 
     /** The size the copied client defaults to, before the atlas doubles it. */

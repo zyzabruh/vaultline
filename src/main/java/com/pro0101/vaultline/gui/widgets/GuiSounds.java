@@ -40,7 +40,6 @@ public final class GuiSounds {
     private GuiSounds() {
     }
 
-    /** The sounds a theme can be set to. */
     public enum GuiSound {
         NONE(null, null),
         CLICK(SoundEvents.UI_BUTTON_CLICK, null),

@@ -200,7 +200,6 @@ public class ZioScreen extends TabScreen {
     /** When this screen was first drawn, for its opening fade. */
     private long openedAt;
 
-    /** The scissor regions open this frame, outermost first. */
     private final ZioScissor scissors = new ZioScissor();
 
     private Panel draggingPanel;
@@ -1048,7 +1047,6 @@ public class ZioScreen extends TabScreen {
         return (alpha << 24) | (faded & 0xFFFFFF);
     }
 
-    /** The size controls: smaller, the current percentage, bigger. */
     private void drawZoom(DrawContext context) {
         ZioChrome.Rect minus = zoomMinusButton();
         ZioChrome.Rect label = zoomLabelRect();
@@ -1724,7 +1722,6 @@ public class ZioScreen extends TabScreen {
         context.fill(alphaMarker, alphaTop, alphaMarker + 1, alphaTop + COLOUR_SLIDER, 0xFFFFFFFF);
     }
 
-    /** Blends two packed colours, keeping their alpha. */
     private static int mix(int from, int to, float t) {
         int r = Math.round(((from >> 16) & 0xFF) * (1 - t) + ((to >> 16) & 0xFF) * t);
         int g = Math.round(((from >> 8) & 0xFF) * (1 - t) + ((to >> 8) & 0xFF) * t);

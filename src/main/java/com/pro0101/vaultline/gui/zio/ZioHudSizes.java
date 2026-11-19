@@ -40,7 +40,6 @@ public final class ZioHudSizes {
         return size == null ? null : size.clone();
     }
 
-    /** Whether this element was resized in the editor. */
     public static synchronized boolean isForced(String name) {
         ensureLoaded();
 
@@ -69,7 +68,6 @@ public final class ZioHudSizes {
         ZioHudSizeStore.save(file, sizes);
     }
 
-    /** Lets an element measure itself again. */
     public static synchronized void clear(String name) {
         ensureLoaded();
 

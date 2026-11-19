@@ -13,7 +13,6 @@ import java.util.Locale;
  * without a game client.
  */
 public final class ZioPresets {
-    /** The longest name the panel accepts. */
     public static final int MAX_NAME = 24;
 
     private ZioPresets() {

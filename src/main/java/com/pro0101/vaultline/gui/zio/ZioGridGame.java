@@ -85,7 +85,6 @@ public abstract class ZioGridGame {
         return resetAtMillis >= 0L;
     }
 
-    /** Starts the board over after the given pause. */
     protected final void scheduleReset(long delayMillis) {
         resetAtMillis = System.currentTimeMillis() + delayMillis;
     }
