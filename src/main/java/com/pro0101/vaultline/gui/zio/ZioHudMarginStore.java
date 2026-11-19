@@ -10,8 +10,9 @@ import java.nio.file.Path;
  * The HUD safe margins the mod remembers between launches.
  *
  * <p>Two numbers in one small file next to the game's config, written whenever a drag in the editor
- * changes them, read once at startup, clamped to the copied client's own bounds when the file is
- * missing, out of range or garbage: {@code SafeX 0..20} and {@code SafeY 0..10}, both defaulting to 1.
+ * changes them, read once on the first drag or draw that asks for them, and clamped to the copied
+ * client's own bounds when the file is missing, out of range or garbage: {@code SafeX 0..20} and
+ * {@code SafeY 0..10}, both defaulting to 1.
  */
 public final class ZioHudMarginStore {
     public static final String FILE_NAME = "vaultline-hud-margins.txt";

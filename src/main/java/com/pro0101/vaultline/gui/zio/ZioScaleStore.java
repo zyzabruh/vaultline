@@ -9,8 +9,9 @@ import java.nio.file.Path;
 /**
  * The zoom the mod remembers between launches.
  *
- * <p>One number in one small file next to the game's config: written on every change, read once at
- * startup and brought back inside the allowed range when it is missing, out of range or garbage.
+ * <p>One number in one small file next to the game's config: written on every change, read once on
+ * the first zoom that asks for it, and brought back inside the allowed range when it is missing, out
+ * of range or garbage.
  */
 public final class ZioScaleStore {
     public static final String FILE_NAME = "vaultline-gui.txt";

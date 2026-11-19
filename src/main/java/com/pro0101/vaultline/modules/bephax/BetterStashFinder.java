@@ -832,9 +832,8 @@ public class BetterStashFinder extends Module
             }
         }
 
-        // The found stashes are not written to Xaero waypoints here: the module has no waypoint
-        // library of its own, and the Xaero integration lives in the huntbuddy modules. Adding them
-        // would need that binding first, so the list stays in the module until then.
+        // Nothing is written to Xaero here: the waypoints follow the save-to-waypoints setting, which
+        // adds one for each new find and backfills the chunks already loaded when it is switched on.
     }
 
     private void saveCsv() {
@@ -925,12 +924,13 @@ public class BetterStashFinder extends Module
 
         String waypointName = getWaypointName(chunk);
 
-        // set color based on total storage blocks
+        // The colour index is chosen by the stored block count, in the bands of the copied module;
+        // the palette itself belongs to Xaero and its indices are not named here.
         int color = 0;
-        if (chunk.getTotal() < 15) color = 10; // green
-        else if (chunk.getTotal() < 50) color = 14; // i forgot what these are lmao
+        if (chunk.getTotal() < 15) color = 10;
+        else if (chunk.getTotal() < 50) color = 14;
         else if (chunk.getTotal() < 100) color = 12;
-        else if (chunk.getTotal() >= 100) color = 4; // red i think
+        else if (chunk.getTotal() >= 100) color = 4;
 
         Waypoint waypoint = new Waypoint(
             x,
