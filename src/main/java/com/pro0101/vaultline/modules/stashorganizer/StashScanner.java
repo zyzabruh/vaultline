@@ -34,7 +34,6 @@ public final class StashScanner {
         }
     }
 
-    /** @return false when no storage block was found */
     public boolean discover() {
         BlockPos center = session.game.playerFeet();
         int radius = session.radius();

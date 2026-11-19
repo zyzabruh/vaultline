@@ -306,9 +306,6 @@ public class BounceFly extends Module {
         );
     }
 
-    /**
-     * Prepares flight state and required modules.
-     */
     @Override
     public void onActivate() {
         if (!Client.ready()) return;
@@ -345,9 +342,6 @@ public class BounceFly extends Module {
         this.cleanFakeFly();
     }
 
-    /**
-     * Stops active movement and restores module state.
-     */
     @Override
     public void onDeactivate() {
         this.release();
@@ -377,11 +371,6 @@ public class BounceFly extends Module {
     }
 
 
-    /**
-     * Controls normal bounce movement and obstacle handling.
-     *
-     * @param event pre-tick event
-     */
     @EventHandler
     private void onTick(TickEvent.Pre event) {
         if (!Client.ready()) return;
@@ -429,7 +418,6 @@ public class BounceFly extends Module {
      * does instead of releasing them or dropping the glide. Meteor fires the receive event on the
      * netty thread, so the counter is changed on the main thread.
      *
-     * @param event packet receive event
      */
     @EventHandler
     private void onReceive(PacketEvent.Receive event) {
@@ -457,7 +445,6 @@ public class BounceFly extends Module {
      * interactions go out as they arrive, so a burst can never swallow something the player typed
      * or a click that changes the inventory.
      *
-     * @param event packet send event
      */
     @EventHandler
     private void onSend(PacketEvent.Send event) {
@@ -483,7 +470,6 @@ public class BounceFly extends Module {
      * and the next tick cannot begin with the elytra still worn or the landing would cost it
      * durability, which is the whole point of the option.
      *
-     * @param event movement packet event
      */
     @EventHandler
     private void onSendMovement(SendMovementPacketsEvent.Pre event) {
@@ -500,7 +486,6 @@ public class BounceFly extends Module {
      *
      * <p>Only the local sound is dropped; the server still sees the swap.
      *
-     * @param event sound event
      */
     @EventHandler
     private void onPlaySound(PlaySoundEvent event) {
@@ -560,20 +545,12 @@ public class BounceFly extends Module {
         }
     }
 
-    /**
-     * Checks whether outgoing movement is being held back.
-     *
-     * @return true while fake lag applies
-     */
     private boolean holding() {
         return this.fakeLag.get() && this.isActive() && this.enabled()
             && this.mc.player != null && this.mc.player.isGliding()
             && this.mc.player.getY() - this.groundY < this.lagHeight.get();
     }
 
-    /**
-     * Sends everything fake lag is holding.
-     */
     private void flush() {
         if (this.queue.isEmpty()) return;
 
@@ -717,11 +694,6 @@ public class BounceFly extends Module {
         return this.fakeWant ? GliderSwap.isGlider(worn) : GliderSwap.isChestPiece(worn);
     }
 
-    /**
-     * Tracks the swap transactions the server has answered.
-     *
-     * @param event packet send event
-     */
     private void trackFakeFly(PacketEvent.Send event) {
         if (!this.fakeFly.get() || this.mc.player == null) return;
 
@@ -747,7 +719,6 @@ public class BounceFly extends Module {
      * <p>Meteor fires the receive event on the netty thread, so the sequence is handed to the main
      * thread before it is stored.
      *
-     * @param event packet receive event
      */
     private void intakeFakeFly(PacketEvent.Receive event) {
         if (!this.fakeFly.get() || this.mc.player == null) return;
@@ -798,11 +769,6 @@ public class BounceFly extends Module {
             && !this.held;
     }
 
-    /**
-     * Finds a chestplate in the hotbar.
-     *
-     * @return matching hotbar slot, or -1 when unavailable
-     */
     private int chestSlot() {
         for (int slot = 0; slot < 9; slot++) {
             if (GliderSwap.isChestPiece(this.mc.player.getInventory().getStack(slot))) {
@@ -813,11 +779,6 @@ public class BounceFly extends Module {
         return -1;
     }
 
-    /**
-     * Reports a fakefly problem once per change.
-     *
-     * @param reason reason the pair cannot be used
-     */
     private void blocked(String reason) {
         if (reason.equals(this.fakeBlocked)) return;
 
@@ -825,9 +786,6 @@ public class BounceFly extends Module {
         this.warning("%s", reason);
     }
 
-    /**
-     * Clears every fakefly transaction state.
-     */
     private void cleanFakeFly() {
         this.fakeHand = null;
         this.fakePending = -1;
@@ -847,39 +805,21 @@ public class BounceFly extends Module {
 
 
 
-    /**
-     * Checks whether bounce input should be forced.
-     *
-     * @return true while normal bounce movement is active
-     */
     public boolean enabled() {
         return this.isActive() && this.mc.player != null
             && !this.pass && (Elytra.equipped() || this.glider());
     }
 
-    /**
-     * Returns the current bounce jump input.
-     *
-     * @return forced jump state
-     */
     public boolean jumping() {
         // A stale launch flag used to survive a handover to Baritone, and the key mixin kept answering the
         // jump as pressed while the player was walking. The input is only ours while the module drives movement.
         return this.launch && this.enabled() && this.ready();
     }
 
-    /**
-     * Checks whether acceleration mode is enabled.
-     *
-     * @return true when acceleration mode is enabled
-     */
     public boolean accelerated() {
         return this.acceleration.get();
     }
 
-    /**
-     * Clears bounce movement state.
-     */
     private void reset() {
         this.slow = 0;
         this.jump = 0;
@@ -887,9 +827,6 @@ public class BounceFly extends Module {
         this.force = false;
     }
 
-    /**
-     * Clears obstacle passing state.
-     */
     private void clear() {
         this.blocks.clear();
         this.goal = null;
@@ -898,18 +835,12 @@ public class BounceFly extends Module {
         this.passWait = 0;
     }
 
-    /**
-     * Keeps Mining Tweaks enabled while mining obstacles.
-     */
     private void setup() {
         if (this.mining != null && !this.mining.isActive()) {
             this.mining.toggle();
         }
     }
 
-    /**
-     * Restores the Mining Tweaks state from before activation.
-     */
     private void restore() {
         if (this.mining != null && !this.enabled &&
             this.mining.isActive()) {
@@ -919,20 +850,10 @@ public class BounceFly extends Module {
 
 
 
-    /**
-     * Checks whether bounce movement is available.
-     *
-     * @return true when Bounce Fly can control movement
-     */
     private boolean available() {
         return !this.pathing() && this.equipped();
     }
 
-    /**
-     * Validates equipped elytra and clears bounce state.
-     *
-     * @return true when an elytra is equipped
-     */
     private boolean equipped() {
         if (Elytra.equipped() || this.glider()) {
             return true;
@@ -945,11 +866,6 @@ public class BounceFly extends Module {
         return false;
     }
 
-    /**
-     * Updates jump input for the current bounce state.
-     * 
-     * @param velocity current player velocity
-     */
     private void launch(Vec3d velocity) {
         // With the chestplate worn the elytra sits in a hand until the burst swaps it in. Pressing
         // while the pair is not ready sends a glide start with no glider on, so the inputs stay
@@ -1021,9 +937,6 @@ public class BounceFly extends Module {
         return true;
     }
 
-    /**
-     * Releases forced movement and sprint state.
-     */
     private void release() {
         this.mc.options.forwardKey.setPressed(false);
         this.mc.options.jumpKey.setPressed(false);
@@ -1035,11 +948,6 @@ public class BounceFly extends Module {
 
 
 
-    /**
-     * Manages active obstacle passing and mining.
-     *
-     * @return true while obstacle handling is active
-     */
     private boolean pathing() {
         if (!this.passer.get()) {
             if (this.pass) {
@@ -1089,11 +997,6 @@ public class BounceFly extends Module {
         return false;
     }
 
-    /**
-     * Starts obstacle handling when a collision is detected.
-     *
-     * @return true when obstacle handling was started
-     */
     private boolean blocked() {
         if (!this.passer.get() || !this.avoid.get()) {
             return false;
@@ -1117,9 +1020,6 @@ public class BounceFly extends Module {
         return true;
     }
 
-    /**
-     * Detects slow movement and starts recovery pathing.
-     */
     private void stuck() {
         Vec3d motion = this.mc.player.getVelocity();
         double speed = motion.horizontalLength() * ticks;
@@ -1189,9 +1089,6 @@ public class BounceFly extends Module {
 
 
 
-    /**
-     * Starts recovery toward a safe highway position.
-     */
     private void path() {
         this.level = this.level();
         BlockPos goal = this.trace();
@@ -1204,11 +1101,6 @@ public class BounceFly extends Module {
         }
     }
 
-    /**
-     * Starts Baritone pathing beyond the selected goal.
-     *
-     * @param pos pathing goal
-     */
     private void path(BlockPos pos) {
         this.level = this.level();
 
@@ -1242,11 +1134,6 @@ public class BounceFly extends Module {
         Baritone.walk(pos);
     }
 
-    /**
-     * Starts obstacle mining before pathing onward.
-     *
-     * @param goal safe pathing goal after the obstacle
-     */
     private void mine(BlockPos goal) {
         this.release();
         this.reset();
@@ -1262,9 +1149,6 @@ public class BounceFly extends Module {
         this.mine();
     }
 
-    /**
-     * Queues obstacles for mining while approaching them.
-     */
     private void mine() {
         this.blocks.removeIf(pos -> !this.solid(pos));
 
@@ -1302,7 +1186,6 @@ public class BounceFly extends Module {
      * it with a segfault rather than an exception (cabaletta/baritone#4830), so the goal now stops
      * at the last loaded, standable, non-portal block between the player and the request.
      *
-     * @param target requested goal
      * @return furthest safe goal before the request, or the last loaded block when none is safe
      */
     private BlockPos safe(BlockPos target) {
@@ -1342,12 +1225,6 @@ public class BounceFly extends Module {
         );
     }
 
-    /**
-     * Checks whether Baritone may stand on a block.
-     *
-     * @param pos block position to check
-     * @return true when the block is clear, supported and not a portal
-     */
     private boolean standable(BlockPos pos) {
         BlockState state = this.mc.world.getBlockState(pos);
 
@@ -1357,11 +1234,6 @@ public class BounceFly extends Module {
         return this.clear(pos);
     }
 
-    /**
-     * Finds a safe center position for recovery pathing.
-     *
-     * @return recovery pathing goal
-     */
     private BlockPos trace() {
         this.blocks.clear();
 
@@ -1388,7 +1260,6 @@ public class BounceFly extends Module {
      * Finds a safe pathing goal beyond the detected obstacle.
      *
      * @param hit detected collision block
-     * @return pathing goal
      */
     private BlockPos trace(BlockPos hit) {
         this.blocks.clear();
@@ -1446,11 +1317,6 @@ public class BounceFly extends Module {
         return blocked;
     }
 
-    /**
-     * Saves the breakable blocks from a trail column.
-     *
-     * @param pos lower block of the column
-     */
     private void collect(BlockPos pos) {
         for (int py = 0; py <= 2; py++) {
             BlockPos block = pos.up(py);
@@ -1469,11 +1335,6 @@ public class BounceFly extends Module {
 
 
 
-    /**
-     * Finds the closest obstacle along the highway direction.
-     *
-     * @return closest collision block, or null when undetected
-     */
     private BlockPos collision() {
         Vec3d front = new Vec3d(this.nx, 0, this.nz);
         Vec3d side = new Vec3d(-front.z, 0, front.x);
@@ -1517,13 +1378,6 @@ public class BounceFly extends Module {
         return closest;
     }
 
-    /**
-     * Raycasts between two points using block collision shapes.
-     *
-     * @param start raycast start position
-     * @param end raycast end position
-     * @return block raycast result
-     */
     private BlockHitResult ray(Vec3d start, Vec3d end) {
         return this.mc.world.raycast(new RaycastContext(
             start, end, RaycastContext.ShapeType.COLLIDER,
@@ -1574,9 +1428,6 @@ public class BounceFly extends Module {
         }
     }
 
-    /**
-     * Rotates the player toward the stored highway direction.
-     */
     private void rotate() {
         Player.rotate((float) this.yaw);
     }
@@ -1620,30 +1471,14 @@ public class BounceFly extends Module {
         return this.isActive() && this.mc.player != null && this.viewActive;
     }
 
-    /**
-     * Returns the independent camera yaw.
-     *
-     * @return camera yaw
-     */
     public float yaw() {
         return this.viewActive ? this.viewYaw : this.mc.player.getYaw();
     }
 
-    /**
-     * Returns the independent camera pitch.
-     *
-     * @return camera pitch
-     */
     public float pitch() {
         return this.viewActive ? this.viewPitch : this.mc.player.getPitch();
     }
 
-    /**
-     * Applies mouse movement to the independent camera rotation.
-     *
-     * @param mx horizontal mouse movement
-     * @param my vertical mouse movement
-     */
     public void look(double mx, double my) {
         this.viewYaw += (float) (mx * 0.15);
         this.viewPitch = MathHelper.clamp(
@@ -1662,37 +1497,16 @@ public class BounceFly extends Module {
         return this.point(px, pz);
     }
 
-    /**
-     * Projects a position onto the stored highway line.
-     *
-     * @param px world X coordinate
-     * @param pz world Z coordinate
-     * @return projected center block
-     */
     private BlockPos point(double px, double pz) {
         return this.dx == 0 || this.dz == 0 ?
             this.cardinal(px, pz) : this.diagonal(px, pz);
     }
 
-    /**
-     * Projects a position onto a cardinal highway line.
-     *
-     * @param px world X coordinate
-     * @param pz world Z coordinate
-     * @return projected center block
-     */
     private BlockPos cardinal(double px, double pz) {
         if (this.dx == 0) return this.block(this.px, pz);
         return this.block(px, this.pz);
     }
 
-    /**
-     * Projects a position onto the diagonal highway line.
-     *
-     * @param px world X coordinate
-     * @param pz world Z coordinate
-     * @return projected center block
-     */
     private BlockPos diagonal(double px, double pz) {
         boolean equal = this.dx == this.dz;
         double axis = equal ? px + pz : px - pz;
@@ -1705,21 +1519,10 @@ public class BounceFly extends Module {
 
 
 
-    /**
-     * Finds the most likely highway level being followed.
-     *
-     * @return detected highway level
-     */
     private int level() {
         return this.trail(high) >= this.trail(low) ? high : low;
     }
 
-    /**
-     * Scores clear positions along the highway center line.
-     *
-     * @param level highway level to check
-     * @return number of valid center positions
-     */
     private int trail(int level) {
         int score = 0;
 
@@ -1736,25 +1539,10 @@ public class BounceFly extends Module {
 
 
 
-    /**
-     * Creates a block position on the highway level.
-     *
-     * @param px world X coordinate
-     * @param pz world Z coordinate
-     * @return block position on the highway level
-     */
     private BlockPos block(double px, double pz) {
         return this.block(px, this.level, pz);
     }
 
-    /**
-     * Creates a block position at a specific level.
-     *
-     * @param px world X coordinate
-     * @param py world Y coordinate
-     * @param pz world Z coordinate
-     * @return block position
-     */
     private BlockPos block(double px, int py, double pz) {
         return new BlockPos(
             (int) Math.round(px), py, (int) Math.round(pz)
@@ -1764,7 +1552,6 @@ public class BounceFly extends Module {
     /**
      * Checks whether a trail position is clear and supported.
      *
-     * @param pos trail position
      * @return true when the position is valid
      */
     private boolean clear(BlockPos pos) {
@@ -1796,7 +1583,6 @@ public class BounceFly extends Module {
     /**
      * Rounds a coordinate to the nearest highway grid position.
      *
-     * @param value coordinate to round
      * @return coordinate aligned to the highway grid
      */
     private int snap(double value) {

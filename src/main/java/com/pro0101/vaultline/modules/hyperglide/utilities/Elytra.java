@@ -19,22 +19,12 @@ public final class Elytra {
 
     private Elytra() {}
 
-    /**
-     * Checks whether the player has an elytra equipped.
-     *
-     * @return true when an elytra is equipped in the chest slot
-     */
     public static boolean equipped() {
         return client.player.getEquippedStack(
             EquipmentSlot.CHEST
         ).isOf(Items.ELYTRA);
     }
 
-    /**
-     * Checks whether the player is wearing a chestplate.
-     *
-     * @return true when a chestplate is equipped
-     */
     public static boolean chestplate() {
         return chestplate(client.player.getEquippedStack(
             EquipmentSlot.CHEST
@@ -60,11 +50,6 @@ public final class Elytra {
         return equipment.slot() == EquipmentSlot.CHEST;
     }
 
-    /**
-     * Finds the healthiest elytra in the hotbar.
-     *
-     * @return matching hotbar slot, or -1 when unavailable
-     */
     public static int hotbar() {
         return Hotbar.best(
             stack -> stack.isOf(Items.ELYTRA),
@@ -72,29 +57,15 @@ public final class Elytra {
         );
     }
 
-    /**
-     * Returns the remaining durability of an item stack.
-     *
-     * @param stack item stack to check
-     * @return remaining durability
-     */
     public static int remaining(ItemStack stack) {
         if (!stack.isDamageable()) return Integer.MAX_VALUE;
         return stack.getMaxDamage() - stack.getDamage();
     }
 
-    /**
-     * Sends a direct request to start elytra flight.
-     */
     public static void start() {
         Packets.command(ClientCommandC2SPacket.Mode.START_FALL_FLYING);
     }
 
-    /**
-     * Uses a firework with the current player rotation.
-     *
-     * @return true when the firework packet was sent
-     */
     public static boolean firework() {
         if (client.player == null) return false;
 
@@ -104,13 +75,6 @@ public final class Elytra {
         return firework(yaw, pitch);
     }
 
-    /**
-     * Uses a firework from the hotbar or offhand.
-     *
-     * @param yaw interaction yaw
-     * @param pitch interaction pitch
-     * @return true when the firework packet was sent
-     */
     public static boolean firework(float yaw, float pitch) {
         if (!Client.interaction() || !Inventory.ready()) {
             return false;
@@ -146,25 +110,10 @@ public final class Elytra {
         return false;
     }
 
-    /**
-     * Calculates elytra movement for the next tick.
-     *
-     * @param velocity current velocity
-     * @param rotation current flight direction
-     * @return calculated gliding velocity
-     */
     public static Vec3d glide(Vec3d velocity, Vec3d rotation) {
         return glide(velocity, rotation, 0.08);
     }
 
-    /**
-     * Calculates elytra movement using the supplied gravity.
-     *
-     * @param velocity current velocity
-     * @param rotation current flight direction
-     * @param gravity current player gravity
-     * @return calculated gliding velocity
-     */
     public static Vec3d glide(Vec3d velocity, Vec3d rotation, double gravity) {
         double length = rotation.horizontalLength();
         double speed = velocity.horizontalLength();
@@ -178,12 +127,7 @@ public final class Elytra {
     /**
      * Applies the remaining elytra movement for the current tick.
      *
-     * @param velocity current velocity
-     * @param rotation current flight direction
-     * @param length horizontal rotation length
-     * @param speed horizontal movement speed
      * @param cosine pitch-derived lift factor
-     * @return simulated gliding velocity
      */
     private static Vec3d glide(Vec3d velocity, Vec3d rotation,
         double length, double speed, double cosine) {
@@ -195,15 +139,6 @@ public final class Elytra {
         return velocity.multiply(0.99, 0.98, 0.99);
     }
 
-    /**
-     * Applies movement while descending.
-     *
-     * @param velocity current velocity
-     * @param rotation current flight direction
-     * @param length horizontal rotation length
-     * @param cosine pitch-derived lift factor
-     * @return adjusted velocity
-     */
     private static Vec3d fall(Vec3d velocity,
         Vec3d rotation, double length, double cosine) {
 
@@ -220,15 +155,6 @@ public final class Elytra {
         return velocity;
     }
 
-    /**
-     * Applies movement while climbing.
-     *
-     * @param velocity current velocity
-     * @param rotation current flight direction
-     * @param length horizontal rotation length
-     * @param speed horizontal movement speed
-     * @return adjusted velocity
-     */
     private static Vec3d rise(Vec3d velocity,
         Vec3d rotation, double length, double speed) {
 
@@ -248,15 +174,6 @@ public final class Elytra {
         return velocity;
     }
 
-    /**
-     * Steers horizontal velocity toward the flight direction.
-     *
-     * @param velocity current velocity
-     * @param rotation current flight direction
-     * @param length horizontal rotation length
-     * @param speed horizontal movement speed
-     * @return adjusted velocity
-     */
     private static Vec3d align(Vec3d velocity,
         Vec3d rotation, double length, double speed) {
 

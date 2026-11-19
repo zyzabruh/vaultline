@@ -19,11 +19,6 @@ public record Route(List<Leg> legs, float distance, float time) {
         Highway
     }
 
-    /**
-     * Checks whether the route contains no travel legs.
-     *
-     * @return true when the route is empty
-     */
     public boolean empty() {
         return this.legs.isEmpty();
     }
@@ -32,7 +27,6 @@ public record Route(List<Leg> legs, float distance, float time) {
      * Merges connected legs that continue in the same direction.
      *
      * @param legs route legs to simplify
-     * @return immutable simplified leg list
      */
     private static List<Leg> simplify(List<Leg> legs) {
         List<Leg> result = new ArrayList<>();
@@ -57,7 +51,6 @@ public record Route(List<Leg> legs, float distance, float time) {
      * Checks whether two route legs can be represented as one.
      *
      * @param first previous route leg
-     * @param second following route leg
      * @return true when both legs continue in the same direction
      */
     private static boolean merge(Leg first, Leg second) {
@@ -72,20 +65,7 @@ public record Route(List<Leg> legs, float distance, float time) {
         return sa.forward(sb);
     }
 
-    /**
-     * Represents one continuous part of a calculated route.
-     *
-     * @param start leg starting position
-     * @param end leg ending position
-     * @param road first highway used by the leg, or null for free flight
-     * @param type travel type
-     */
     public record Leg(Vec2f start, Vec2f end, Highways.Road road, Type type) {
-        /**
-         * Calculates the leg length.
-         *
-         * @return distance between leg endpoints
-         */
         public float length() {
             return this.end.add(this.start.negate()).length();
         }

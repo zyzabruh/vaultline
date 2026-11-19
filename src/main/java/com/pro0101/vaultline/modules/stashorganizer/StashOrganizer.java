@@ -407,11 +407,9 @@ public class StashOrganizer extends Module implements SessionHost {
     /** Ready-made tuning applied when the module starts; {@code Custom} keeps the settings as they are. */
     public enum Preset {
         Custom,
-        /** Low latency server: shorter waits, bigger batches. */
         Fast,
         /** High latency server: long waits, small batches and a generous timeout. */
         Laggy,
-        /** Only scan and report, never move an item. */
         DryRun
     }
 

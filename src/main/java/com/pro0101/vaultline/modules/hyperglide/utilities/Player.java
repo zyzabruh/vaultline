@@ -16,11 +16,6 @@ public final class Player {
 
     private Player() {}
 
-    /**
-     * Returns the player's horizontal position.
-     *
-     * @return player X/Z position
-     */
     public static Vec2f position() {
         return new Vec2f(
             (float) client.player.getX(),
@@ -28,11 +23,6 @@ public final class Player {
         );
     }
 
-    /**
-     * Returns the block directly below the player.
-     *
-     * @return block below the player's feet
-     */
     public static BlockPos floor() {
         boolean ground = client.player.isOnGround();
         double offset = ground ? 0.01 : 1.0;
@@ -44,12 +34,6 @@ public final class Player {
         );
     }
 
-    /**
-     * Applies the requested velocity to the player.
-     *
-     * @param event player movement event
-     * @param velocity requested movement vector
-     */
     public static void velocity(PlayerMoveEvent event, Vec3d velocity) {
         client.player.setVelocity(velocity);
         ((IVec3d) event.movement).meteor$set(
@@ -57,11 +41,6 @@ public final class Player {
         );
     }
 
-    /**
-     * Rotates the player to follow direction.
-     *
-     * @param yaw requested yaw
-     */
     public static void rotate(float yaw) {
         client.player.setYaw(yaw);
         client.player.setHeadYaw(yaw);
@@ -71,18 +50,12 @@ public final class Player {
     /**
      * Checks whether the player is in water or lava.
      *
-     * @return true while inside liquid
      */
     public static boolean liquid() {
         return client.player.isTouchingWater()
             || client.player.isInLava();
     }
 
-    /**
-     * Checks whether the player is eating or drinking.
-     *
-     * @return true while consuming an item
-     */
     public static boolean consuming() {
         if (!client.player.isUsingItem()) return false;
 

@@ -18,31 +18,14 @@ public final class Search {
 
     //region Public API
 
-    /**
-     * Builds a search over the complete highway network.
-     */
     public Search() {
         this(Highways.roads());
     }
 
-    /**
-     * Builds a search over the supplied highway network.
-     *
-     * @param roads roads available for routing
-     */
     public Search(List<Highways.Road> roads) {
         this.graph = new Graph(roads);
     }
 
-    /**
-     * Calculates the fastest route between two positions.
-     *
-     * @param start starting X/Z position
-     * @param end destination X/Z position
-     * @param highway highway travel speed
-     * @param normal standard travel speed
-     * @return fastest available route
-     */
     public Route find(Vec2f start, Vec2f end, float highway, float normal) {
         Route undefined = new Route(List.of(), 0.0F, 0.0F);
 
@@ -61,11 +44,6 @@ public final class Search {
     /**
      * Adds optimal entry and exit points to the highway graph.
      *
-     * @param start starting position
-     * @param end destination position
-     * @param highway highway travel speed
-     * @param normal standard travel speed
-     * @return temporary routing graph
      */
     private Network build(Vec2f start, Vec2f end, float highway, float normal) {
         List<Graph.Node> nodes = new ArrayList<>(graph.nodes());
@@ -99,16 +77,6 @@ public final class Search {
         return new Network(source, target, links);
     }
 
-    /**
-     * Calculates both approach points on a highway edge.
-     *
-     * @param nodes available route nodes
-     * @param segment highway edge
-     * @param point off-highway position
-     * @param highway highway travel speed
-     * @param normal standard travel speed
-     * @return optimal candidates for both travel directions
-     */
     private List<Graph.Node> candidates(List<Graph.Node> nodes,
         Segment segment, Vec2f point, float highway, float normal) {
 
@@ -130,14 +98,6 @@ public final class Search {
         return first.equals(second) ? List.of(first) : List.of(first, second);
     }
 
-    /**
-     * Connects approach points to an off-highway position.
-     *
-     * @param links temporary graph connections
-     * @param points highway segment points
-     * @param source off-highway position
-     * @param candidates calculated approach points
-     */
     private void attach(Map<Graph.Node, List<Link>> links, List<Graph.Node>
         points, Graph.Node source, List<Graph.Node> candidates) {
 
@@ -147,14 +107,6 @@ public final class Search {
         }
     }
 
-    /**
-     * Connects ordered points along a highway segment.
-     *
-     * @param links temporary graph connections
-     * @param points points belonging to the segment
-     * @param segment original highway segment
-     * @param road highway containing the segment
-     */
     private void highway(Map<Graph.Node, List<Link>> links,
         List<Graph.Node> points, Segment segment, Highways.Road road) {
 
@@ -176,9 +128,6 @@ public final class Search {
     /**
      * Returns a nearby node or creates a temporary one.
      *
-     * @param nodes available nodes
-     * @param point requested position
-     * @return canonical route node
      */
     private Graph.Node node(List<Graph.Node> nodes, Vec2f point) {
         for (Graph.Node node : nodes) {
@@ -194,8 +143,6 @@ public final class Search {
     /**
      * Adds a candidate node once to a temporary point list.
      *
-     * @param nodes destination node list
-     * @param candidate node to add
      */
     private void add(List<Graph.Node> nodes, Graph.Node candidate) {
         if (nodes.stream().noneMatch(node -> node ==
@@ -204,15 +151,6 @@ public final class Search {
         }
     }
 
-    /**
-     * Adds bidirectional travel between two route nodes.
-     *
-     * @param links destination adjacency map
-     * @param start first node
-     * @param end second node
-     * @param road owning road, or null for free flight
-     * @param type travel type
-     */
     private void connect(
         Map<Graph.Node, List<Link>> links, Graph.Node start,
         Graph.Node end, Highways.Road road, Route.Type type) {
@@ -227,7 +165,6 @@ public final class Search {
     /**
      * Adds a route link unless an equivalent link already exists.
      *
-     * @param links destination adjacency map
      * @param link route link to add
      */
     private void add(Map<Graph.Node, List<Link>> links, Link link) {
@@ -237,13 +174,6 @@ public final class Search {
         if (!this.duplicate(list, link)) list.add(link);
     }
 
-    /**
-     * Checks whether an equivalent connection already exists.
-     *
-     * @param links existing connections
-     * @param link connection to check
-     * @return true if an equivalent connection exists
-     */
     private boolean duplicate(List<Link> links, Link link) {
         if (link.type == Route.Type.Normal) return false;
 
@@ -258,13 +188,6 @@ public final class Search {
         return false;
     }
 
-    /**
-     * Calculates distance between two positions.
-     *
-     * @param first first position
-     * @param second second position
-     * @return distance between both positions
-     */
     private float distance(Vec2f first, Vec2f second) {
         return second.add(first.negate()).length();
     }
@@ -273,14 +196,6 @@ public final class Search {
 
     //region Route pathfinding
 
-    /**
-     * Finds the fastest connections through the network.
-     *
-     * @param network temporary routing graph
-     * @param highway highway travel speed
-     * @param normal standard travel speed
-     * @return predecessor links for the fastest route
-     */
     private Map<Graph.Node, Link> search(
         Network network, float highway, float normal) {
 
@@ -325,10 +240,6 @@ public final class Search {
     /**
      * Estimates the minimum remaining travel time to a goal.
      *
-     * @param node current graph node
-     * @param end destination graph node
-     * @param speed maximum travel speed
-     * @return estimated remaining travel time
      */
     private float estimate(Graph.Node node, Graph.Node end, float speed) {
         return this.distance(node.pos(), end.pos()) / speed;
@@ -338,16 +249,6 @@ public final class Search {
 
     //region Route reconstruction
 
-    /**
-     * Reconstructs the selected route from search predecessors.
-     *
-     * @param start route start node
-     * @param end route destination node
-     * @param previous predecessor links
-     * @param highway highway travel speed
-     * @param normal standard travel speed
-     * @return reconstructed route
-     */
     private Route route(Graph.Node start, Graph.Node end,
         Map<Graph.Node, Link> previous, float highway, float normal) {
 
@@ -373,14 +274,6 @@ public final class Search {
         return new Route(legs, distance, time);
     }
 
-    /**
-     * Traces the fastest route through predecessor links.
-     *
-     * @param start route starting node
-     * @param end route destination node
-     * @param previous predecessor links
-     * @return ordered links, or null if unreachable
-     */
     private List<Link> path(Graph.Node start,
         Graph.Node end, Map<Graph.Node, Link> previous) {
 
@@ -402,10 +295,6 @@ public final class Search {
     /**
      * Creates a direct standard route using a normal speed.
      *
-     * @param start starting position
-     * @param end destination position
-     * @param speed standard speed
-     * @return direct route
      */
     private Route direct(Vec2f start, Vec2f end, float speed) {
         float distance = this.distance(start, end);
@@ -417,38 +306,15 @@ public final class Search {
 
     //region Data structures
 
-    /**
-     * Represents a connection used during route calculation.
-     *
-     * @param start starting node
-     * @param end ending node
-     * @param road highway, or null for free flight
-     * @param type travel type
-     * @param distance connection distance
-     */
     private record Link(Graph.Node start, Graph.Node end,
         Highways.Road road, Route.Type type, float distance
     ) {}
 
-    /**
-     * Represents the graph used for a route calculation.
-     *
-     * @param start starting node
-     * @param end destination node
-     * @param links graph connections
-     */
     private record Network(
         Graph.Node start, Graph.Node end,
         Map<Graph.Node, List<Link>> links
     ) {}
 
-    /**
-     * Represents a node queued during pathfinding.
-     *
-     * @param node graph node
-     * @param cost accumulated travel time
-     * @param priority estimated total travel time
-     */
     private record State(
         Graph.Node node, float cost, float priority
     ) {}

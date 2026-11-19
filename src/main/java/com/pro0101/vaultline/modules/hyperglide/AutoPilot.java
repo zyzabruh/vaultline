@@ -107,9 +107,6 @@ public class AutoPilot extends Module {
         );
     }
 
-    /**
-     * Captures the current route and prepares required modules.
-     */
     @Override
     public void onActivate() {
         if (!BaritoneCompat.isAvailable()) {
@@ -140,9 +137,6 @@ public class AutoPilot extends Module {
         this.started = true;
     }
 
-    /**
-     * Stops active movement and clears runtime state.
-     */
     @Override
     public void onDeactivate() {
         if (!this.started) {
@@ -162,11 +156,6 @@ public class AutoPilot extends Module {
     }
 
 
-    /**
-     * Advances travel along the saved route.
-     *
-     * @param event pre-tick event
-     */
     @EventHandler
     private void tick(TickEvent.Pre event) {
         if (!this.valid()) return;
@@ -220,9 +209,6 @@ public class AutoPilot extends Module {
 
 
 
-    /**
-     * Clears the saved route and runtime state.
-     */
     private void reset() {
         this.route = null;
         this.state = State.Idle;
@@ -249,9 +235,6 @@ public class AutoPilot extends Module {
         this.columnBlocked = false;
     }
 
-    /**
-     * Keeps the required travel modules enabled.
-     */
     private void setup() {
         Navigation navigation = this.navigation();
         if (navigation != null && !navigation.isActive()) {
@@ -324,9 +307,6 @@ public class AutoPilot extends Module {
 
 
 
-    /**
-     * Captures the current route and destination from Navigation.
-     */
     private void load() {
         Navigation navigation = this.navigation();
         if (navigation == null) return;
@@ -340,11 +320,6 @@ public class AutoPilot extends Module {
         this.target = navigation.point().toImmutable();
     }
 
-    /**
-     * Updates the route from the current position.
-     *
-     * @return true when route progress is available
-     */
     private boolean refresh() {
         Navigation navigation = this.navigation();
         if (navigation == null) return false;
@@ -364,11 +339,6 @@ public class AutoPilot extends Module {
         return true;
     }
 
-    /**
-     * Finds the closest remaining route leg.
-     *
-     * @return route leg index, or -1 when unavailable
-     */
     private int progress() {
         List<Leg> legs = this.route.legs();
 
@@ -399,7 +369,6 @@ public class AutoPilot extends Module {
     /**
      * Checks whether the player is aligned with a highway leg.
      *
-     * @param leg highway route leg
      * @return true when at highway level and within proximity
      */
     private boolean aligned(Route.Leg leg) {
@@ -417,8 +386,6 @@ public class AutoPilot extends Module {
     /**
      * Projects a point onto the nearest position of a route leg.
      *
-     * @param leg route leg
-     * @param point point to project
      * @return closest point on the leg
      */
     private Vec2f project(Route.Leg leg, Vec2f point) {
@@ -426,12 +393,6 @@ public class AutoPilot extends Module {
         return segment.point(segment.projection(point));
     }
 
-    /**
-     * Finds a nearby point for entering a highway.
-     *
-     * @param leg highway route leg
-     * @return closest point shifted forward along the leg
-     */
     private Vec2f entry(Route.Leg leg) {
         Vec2f position = Player.position();
         Segment segment = new Segment(leg.start(), leg.end());
@@ -443,7 +404,6 @@ public class AutoPilot extends Module {
     /**
      * Converts a route point to a block position at highway level.
      *
-     * @param point route point
      * @return block position at highway level
      */
     private BlockPos waypoint(Vec2f point) {
@@ -455,9 +415,6 @@ public class AutoPilot extends Module {
 
 
 
-    /**
-     * Selects the closest route leg and resumes travel.
-     */
     private void idle() {
         if (this.mc.player.isOnGround() &&
             this.close(this.target, approach)) {
@@ -472,9 +429,6 @@ public class AutoPilot extends Module {
         if (!this.access()) this.begin();
     }
 
-    /**
-     * Starts flight directly or searches for clear space.
-     */
     private void begin() {
         if (this.mc.player.isGliding()) {
             this.launch();
@@ -529,9 +483,6 @@ public class AutoPilot extends Module {
         }
     }
 
-    /**
-     * Clears temporary supports before starting launch flight.
-     */
     private void prepare() {
         if (this.blocks == null && !this.settled()) {
             return;
@@ -543,11 +494,6 @@ public class AutoPilot extends Module {
         }
     }
 
-    /**
-     * Waits for the launch position before collecting blocks.
-     *
-     * @return true when the support column is ready
-     */
     private boolean settled() {
         if (!this.close(this.point, 1.5)) {
             this.goal = null;
@@ -563,9 +509,6 @@ public class AutoPilot extends Module {
         return true;
     }
 
-    /**
-     * Resumes normal route flight after finding clear space.
-     */
     private void launch() {
         this.abort();
 
@@ -578,9 +521,6 @@ public class AutoPilot extends Module {
 
 
 
-    /**
-     * Follows standard route legs with Baritone Elytra.
-     */
     private void flight() {
         if (this.goal == null || this.resume()) {
             this.follow();
@@ -648,9 +588,6 @@ public class AutoPilot extends Module {
         }
     }
 
-    /**
-     * Finishes the route with normal Baritone pathing.
-     */
     private void finish() {
         if (this.state != State.Final) {
             if (!this.mc.player.isOnGround() || this.done()) {
@@ -754,9 +691,6 @@ public class AutoPilot extends Module {
         }
     }
 
-    /**
-     * Moves onto the next highway leg before bouncing.
-     */
     private void entry() {
         if (this.goal != null) {
             if (this.pathing()) return;
@@ -791,9 +725,6 @@ public class AutoPilot extends Module {
         this.start(next);
     }
 
-    /**
-     * Keeps flight active during the upward landing climb.
-     */
     private void glide() {
         if (this.blocks != null ||
             !Elytra.equipped() ||
@@ -839,9 +770,6 @@ public class AutoPilot extends Module {
         this.state = State.Highway;
     }
 
-    /**
-     * Follows the current highway leg to its endpoint.
-     */
     private void highway() {
         List<Leg> legs = this.route.legs();
         if (this.leg < 0 || this.leg >= legs.size()) {
@@ -866,9 +794,6 @@ public class AutoPilot extends Module {
         if (--this.timer <= 0) this.cross();
     }
 
-    /**
-     * Advances after reaching a highway endpoint.
-     */
     private void cross() {
         this.halted = false;
 
@@ -898,13 +823,6 @@ public class AutoPilot extends Module {
         this.state = State.Exit;
     }
 
-    /**
-     * Prepares the transition after reaching a highway endpoint.
-     *
-     * @param road current highway leg
-     * @param exiting whether the route leaves the highway next
-     * @return true when the player can stop for the transition
-     */
     private boolean arrive(Route.Leg road, boolean exiting) {
         if (!this.aligned(road) ||
             !this.close(road.end(), proximity)) {
@@ -934,12 +852,6 @@ public class AutoPilot extends Module {
         return true;
     }
 
-    /**
-     * Waits before searching again for a highway exit.
-     *
-     * @param exiting whether the route leaves the highway next
-     * @return true while the retry delay is still active
-     */
     private boolean delay(boolean exiting) {
         return exiting && this.point == null
             && this.timer > 0 && --this.timer > 0;
@@ -981,9 +893,6 @@ public class AutoPilot extends Module {
         this.state = State.Drop;
     }
 
-    /**
-     * Clears the selected exit column before resuming flight.
-     */
     private void drop() {
         if (this.point == null) return;
 
@@ -1017,12 +926,6 @@ public class AutoPilot extends Module {
 
 
 
-    /**
-     * Finds the nearest clear space below the player.
-     *
-     * @param start whether the first box starts from player
-     * @return closest point in a clear space, or null
-     */
     private BlockPos space(boolean start) {
         BlockPos origin = this.mc.player.getBlockPos();
 
@@ -1058,7 +961,6 @@ public class AutoPilot extends Module {
     /**
      * Searches one horizontal ring for the nearest clear space.
      *
-     * @param origin player position
      * @param range horizontal search range
      * @param base initial vertical center offset
      * @param limit lowest vertical search offset
@@ -1090,17 +992,6 @@ public class AutoPilot extends Module {
         return best;
     }
 
-    /**
-     * Searches the vertical positions at a horizontal offset.
-     *
-     * @param origin player position
-     * @param px horizontal X offset
-     * @param pz horizontal Z offset
-     * @param base initial vertical offset
-     * @param limit vertical search distance
-     * @param distance nearest distance already found
-     * @return closest clear position, or null
-     */
     private BlockPos vertical(BlockPos origin, int px,
         int pz, int base, int limit, double distance) {
 
@@ -1123,13 +1014,6 @@ public class AutoPilot extends Module {
         return best;
     }
 
-    /**
-     * Finds the closest point inside a tested box.
-     *
-     * @param center center of the tested box
-     * @param origin reference position
-     * @return box point closest to the reference position
-     */
     private BlockPos closest(BlockPos center, BlockPos origin) {
         int minx = center.getX() - width / 2;
         int miny = center.getY() - height / 2;
@@ -1149,7 +1033,6 @@ public class AutoPilot extends Module {
     /**
      * Adjusts a clear space point for launch or exit use.
      *
-     * @param point clear space point
      * @param start whether selecting a launch point
      * @return adjusted point to traverse to
      */
@@ -1195,12 +1078,6 @@ public class AutoPilot extends Module {
     /**
      * Checks whether a space contains only air or flowing lava.
      *
-     * @param minx minimum box X
-     * @param miny minimum box Y
-     * @param minz minimum box Z
-     * @param maxx maximum box X
-     * @param maxy maximum box Y
-     * @param maxz maximum box Z
      * @return true when no solid block occupies the space
      */
     private boolean empty(int minx, int miny,
@@ -1223,10 +1100,6 @@ public class AutoPilot extends Module {
     /**
      * Checks whether all chunks in an area are loaded.
      *
-     * @param minx minimum box X
-     * @param minz minimum box Z
-     * @param maxx maximum box X
-     * @param maxz maximum box Z
      * @return true when every required chunk is loaded
      */
     private boolean loaded(int minx, int minz, int maxx, int maxz) {
@@ -1242,13 +1115,6 @@ public class AutoPilot extends Module {
 
 
 
-    /**
-     * Collects minable blocks in a selected vertical column.
-     *
-     * @param point upper position of the column
-     * @param bottom lowest included block level
-     * @return column blocks ordered from highest to lowest
-     */
     private List<BlockPos> column(BlockPos point, int bottom) {
         List<BlockPos> blocks = new ArrayList<>();
 
@@ -1272,11 +1138,6 @@ public class AutoPilot extends Module {
         return blocks;
     }
 
-    /**
-     * Moves toward and mines the highest remaining block.
-     *
-     * @return true when no blocks remain
-     */
     private boolean excavate() {
         if (this.blocks == null) return false;
 
@@ -1306,9 +1167,6 @@ public class AutoPilot extends Module {
         return false;
     }
 
-    /**
-     * Fills nearby lava source blocks with netherrack.
-     */
     private void fill() {
         int slot = this.netherrack();
         if (slot < 0) return;
@@ -1340,11 +1198,6 @@ public class AutoPilot extends Module {
         }
     }
 
-    /**
-     * Collects the blocks directly below the player.
-     *
-     * @return one to four fixed platform blocks
-     */
     private List<BlockPos> platform() {
         Box box = this.mc.player.getBoundingBox();
 
@@ -1365,11 +1218,6 @@ public class AutoPilot extends Module {
         return blocks;
     }
 
-    /**
-     * Places the saved landing platform.
-     *
-     * @return true when every required block is present
-     */
     private boolean support() {
         if (this.blocks == null || this.blocks.isEmpty()) {
             return false;
@@ -1383,12 +1231,6 @@ public class AutoPilot extends Module {
         return true;
     }
 
-    /**
-     * Places netherrack at a specific position.
-     *
-     * @param pos target block position
-     * @return true when the placement packet was sent
-     */
     private boolean place(BlockPos pos) {
         int slot = this.netherrack();
 
@@ -1398,13 +1240,6 @@ public class AutoPilot extends Module {
 
 
 
-    /**
-     * Starts Baritone elytra pathing toward a destination.
-     *
-     * @param pos destination position
-     * @param exact whether Y must be part of the goal
-     * @return true when elytra pathing was started
-     */
     private boolean fly(BlockPos pos, boolean exact) {
         if (!Baritone.loaded() || !this.flight.normal()) {
             return false;
@@ -1427,12 +1262,6 @@ public class AutoPilot extends Module {
         }
     }
 
-    /**
-     * Starts normal Baritone pathing toward a destination.
-     *
-     * @param pos destination position
-     * @param exact whether Y must be part of the goal
-     */
     private void walk(BlockPos pos, boolean exact) {
         if (this.goal != null && this.goal.equals(pos) &&
             this.pathing()) {
@@ -1446,17 +1275,11 @@ public class AutoPilot extends Module {
         this.join = false;
     }
 
-    /**
-     * Cancels controlled pathing and releases movement inputs.
-     */
     private void abort() {
         this.cancel();
         this.release();
     }
 
-    /**
-     * Cancels active Baritone movement.
-     */
     private void cancel() {
         Baritone.stop();
         this.goal = null;
@@ -1485,11 +1308,6 @@ public class AutoPilot extends Module {
 
 
 
-    /**
-     * Moves toward the center of a block.
-     *
-     * @param pos block position to move toward
-     */
     private void toward(BlockPos pos) {
         this.release();
 
@@ -1502,9 +1320,6 @@ public class AutoPilot extends Module {
         this.mc.options.forwardKey.setPressed(true);
     }
 
-    /**
-     * Holds the player still during a highway transition.
-     */
     private void stop() {
         if (this.halted) return;
         this.halted = true;
@@ -1522,11 +1337,6 @@ public class AutoPilot extends Module {
         this.mc.player.setPitch(0.0F);
     }
 
-    /**
-     * Rotates the player toward a highway point.
-     *
-     * @param point highway target
-     */
     private void rotate(Vec2f point) {
         double px = point.x - this.mc.player.getX();
         double pz = point.y - this.mc.player.getZ();
@@ -1535,21 +1345,11 @@ public class AutoPilot extends Module {
         Player.rotate((float) Math.toDegrees(yaw));
     }
 
-    /**
-     * Requests a firework for the current flight.
-     *
-     * @return true when the request was accepted
-     */
     private boolean rocket() {
         return this.mc.interactionManager != null
             && this.flight.request(Elytra::firework);
     }
 
-    /**
-     * Sets Bounce Fly to the requested state.
-     *
-     * @param active requested module state
-     */
     private void bounce(boolean active) {
         BounceFly bounce = Modules.get().get(BounceFly.class);
         if (bounce != null && bounce.isActive() != active) {
@@ -1557,9 +1357,6 @@ public class AutoPilot extends Module {
         }
     }
 
-    /**
-     * Releases forced movement inputs.
-     */
     private void release() {
         if (this.mc.options == null) return;
 
@@ -1573,58 +1370,27 @@ public class AutoPilot extends Module {
 
 
 
-    /**
-     * Returns the Navigation module.
-     *
-     * @return Navigation module, or null when unavailable
-     */
     private Navigation navigation() {
         return Modules.get().get(Navigation.class);
     }
 
-    /**
-     * Finds netherrack in the hotbar.
-     *
-     * @return hotbar slot, or -1 when unavailable
-     */
     private int netherrack() {
         return this.mc.player == null ? -1
             : Hotbar.find(Items.NETHERRACK);
     }
 
-    /**
-     * Checks horizontal proximity to a route point.
-     *
-     * @param point route point
-     * @param radius maximum distance
-     * @return true when the point is within range
-     */
     private boolean close(Vec2f point, double radius) {
         double px = point.x - this.mc.player.getX();
         double pz = point.y - this.mc.player.getZ();
         return px * px + pz * pz <= radius * radius;
     }
 
-    /**
-     * Checks horizontal proximity to a block position.
-     *
-     * @param pos block position
-     * @param radius maximum distance
-     * @return true when the position is within range
-     */
     private boolean close(BlockPos pos, double radius) {
         double px = pos.getX() + 0.5 - this.mc.player.getX();
         double pz = pos.getZ() + 0.5 - this.mc.player.getZ();
         return px * px + pz * pz <= radius * radius;
     }
 
-    /**
-     * Checks the exact proximity to a block position.
-     *
-     * @param pos block position
-     * @param radius maximum distance
-     * @return true when the position is within range
-     */
     private boolean reach(BlockPos pos, double radius) {
         double px = pos.getX() + 0.5 - this.mc.player.getX();
         double py = pos.getY() - this.mc.player.getY();
@@ -1655,11 +1421,6 @@ public class AutoPilot extends Module {
         return !state.getCollisionShape(this.mc.world, pos).isEmpty();
     }
 
-    /**
-     * Checks whether the required client state is available.
-     *
-     * @return true when ready to run the module
-     */
     private boolean valid() {
         return Client.ready() && Client.nether();
     }

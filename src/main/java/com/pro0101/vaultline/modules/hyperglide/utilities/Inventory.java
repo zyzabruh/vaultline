@@ -21,11 +21,6 @@ public final class Inventory {
 
     private Inventory() {}
 
-    /**
-     * Checks whether the normal player inventory is active.
-     *
-     * @return true when player inventory slots can be used
-     */
     public static boolean ready() {
         return client.player.currentScreenHandler
             == client.player.playerScreenHandler;
@@ -34,18 +29,12 @@ public final class Inventory {
     /**
      * Returns an item stack from a player screen slot.
      *
-     * @param slot screen slot index
      * @return item stack stored in the slot
      */
     public static ItemStack stack(int slot) {
         return handler().getSlot(slot).getStack();
     }
 
-    /**
-     * Returns the current cursor stack.
-     *
-     * @return cursor item stack
-     */
     public static ItemStack cursor() {
         return handler().getCursorStack();
     }
@@ -53,19 +42,11 @@ public final class Inventory {
     /**
      * Converts an inventory slot to the matching screen slot.
      *
-     * @param slot player inventory slot
-     * @return matching player screen slot
      */
     public static int slot(int slot) {
         return slot < 9 ? slot + 36 : slot;
     }
 
-    /**
-     * Finds an item in the player inventory.
-     *
-     * @param item item to find
-     * @return matching player inventory slot, or -1 when unavailable
-     */
     public static int find(Item item) {
         return find(stack -> stack.isOf(item));
     }
@@ -73,7 +54,6 @@ public final class Inventory {
     /**
      * Finds the first matching stack in the player inventory.
      *
-     * @param predicate stack condition
      * @return matching player inventory slot, or -1 when unavailable
      */
     public static int find(Predicate<ItemStack> predicate) {
@@ -85,7 +65,6 @@ public final class Inventory {
      *
      * @param first first player inventory slot
      * @param last last player inventory slot
-     * @param predicate stack condition
      * @return matching player inventory slot, or -1 when unavailable
      */
     public static int find(int first, int last, Predicate<ItemStack> predicate) {
@@ -102,8 +81,6 @@ public final class Inventory {
     /**
      * Finds the highest scoring stack in the player inventory.
      *
-     * @param predicate stack condition
-     * @param score stack score
      * @return matching player inventory slot, or -1 when unavailable
      */
     public static int best(
@@ -127,12 +104,6 @@ public final class Inventory {
         return slot;
     }
 
-    /**
-     * Finds the first matching player screen slot.
-     *
-     * @param predicate stack condition
-     * @return matching screen slot, or -1 when unavailable
-     */
     public static int search(Predicate<ItemStack> predicate) {
         for (int slot = first; slot <= last; slot++) {
             if (predicate.test(stack(slot))) return slot;
@@ -140,13 +111,6 @@ public final class Inventory {
         return -1;
     }
 
-    /**
-     * Finds the highest scoring player screen stack.
-     *
-     * @param predicate stack condition
-     * @param score stack score
-     * @return matching screen slot, or -1 when unavailable
-     */
     public static int search(
         Predicate<ItemStack> predicate,
         ToIntFunction<ItemStack> score) {
@@ -168,22 +132,10 @@ public final class Inventory {
         return slot;
     }
 
-    /**
-     * Counts an item across the player inventory.
-     *
-     * @param item item to count
-     * @return total item count
-     */
     public static int count(Item item) {
         return count(stack -> stack.isOf(item));
     }
 
-    /**
-     * Counts units from matching inventory stacks.
-     *
-     * @param predicate stack condition
-     * @return total matching item count
-     */
     public static int count(Predicate<ItemStack> predicate) {
         int count = 0;
 
@@ -198,12 +150,6 @@ public final class Inventory {
         return count;
     }
 
-    /**
-     * Counts matching stacks in the player inventory.
-     *
-     * @param predicate stack condition
-     * @return number of matching stacks
-     */
     public static int stacks(Predicate<ItemStack> predicate) {
         int count = 0;
 
@@ -214,11 +160,6 @@ public final class Inventory {
         return count;
     }
 
-    /**
-     * Finds the first empty player screen slot.
-     *
-     * @return empty screen slot, or -1 when unavailable
-     */
     public static int empty() {
         return search(ItemStack::isEmpty);
     }
@@ -236,12 +177,6 @@ public final class Inventory {
         return -1;
     }
 
-    /**
-     * Finds the first two matching player screen slots.
-     *
-     * @param predicate stack condition
-     * @return matching screen slots, or null when fewer than two exist
-     */
     public static int[] pair(Predicate<ItemStack> predicate) {
         int found = -1;
 
@@ -258,13 +193,6 @@ public final class Inventory {
         return null;
     }
 
-    /**
-     * Performs an action on a player inventory slot.
-     *
-     * @param slot screen slot index
-     * @param button mouse button or action data
-     * @param action slot action type
-     */
     public static void click(int slot, int button, SlotActionType action) {
         client.interactionManager.clickSlot(
             handler().syncId, slot, button, action, client.player
@@ -274,17 +202,11 @@ public final class Inventory {
     /**
      * Picks up or places the stack in a player screen slot.
      *
-     * @param slot screen slot index
      */
     public static void pick(int slot) {
         click(slot, 0, SlotActionType.PICKUP);
     }
 
-    /**
-     * Quick-moves a stack between inventory sections.
-     *
-     * @param slot screen slot index
-     */
     public static void move(int slot) {
         click(slot, 0, SlotActionType.QUICK_MOVE);
     }
@@ -292,8 +214,6 @@ public final class Inventory {
     /**
      * Swaps a player screen slot with a hotbar slot.
      *
-     * @param slot screen slot index
-     * @param hotbar hotbar slot
      */
     public static void swap(int slot, int hotbar) {
         click(slot, hotbar, SlotActionType.SWAP);
@@ -322,21 +242,10 @@ public final class Inventory {
         );
     }
 
-    /**
-     * Returns an item stack from the player inventory.
-     *
-     * @param slot player inventory slot
-     * @return item stack stored in the slot
-     */
     private static ItemStack item(int slot) {
         return client.player.getInventory().getStack(slot);
     }
 
-    /**
-     * Returns the normal player inventory handler.
-     *
-     * @return player inventory screen handler
-     */
     private static PlayerScreenHandler handler() {
         return client.player.playerScreenHandler;
     }

@@ -58,25 +58,16 @@ public class Overview extends Module {
         );
     }
 
-    /**
-     * Clears cached content and resets rendering state.
-     */
     @Override
     public void onActivate() {
         this.reset();
     }
 
-    /**
-     * Clears cached content and resets rendering state.
-     */
     @Override
     public void onDeactivate() {
         this.reset();
     }
 
-    /**
-     * Clears cached content and rendering state.
-     */
     private void reset() {
         this.cache.clear();
         this.drawing = false;
@@ -85,10 +76,6 @@ public class Overview extends Module {
     /**
      * Renders the most common item over a shulker box or bundle.
      *
-     * @param context draw context
-     * @param stack container item stack
-     * @param px item X coordinate
-     * @param py item Y coordinate
      */
     public void render(DrawContext context, ItemStack stack, int px, int py) {
         if (!this.isActive() || this.drawing || stack.isEmpty()) {
@@ -117,7 +104,6 @@ public class Overview extends Module {
     /**
      * Returns the dominant content icon for a container stack.
      *
-     * @param stack container item stack
      * @return dominant content item, or an empty stack when unavailable
      */
     private ItemStack icon(ItemStack stack) {
@@ -201,11 +187,6 @@ public class Overview extends Module {
         private int slots;
         private int items;
 
-        /**
-         * Creates an item occurrence counter.
-         *
-         * @param stack representative item stack
-         */
         private Count(ItemStack stack) {
             this.stack = stack;
         }
@@ -218,12 +199,6 @@ public class Overview extends Module {
         private final Object data;
         private final ItemStack stack;
 
-        /**
-         * Creates a cached content result.
-         *
-         * @param data source content data
-         * @param stack dominant item stack
-         */
         private Cached(Object data, ItemStack stack) {
             this.data = data;
             this.stack = stack;

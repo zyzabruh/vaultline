@@ -33,20 +33,10 @@ public final class Flight {
     private Flight() {}
 
 
-    /**
-     * Returns the shared flight controller.
-     *
-     * @return flight controller
-     */
     public static Flight get() {
         return instance;
     }
 
-    /**
-     * Enables or disables spoofing.
-     *
-     * @param enabled requested spoofing state
-     */
     public void enabled(boolean enabled) {
         if (this.enabled == enabled) return;
 
@@ -54,48 +44,23 @@ public final class Flight {
         if (!enabled) this.clear();
     }
 
-    /**
-     * Checks whether spoofing may be used.
-     *
-     * @return true when spoofing may be used
-     */
     public boolean spoof() {
         return this.enabled && !Baritone.elytra()
             && !this.liquid && !Player.liquid();
     }
 
-    /**
-     * Checks whether spoofing is waiting to take control.
-     *
-     * @return true while spoofing is waiting to become active
-     */
     public boolean standby() {
         return this.spoof() && !this.active;
     }
 
-    /**
-     * Reports when required equipment cannot be prepared.
-     *
-     * @return true when spoofing preparation cannot complete
-     */
     public boolean blocked() {
         return this.spoof() && !this.prepare();
     }
 
-    /**
-     * Checks whether the flight mode has usable equipment.
-     *
-     * @return true when normal or spoofed flight is available
-     */
     public boolean available() {
         return this.spoof() ? this.ready() : Elytra.equipped();
     }
 
-    /**
-     * Checks whether spoofing has the equipment it needs.
-     *
-     * @return true when spoofing can start or continue
-     */
     public boolean ready() {
         if (!this.spoof()) return false;
 
@@ -111,31 +76,16 @@ public final class Flight {
         return Hotbar.find(Elytra::chestplate) >= 0;
     }
 
-    /**
-     * Checks whether spoofing currently owns the glide.
-     *
-     * @return true while spoofed flight is active
-     */
     public boolean active() {
         return this.spoof() && this.active;
     }
 
-    /**
-     * Checks whether spoof equipment sounds should be muted.
-     *
-     * @return true while spoof equipment is being managed
-     */
     public boolean mute() {
         return this.spoof() && (this.active || this.prepared());
     }
 
 
 
-    /**
-     * Converts an existing elytra glide into spoofing.
-     *
-     * @return true when the chestplate transaction starts
-     */
     public boolean activate() {
         if (!this.spoof()) return false;
         if (this.active) return true;
@@ -155,11 +105,6 @@ public final class Flight {
         return true;
     }
 
-    /**
-     * Starts spoofing while the player is airborne.
-     *
-     * @return true when the flight start was accepted
-     */
     public boolean start() {
         if (!this.spoof()) return false;
         if (this.active) return true;
@@ -179,9 +124,6 @@ public final class Flight {
         return false;
     }
 
-    /**
-     * Keeps spoofing synchronized with the current player state.
-     */
     public void tick() {
         this.liquid();
 
@@ -209,9 +151,6 @@ public final class Flight {
         }
     }
 
-    /**
-     * Restores the chestplate after a temporary elytra restart.
-     */
     public void finish() {
         if (!this.restore || !Client.ready() ||
             !this.client.player.isGliding()) {
@@ -229,11 +168,6 @@ public final class Flight {
         this.restore = false;
     }
 
-    /**
-     * Restores elytra equipment for normal flight.
-     *
-     * @return true when an elytra is equipped
-     */
     public boolean normal() {
         if (!Client.interaction() || !Inventory.ready()) {
             return Elytra.equipped();
@@ -258,9 +192,6 @@ public final class Flight {
         return true;
     }
 
-    /**
-     * Keeps normal elytra active while leaving liquid.
-     */
     private void liquid() {
         if (!Client.ready()) {
             this.dry = 0;
@@ -301,7 +232,6 @@ public final class Flight {
     /**
      * Runs an action now or remembers it for later.
      *
-     * @param action action to run
      * @return true when the action ran or was remembered
      */
     public boolean request(BooleanSupplier action) {
@@ -312,11 +242,6 @@ public final class Flight {
         return true;
     }
 
-    /**
-     * Remembers a firework request for the next boost.
-     *
-     * @return true when the request was accepted
-     */
     public boolean request() {
         return this.request(Elytra::firework);
     }
@@ -324,8 +249,6 @@ public final class Flight {
     /**
      * Keeps the local gliding flag when the server clears it.
      *
-     * @param flags incoming entity flags
-     * @return adjusted entity flags
      */
     public byte sync(byte flags) {
         boolean flying = (flags & (1 << gliding)) != 0;
@@ -342,11 +265,6 @@ public final class Flight {
 
 
 
-    /**
-     * Equips a chestplate before spoofing begins.
-     *
-     * @return true when the chestplate and elytra are ready
-     */
     public boolean prepare() {
         if (!this.spoof()) return false;
 
@@ -381,11 +299,6 @@ public final class Flight {
         return Elytra.chestplate() && Elytra.hotbar() >= 0;
     }
 
-    /**
-     * Performs one temporary elytra restart.
-     *
-     * @return true when the restart packet was sent
-     */
     private boolean begin() {
         if (!this.prepared() || !this.continuing()) {
             return false;
@@ -425,17 +338,11 @@ public final class Flight {
         }
     }
 
-    /**
-     * Sends the neutral input before an inventory action.
-     */
     private void inventory() {
         this.sprint();
         Packets.input(Packets.state(false, false, false));
     }
 
-    /**
-     * Keeps sprint disabled while spoofing controls flight.
-     */
     private void sprint() {
         if (this.client.player.isSprinting()) {
             Packets.command(ClientCommandC2SPacket.Mode.STOP_SPRINTING);
@@ -452,7 +359,6 @@ public final class Flight {
     /**
      * Sends the jump state used around the takeoff packet.
      *
-     * @param pressed requested jump state
      */
     private void jump(boolean pressed) {
         Packets.sync(Packets.state(pressed, false));
@@ -460,11 +366,6 @@ public final class Flight {
 
 
 
-    /**
-     * Checks whether flight conditions still allow gliding.
-     *
-     * @return true while flight may continue
-     */
     private boolean continuing() {
         return Client.ready() && !Player.liquid()
             && !this.client.player.isOnGround()
@@ -473,9 +374,6 @@ public final class Flight {
             && !this.client.player.hasStatusEffect(StatusEffects.LEVITATION);
     }
 
-    /**
-     * Ends spoofing and restores the chestplate when necessary.
-     */
     private void clear() {
         if (this.restore && Client.ready() &&
             Elytra.equipped() && this.slot >= 0) {
@@ -487,9 +385,6 @@ public final class Flight {
         this.reset();
     }
 
-    /**
-     * Clears the current state without changing equipment.
-     */
     private void reset() {
         this.active = false;
         this.restart = false;

@@ -18,7 +18,6 @@ import java.util.Set;
  */
 public final class ItemGrouping {
     public enum Mode {
-        /** One group per exact item. */
         Exact,
         /** Items of the same vanilla family (planks, logs, wool, stairs, swords, ores, ...). */
         Family,
@@ -160,7 +159,6 @@ public final class ItemGrouping {
         "quartz", "amethyst"
     );
 
-    /** Items that hold a material under another name. */
     private static final Map<String, String> MATERIAL_ALIASES = Map.of(
         "lapis_lazuli", "lapis",
         "charcoal", "coal",

@@ -5,11 +5,9 @@ package com.pro0101.vaultline.modules.stashorganizer;
  */
 public record StepResult(Kind kind, int target) {
     public enum Kind {
-        /** Stay on this step: it needs more ticks. */
         RUNNING,
         /** The step is complete: move to the next one. */
         DONE,
-        /** The step cannot complete; the script stops. */
         FAILED,
         /** Continue at the given step, for the loops (take another stack, reopen the box, retry). */
         JUMP

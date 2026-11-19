@@ -41,6 +41,5 @@ public interface StashReport {
     /** Records the custom name of a shulker box found in the stash. */
     void renamed(String name);
 
-    /** Writes the report once; later calls are ignored. */
     void finish(String outcome);
 }

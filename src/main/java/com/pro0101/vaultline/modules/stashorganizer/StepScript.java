@@ -20,7 +20,6 @@ public final class StepScript {
         this.steps = steps.clone();
     }
 
-    /** Runs the current step and applies its result. */
     public void run() {
         if (failed || index < 0 || index >= steps.length) return;
 

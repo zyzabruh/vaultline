@@ -41,32 +41,16 @@ public final class Highways {
         Special
     }
 
-    /**
-     * Returns the complete known highway network.
-     *
-     * @return immutable highway road list
-     */
     public static List<Road> roads() {
         return roads;
     }
 
-    /**
-     * Returns the highway network with segments removed.
-     *
-     * @param radius radius to remove from the network
-     * @return modified highway road list
-     */
     public static List<Road> roads(float radius) {
         if (radius <= 0.0F) return roads;
         return cut(roads, radius);
     }
 
 
-    /**
-     * Builds the known nether highway network.
-     *
-     * @return generated highway road list
-     */
     private static List<Road> create() {
         List<Road> roads = new ArrayList<>();
         axis(roads);
@@ -78,11 +62,6 @@ public final class Highways {
         return List.copyOf(roads);
     }
 
-    /**
-     * Adds the four cardinal axis highways.
-     *
-     * @param roads destination road list
-     */
     private static void axis(List<Road> roads) {
         Vec2f center = Vec2f.ZERO;
 
@@ -103,11 +82,6 @@ public final class Highways {
         )));
     }
 
-    /**
-     * Adds the four diagonal highways.
-     *
-     * @param roads destination road list
-     */
     private static void diagonal(List<Road> roads) {
         Vec2f center = Vec2f.ZERO;
 
@@ -132,11 +106,6 @@ public final class Highways {
         )));
     }
 
-    /**
-     * Adds every configured square ring road.
-     *
-     * @param roads destination road list
-     */
     private static void square(List<Road> roads) {
         for (float radius : squares) {
             Vec2f nw = new Vec2f(-radius, -radius);
@@ -152,11 +121,6 @@ public final class Highways {
         }
     }
 
-    /**
-     * Adds every configured diamond ring road.
-     *
-     * @param roads destination road list
-     */
     private static void diamond(List<Road> roads) {
         for (float radius : diamonds) {
             Vec2f north = new Vec2f(0.0F, -radius);
@@ -175,11 +139,6 @@ public final class Highways {
         }
     }
 
-    /**
-     * Adds the 50k highway grid around spawn.
-     *
-     * @param roads destination road list
-     */
     private static void grid(List<Road> roads) {
         for (float offset = spacing; offset <= grid; offset += spacing) {
             grid(roads, offset);
@@ -190,8 +149,6 @@ public final class Highways {
     /**
      * Adds one horizontal and vertical grid road at an offset.
      *
-     * @param roads destination road list
-     * @param offset grid coordinate offset
      */
     private static void grid(List<Road> roads, float offset) {
         List<Segment> sx = segments(offset, true);
@@ -209,7 +166,6 @@ public final class Highways {
     /**
      * Adds the 50k highway extensions out to the 125k ring road.
      *
-     * @param roads destination road list
      */
     private static void special(List<Road> roads) {
         float inner = 50000.0F;
@@ -239,7 +195,6 @@ public final class Highways {
     /**
      * Builds grid roads excluding sections covered by any ring road.
      *
-     * @param offset grid coordinate offset
      * @param cx true for a constant X road, false for constant Z
      * @return non-overlapping grid road segments
      */
@@ -268,9 +223,7 @@ public final class Highways {
     /**
      * Removes segment parts that fall inside the given radius.
      *
-     * @param roads roads to modify
      * @param radius radius around the origin
-     * @return modified road list
      */
     private static List<Road> cut(List<Road> roads, float radius) {
         List<Road> result = new ArrayList<>();
@@ -290,12 +243,6 @@ public final class Highways {
         return List.copyOf(result);
     }
 
-    /**
-     * Formats a ring road radius.
-     *
-     * @param radius ring road radius
-     * @return formatted radius label
-     */
     private static String label(float radius) {
         if (radius == border) return "World Border";
         if (radius == 1568852.0F) return "Farlands";
@@ -336,9 +283,6 @@ public final class Highways {
     /**
      * Represents a highway composed of one or more segments.
      *
-     * @param name highway name
-     * @param kind highway type
-     * @param segments highway segments
      */
     public record Road(String name, Kind kind, List<Segment> segments) {
         public Road {

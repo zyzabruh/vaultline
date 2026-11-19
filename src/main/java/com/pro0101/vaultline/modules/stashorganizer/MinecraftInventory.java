@@ -11,7 +11,6 @@ import net.minecraft.registry.tag.ItemTags;
 import java.util.HashMap;
 import java.util.Map;
 
-/** The player inventory of the running client. */
 public final class MinecraftInventory implements InventoryTools {
     /** Resolved on use: a test builds these services without loading the client. */
     private MinecraftClient mc() {

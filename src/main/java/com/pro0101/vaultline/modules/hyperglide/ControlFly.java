@@ -195,11 +195,6 @@ public class ControlFly extends Module {
     }
 
 
-    /**
-     * Updates boost, takeoff and active flight control.
-     *
-     * @param event pre-tick event
-     */
     @EventHandler
     private void tick(TickEvent.Pre event) {
         if (!Client.ready() || ElytraMace.isDiving()) return;
@@ -224,11 +219,6 @@ public class ControlFly extends Module {
         this.control(input);
     }
 
-    /**
-     * Stops idle flight movement or limits the speed.
-     *
-     * @param event player movement event
-     */
     @EventHandler
     private void move(PlayerMoveEvent event) {
         if (!Client.ready() || ElytraMace.isDiving() ||
@@ -251,11 +241,6 @@ public class ControlFly extends Module {
         this.limit(event, input.normalize());
     }
 
-    /**
-     * Tracks when a firework is used.
-     *
-     * @param event outgoing packet event
-     */
     @EventHandler
     private void packet(PacketEvent.Send event) {
         if (!Client.ready() || this.boost.automatic || !this.mc.player.isGliding() ||
@@ -272,20 +257,10 @@ public class ControlFly extends Module {
 
 
 
-    /**
-     * Checks whether automatic takeoff is active.
-     *
-     * @return true while takeoff input is active
-     */
     public boolean deploying() {
         return this.isActive() && this.input.active();
     }
 
-    /**
-     * Returns whether takeoff is holding jump.
-     *
-     * @return forced jump state
-     */
     public boolean jumping() {
         return this.input.pressed();
     }
@@ -316,9 +291,6 @@ public class ControlFly extends Module {
         this.turn.pitch = 0.0F;
     }
 
-    /**
-     * Clears transient boost, flight and rotation state.
-     */
     private void clear() {
         this.boost.expiry = 0;
         this.boost.endtime = 0;
@@ -341,11 +313,6 @@ public class ControlFly extends Module {
 
 
 
-    /**
-     * Processes movement, steering, pitch control and rocket use.
-     *
-     * @param input current movement direction
-     */
     private void control(Vec3d input) {
         if (input.lengthSquared() < epsilon) {
             this.rest();
@@ -382,7 +349,6 @@ public class ControlFly extends Module {
     /**
      * Tracks steering changes and marks sharp turns for braking.
      *
-     * @param direction requested steering direction
      */
     private void turn(Vec3d direction) {
         if (this.motion.dir.lengthSquared() >= epsilon &&
@@ -409,21 +375,10 @@ public class ControlFly extends Module {
         this.rocket(this.motion.yaw, this.motion.pitch);
     }
 
-    /**
-     * Stops movement after idle input is confirmed.
-     *
-     * @param event player movement event
-     */
     private void stop(PlayerMoveEvent event) {
         Player.velocity(event, Vec3d.ZERO);
     }
 
-    /**
-     * Limits horizontal movement to the configured maximum.
-     *
-     * @param event player movement event
-     * @param dir normalized flight direction
-     */
     private void limit(PlayerMoveEvent event, Vec3d dir) {
         double length = event.movement.horizontalLength();
         Vec3d velocity = new Vec3d(0.0, event.movement.y, 0.0);
@@ -444,15 +399,6 @@ public class ControlFly extends Module {
         }
     }
 
-    /**
-     * Controls horizontal movement and ceiling collision acceleration.
-     *
-     * @param motion current movement vector
-     * @param dir normalized flight direction
-     * @param length current horizontal magnitude
-     * @param ceiling whether the player is colliding with a ceiling
-     * @return adjusted horizontal movement, or null when unchanged
-     */
     private Vec3d adjust(Vec3d motion, Vec3d dir, double length, boolean ceiling) {
         double maximum = this.maximum(dir);
 
@@ -469,14 +415,6 @@ public class ControlFly extends Module {
         }
     }
 
-    /**
-     * Scales horizontal movement without changing its direction.
-     *
-     * @param motion current movement vector
-     * @param amount requested horizontal magnitude
-     * @param length current horizontal magnitude
-     * @return adjusted horizontal movement vector
-     */
     private Vec3d flat(Vec3d motion, double amount, double length) {
         if (length > epsilon) {
             double scale = amount / length;
@@ -489,11 +427,6 @@ public class ControlFly extends Module {
 
 
 
-    /**
-     * Tracks the firework currently boosting the player.
-     *
-     * @param rocket player-owned firework rocket
-     */
     public void track(FireworkRocketEntity rocket) {
         if (!Client.ready() || this.boost.rocket == rocket) {
             return;
@@ -509,9 +442,6 @@ public class ControlFly extends Module {
         this.boost.pending = false;
     }
 
-    /**
-     * Expires pending launches and removes inactive tracked rockets.
-     */
     private void update() {
         if (this.boost.pending &&
             this.mc.player.age > this.boost.expiry) {
@@ -535,7 +465,6 @@ public class ControlFly extends Module {
     /**
      * Stores how long the firework can boost the player.
      *
-     * @param stack used firework stack
      */
     private void duration(ItemStack stack) {
         FireworksComponent fireworks = stack.get(DataComponentTypes.FIREWORKS);
@@ -547,11 +476,6 @@ public class ControlFly extends Module {
         this.boost.endtime = this.mc.player.age + ticks;
     }
 
-    /**
-     * Checks whether the tracked rocket is currently active.
-     *
-     * @return true when the tracked rocket is alive
-     */
     private boolean active() {
         return this.boost.rocket != null && this.boost.rocket.isAlive();
     }
@@ -579,11 +503,6 @@ public class ControlFly extends Module {
 
 
 
-    /**
-     * Calculates movement input relative to the camera direction.
-     *
-     * @return combined movement direction
-     */
     public Vec3d direction() {
         float yaw = this.yaw();
         int state = this.state();
@@ -663,8 +582,6 @@ public class ControlFly extends Module {
     /**
      * Updates flight yaw from input while preserving vertical input.
      *
-     * @param input normalized movement input
-     * @return normalized steering direction
      */
     private Vec3d steer(Vec3d input) {
         double length = input.horizontalLength();
@@ -687,13 +604,6 @@ public class ControlFly extends Module {
         return flat.add(0.0, input.y, 0.0).normalize();
     }
 
-    /**
-     * Checks whether the movement direction changes sharply.
-     *
-     * @param first previous movement direction
-     * @param second requested movement direction
-     * @return true when the turn requires a brake tick
-     */
     private boolean sharp(Vec3d first, Vec3d second) {
         if (first.horizontalLength() < epsilon &&
             second.horizontalLength() < epsilon) {
@@ -710,8 +620,6 @@ public class ControlFly extends Module {
     /**
      * Converts a direction vector into a clamped flight pitch.
      *
-     * @param dir normalized flight direction
-     * @return pitch angle in degrees
      */
     private float angle(Vec3d dir) {
         return MathHelper.clamp((float) -Math.toDegrees(
@@ -721,13 +629,6 @@ public class ControlFly extends Module {
 
 
 
-    /**
-     * Selects manual pitch control or automatic altitude leveling.
-     *
-     * @param dir normalized movement direction
-     * @param boosted whether an active rocket is boosting the player
-     * @param manual whether vertical movement input is controlling pitch
-     */
     private void aim(Vec3d dir, boolean boosted, boolean manual) {
         if (manual) {
             this.motion.porpoise = false;
@@ -757,9 +658,7 @@ public class ControlFly extends Module {
     /**
      * Finds the pitch that most closely maintains the target altitude.
      *
-     * @param velocity current player velocity
      * @param boosted whether rocket acceleration should be predicted
-     * @return selected leveling pitch
      */
     private float level(Vec3d velocity, boolean boosted) {
         double error = this.motion.altitude - this.mc.player.getY();
@@ -827,7 +726,6 @@ public class ControlFly extends Module {
      * Checks the column between two heights for blocks the swing would hit.
      *
      * @param from first height
-     * @param to second height
      * @return true when the column is clear
      */
     private boolean clear(double from, double to) {
@@ -858,7 +756,6 @@ public class ControlFly extends Module {
      * Blends the steering yaw toward the player's current yaw. Zero leaves the
      * yaw untouched so Baritone can keep its own heading.
      *
-     * @param yaw steering yaw
      * @return yaw to send to the server
      */
     private float aligned(float yaw) {
@@ -871,18 +768,6 @@ public class ControlFly extends Module {
         return base + MathHelper.wrapDegrees(yaw - base) * (float) factor;
     }
 
-    /**
-     * Searches pitch values for the best leveling result.
-     *
-     * @param velocity current player velocity
-     * @param boosted whether rocket acceleration should be predicted
-     * @param desired desired vertical velocity
-     * @param start first pitch value
-     * @param step pitch increment
-     * @param count number of pitch increments
-     * @param choice current best choice
-     * @return best pitch choice found
-     */
     private Choice search(Vec3d velocity, boolean boosted,
         double desired, float start, float step, int count, Choice choice) {
 
@@ -896,15 +781,6 @@ public class ControlFly extends Module {
         return choice;
     }
 
-    /**
-     * Scores a leveling pitch from predicted flight behavior.
-     *
-     * @param velocity current player velocity
-     * @param pitch candidate pitch
-     * @param desired desired vertical velocity
-     * @param boosted whether rocket acceleration should be predicted
-     * @return candidate score
-     */
     private double score(Vec3d velocity, float pitch, double desired, boolean boosted) {
         Vec3d next = this.predict(velocity, this.motion.aligned, pitch, boosted);
         double score = Math.abs(next.y - desired);
@@ -951,9 +827,6 @@ public class ControlFly extends Module {
                 this.motion.pitch - this.turn.pitch) > 0.05F;
     }
 
-    /**
-     * Stores the most recently synchronized flight rotation.
-     */
     private void remember() {
         this.turn.yaw = this.motion.aligned;
         this.turn.pitch = this.motion.pitch;
@@ -965,7 +838,6 @@ public class ControlFly extends Module {
     /**
      * Calculates the maximum allowed speed for a flight direction.
      *
-     * @param dir normalized flight direction
      * @return maximum speed in blocks per tick
      */
     private double maximum(Vec3d dir) {
@@ -982,11 +854,7 @@ public class ControlFly extends Module {
     /**
      * Predicts the next velocity from elytra and rocket physics.
      *
-     * @param velocity current velocity
-     * @param yaw predicted yaw
-     * @param pitch predicted pitch
      * @param boosted whether rocket acceleration should be applied
-     * @return predicted next velocity
      */
     private Vec3d predict(Vec3d velocity, float yaw, float pitch, boolean boosted) {
         Vec3d rotation = Vec3d.fromPolar(pitch, yaw);
@@ -994,13 +862,6 @@ public class ControlFly extends Module {
         return boosted ? this.firework(next, rotation) : next;
     }
 
-    /**
-     * Applies firework acceleration to a predicted velocity.
-     *
-     * @param velocity current velocity
-     * @param rotation current rotation direction
-     * @return boosted velocity
-     */
     private Vec3d firework(Vec3d velocity, Vec3d rotation) {
         return velocity.add(
             this.thrust(velocity.x, rotation.x),
@@ -1009,27 +870,12 @@ public class ControlFly extends Module {
         );
     }
 
-    /**
-     * Calculates firework acceleration for one velocity axis.
-     *
-     * @param velocity current axis velocity
-     * @param rotation rotation direction on the same axis
-     * @return acceleration applied to the axis
-     */
     private double thrust(double velocity, double rotation) {
         return rotation * 0.1 + (rotation * 1.5 - velocity) * 0.5;
     }
 
 
 
-    /**
-     * Checks whether another rocket should be launched.
-     *
-     * @param dir normalized flight direction
-     * @param boosted whether an active rocket is boosting the player
-     * @param redirect whether controlled movement changed direction
-     * @return true when direction or speed requires another rocket
-     */
     private boolean launch(Vec3d dir, boolean boosted, boolean redirect) {
         if (!this.stocked()) return false;
 
@@ -1061,12 +907,6 @@ public class ControlFly extends Module {
         this.motion.pitch = this.level(velocity, true);
     }
 
-    /**
-     * Requests a firework at the controlled rotation.
-     *
-     * @param yaw controlled flight yaw
-     * @param pitch controlled flight pitch
-     */
     private void rocket(float yaw, float pitch) {
         if (!Client.ready() || !Client.interaction()) {
             this.cancel();
@@ -1081,8 +921,6 @@ public class ControlFly extends Module {
     /**
      * Sends a firework and updates the current boost timer.
      *
-     * @param yaw controlled flight yaw
-     * @param pitch controlled flight pitch
      * @return true when the firework packet was sent
      */
     private boolean firework(float yaw, float pitch) {
@@ -1107,30 +945,16 @@ public class ControlFly extends Module {
         return true;
     }
 
-    /**
-     * Cancels the current pending rocket launch.
-     */
     private void cancel() {
         this.boost.pending = false;
     }
 
 
 
-    /**
-     * Activates and initializes the independent camera rotation.
-     *
-     * @return true when camera control is available
-     */
     public boolean view() {
         return this.view(this.direction());
     }
 
-    /**
-     * Activates camera control for the current movement input.
-     *
-     * @param input current movement direction
-     * @return true when camera control is available
-     */
     private boolean view(Vec3d input) {
         if (!this.isActive() ||
             this.mc.player == null ||
@@ -1152,12 +976,6 @@ public class ControlFly extends Module {
         return true;
     }
 
-    /**
-     * Applies mouse movement to the independent camera rotation.
-     *
-     * @param mx horizontal mouse movement
-     * @param my vertical mouse movement
-     */
     public void look(double mx, double my) {
         this.view.yaw += (float) (mx * 0.15);
 
@@ -1166,11 +984,6 @@ public class ControlFly extends Module {
         );
     }
 
-    /**
-     * Checks whether independent camera control is currently active.
-     *
-     * @return true when the custom camera rotation should be used
-     */
     public boolean camera() {
         return this.isActive() && this.mc.player != null
             && this.view.active && this.mc.player.isGliding();
@@ -1179,7 +992,6 @@ public class ControlFly extends Module {
     /**
      * Returns the independent camera yaw used for movement control.
      *
-     * @return camera yaw
      */
     public float yaw() {
         return this.view.active ? this.view.yaw : this.mc.player.getYaw();
@@ -1188,15 +1000,11 @@ public class ControlFly extends Module {
     /**
      * Returns the independent camera pitch used for movement control.
      *
-     * @return camera pitch
      */
     public float pitch() {
         return this.view.active ? this.view.pitch : this.mc.player.getPitch();
     }
 
-    /**
-     * Restores the independent camera rotation to the player.
-     */
     private void restore() {
         if (!this.view.active) return;
 
@@ -1210,11 +1018,6 @@ public class ControlFly extends Module {
 
 
 
-    /**
-     * Checks whether Elytra Tweaks currently stops movement.
-     *
-     * @return true while collision avoidance is stopping movement
-     */
     private boolean halted() {
         ElytraTweaks tweaks = Modules.get().get(ElytraTweaks.class);
         return tweaks != null && tweaks.halted();
@@ -1317,8 +1120,6 @@ public class ControlFly extends Module {
     /**
      * Stores a candidate leveling pitch and its prediction score.
      *
-     * @param pitch candidate pitch
-     * @param score candidate score
      */
     private record Choice(float pitch, double score) {}
 

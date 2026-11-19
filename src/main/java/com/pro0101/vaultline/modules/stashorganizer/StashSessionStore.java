@@ -41,7 +41,6 @@ public final class StashSessionStore {
     private StashSessionStore() {
     }
 
-    /** World identity: server (or singleplayer level) plus dimension. */
     public static String worldKey() {
         MinecraftClient mc = MeteorClient.mc;
         if (mc == null || mc.world == null) return null;

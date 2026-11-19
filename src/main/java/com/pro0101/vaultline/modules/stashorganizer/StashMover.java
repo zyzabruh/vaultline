@@ -20,7 +20,6 @@ public interface StashMover {
 
     boolean isPathing();
 
-    /** Called once before the organizer starts moving. */
     default void prepare() {
     }
 

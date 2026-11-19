@@ -19,19 +19,11 @@ import baritone.api.event.listener.AbstractGameEventListener;
 public final class BaritoneAssist implements AbstractGameEventListener {
     private BaritoneAssist() {}
 
-    /**
-     * Registers the listener on the primary Baritone instance.
-     */
     public static void register() {
         BaritoneAPI.getProvider().getPrimaryBaritone()
             .getGameEventHandler().registerEventListener(new BaritoneAssist());
     }
 
-    /**
-     * Aligns the player before Baritone follows its movement.
-     *
-     * @param event Baritone player update event
-     */
     @Override
     public void onPlayerUpdate(PlayerUpdateEvent event) {
         if (event.getState() == EventState.PRE) Baritone.assist();

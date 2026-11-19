@@ -12,7 +12,6 @@ import java.util.function.Supplier;
 public final class Timings {
     /** Server latency profile: scales every wait between two actions. */
     public enum Latency {
-        /** Everything answers within two ticks. */
         Fast(75),
         /** Default: the client sees the server's answer within two or three ticks. */
         Normal(100),
@@ -21,7 +20,6 @@ public final class Timings {
         /** A heavily loaded server or a very high ping. */
         VerySlow(300);
 
-        /** Percentage applied to every base wait. */
         public final int percent;
 
         Latency(int percent) {
@@ -41,11 +39,9 @@ public final class Timings {
     private static final int BREAK_SETTLE = 8;
     /** Ticks to let the player walk onto a broken block's drop. */
     private static final int PICKUP_MOVE = 15;
-    /** Ticks between two pickup attempts. */
     private static final int PICKUP_RETRY = 10;
     /** Pickup attempts before the dropped item is considered lost. */
     private static final int MAX_PICKUP_TRIES = 6;
-    /** Ticks between two item frame rotations. */
     private static final int FRAME_ROTATION = 6;
 
     private final Supplier<Latency> latency;

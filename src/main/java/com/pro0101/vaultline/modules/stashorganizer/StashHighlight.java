@@ -8,7 +8,6 @@ import net.minecraft.util.math.BlockPos;
  */
 public record StashHighlight(BlockPos pos, Kind kind) {
     public enum Kind {
-        /** The block the current phase is working on. */
         Target,
         /** The container the carried items are being delivered to. */
         Destination

@@ -67,7 +67,6 @@ public interface InventoryTools {
     /** Puts the item in the hotbar and selects it. */
     int ensureInHotbar(Item item);
 
-    /** Inventory slot of the item, or -1. */
     int findSlot(Item item);
 
     /** True for an empty shulker box (no stored stacks), used as overflow storage. */

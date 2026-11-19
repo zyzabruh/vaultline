@@ -41,23 +41,12 @@ public final class Gui {
         );
     }
 
-    /**
-     * Checks whether a mouse button is held.
-     *
-     * @param button mouse button
-     * @return true when the button is held
-     */
     public static boolean pressed(int button) {
         return GLFW.glfwGetMouseButton(
             client.getWindow().getHandle(), button
         ) == GLFW.GLFW_PRESS;
     }
 
-    /**
-     * Returns the mouse position in scaled screen coordinates.
-     *
-     * @return scaled mouse position
-     */
     public static Vec2f mouse() {
         int width = client.getWindow().getWidth();
         int height = client.getWindow().getHeight();

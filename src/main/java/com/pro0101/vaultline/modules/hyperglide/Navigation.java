@@ -243,9 +243,6 @@ public class Navigation extends Module {
         );
     }
 
-    /**
-     * Initializes the route and map zoom.
-     */
     @Override
     public void onActivate() {
         this.offset = Vec2f.ZERO;
@@ -265,20 +262,12 @@ public class Navigation extends Module {
         this.reload();
     }
 
-    /**
-     * Cancels any pending Auto Pilot restart.
-     */
     @Override
     public void onDeactivate() {
         this.restart = 0;
     }
 
 
-    /**
-     * Recalculates the route at a fixed tick interval.
-     *
-     * @param event post-tick event
-     */
     @EventHandler
     private void onTick(TickEvent.Post event) {
         if (!Client.nether() || this.mc.player == null) {
@@ -304,7 +293,6 @@ public class Navigation extends Module {
     /**
      * Zooms the map when the mouse wheel is used over it.
      *
-     * @param event mouse scroll event
      */
     @EventHandler
     private void onScroll(MouseScrollEvent event) {
@@ -338,11 +326,6 @@ public class Navigation extends Module {
         event.cancel();
     }
 
-    /**
-     * Renders highway and route information around the map.
-     *
-     * @param event 2D render event
-     */
     @EventHandler
     private void onRender2D(Render2DEvent event) {
         if (!this.render.get() || !Client.nether() ||
@@ -369,11 +352,6 @@ public class Navigation extends Module {
         renderer.end();
     }
 
-    /**
-     * Renders the navigation map.
-     *
-     * @param context draw context
-     */
     public void render(DrawContext context) {
         if (!this.isActive() || !this.render.get() ||
             !Client.nether() || Gui.vanilla() ||
@@ -405,39 +383,20 @@ public class Navigation extends Module {
 
 
 
-    /**
-     * Recalculates the route immediately.
-     */
     public void refresh() {
         this.calculate();
     }
 
-    /**
-     * Returns the current calculated route.
-     *
-     * @return current route, or null when unavailable
-     */
     public Route route() {
         return this.route;
     }
 
-    /**
-     * Returns the configured destination block.
-     *
-     * @return configured destination
-     */
     public BlockPos point() {
         return this.point;
     }
 
 
 
-    /**
-     * Calculates the map view around the selected position.
-     *
-     * @param current current player position
-     * @return map view
-     */
     private View view(Vec2f current) {
         if (this.mode.get() == Mode.Free) {
             this.offset = this.bound(this.offset);
@@ -452,12 +411,6 @@ public class Navigation extends Module {
         return new View(center, this.scale());
     }
 
-    /**
-     * Keeps the visible area inside the navigation limit.
-     *
-     * @param point requested map center
-     * @return bounded map center
-     */
     private Vec2f bound(Vec2f point) {
         double half = this.size.get() * this.scale() * 0.5;
         float max = (float) Math.max(0.0, limit - half);
@@ -468,24 +421,10 @@ public class Navigation extends Module {
         );
     }
 
-    /**
-     * Returns the current world blocks per screen pixel.
-     *
-     * @return world blocks per screen pixel
-     */
     private double scale() {
         return span / this.size.get() / this.zoom;
     }
 
-    /**
-     * Converts a world position to map screen coordinates.
-     *
-     * @param point world position
-     * @param view current map view
-     * @param left map left position
-     * @param top map top position
-     * @return map screen position
-     */
     private Vec2f screen(Vec2f point, View view, double left, double top) {
         float size = this.size.get();
 
@@ -499,15 +438,6 @@ public class Navigation extends Module {
         return screen;
     }
 
-    /**
-     * Converts a map screen position to world coordinates.
-     *
-     * @param point map screen position
-     * @param view current map view
-     * @param left map left position
-     * @param top map top position
-     * @return world block position
-     */
     private BlockPos world(Vec2f point, View view, double left, double top) {
         int scale = this.convert.get() ? 8 : 1;
         float size = this.size.get();
@@ -530,10 +460,6 @@ public class Navigation extends Module {
     /**
      * Draws every highway segment within the current map view.
      *
-     * @param context draw context
-     * @param view current map view
-     * @param left map left position
-     * @param top map top position
      */
     private void network(DrawContext context, View view, int left, int top) {
         Color color = this.highways.get();
@@ -551,10 +477,6 @@ public class Navigation extends Module {
     /**
      * Draws the circular boundary for the configured clip radius.
      *
-     * @param context draw context
-     * @param view current map view
-     * @param left map left position
-     * @param top map top position
      */
     private void circle(DrawContext context, View view, int left, int top) {
         float radius = this.clip();
@@ -569,10 +491,6 @@ public class Navigation extends Module {
     /**
      * Draws each leg of the currently calculated navigation route.
      *
-     * @param context draw context
-     * @param view current map view
-     * @param left map left position
-     * @param top map top position
      */
     private void trace(DrawContext context, View view, int left, int top) {
         if (this.route == null) return;
@@ -590,12 +508,6 @@ public class Navigation extends Module {
     /**
      * Draws a square marker for a world position on the map.
      *
-     * @param context draw context
-     * @param point marker world position
-     * @param view current map view
-     * @param left map left position
-     * @param top map top position
-     * @param color marker color
      */
     private void mark(DrawContext context, Vec2f point,
         View view, double left, double top, Color color) {
@@ -617,31 +529,12 @@ public class Navigation extends Module {
         );
     }
 
-    /**
-     * Draws the outline around the navigation map window.
-     *
-     * @param context draw context
-     * @param left map left position
-     * @param top map top position
-     */
     private void frame(DrawContext context, int left, int top) {
         int size = this.size.get();
         int color = this.outline.get().getPacked();
         API.border(context, left, top, size, size, color);
     }
 
-    /**
-     * Draws a world-space line inside the map.
-     *
-     * @param context draw context
-     * @param first line starting position
-     * @param second line ending position
-     * @param view current map view
-     * @param left map left position
-     * @param top map top position
-     * @param color line color
-     * @param width line thickness
-     */
     private void draw(DrawContext context, Vec2f first, Vec2f second,
         View view, double left, double top, Color color, int width) {
 
@@ -656,21 +549,6 @@ public class Navigation extends Module {
         );
     }
 
-    /**
-     * Draws a clipped line with configurable thickness.
-     *
-     * @param context draw context
-     * @param x1 line starting X position
-     * @param y1 line starting Y position
-     * @param x2 line ending X position
-     * @param y2 line ending Y position
-     * @param left clipping left position
-     * @param top clipping top position
-     * @param right clipping right position
-     * @param bottom clipping bottom position
-     * @param color line color
-     * @param width line thickness
-     */
     private void line(DrawContext context, double x1, double y1, double x2, double y2,
         double left, double top, double right, double bottom, Color color, int width) {
 
@@ -688,19 +566,6 @@ public class Navigation extends Module {
         );
     }
 
-    /**
-     * Clips a line to the map rectangle.
-     *
-     * @param x1 line starting X position
-     * @param y1 line starting Y position
-     * @param x2 line ending X position
-     * @param y2 line ending Y position
-     * @param left clipping left position
-     * @param top clipping top position
-     * @param right clipping right position
-     * @param bottom clipping bottom position
-     * @return clipped coordinates, or null when outside
-     */
     private double[] clip(double x1, double y1, double x2, double y2,
         double left, double top, double right, double bottom) {
 
@@ -756,16 +621,6 @@ public class Navigation extends Module {
 
 
 
-    /**
-     * Renders information for the hovered map position.
-     *
-     * @param renderer HUD renderer
-     * @param mouse mouse position
-     * @param view current map view
-     * @param left map left position
-     * @param top map top position
-     * @param gui GUI scale factor
-     */
     private void hover(HudRenderer renderer, Vec2f mouse,
         View view, int left, int top, double gui) {
 
@@ -790,14 +645,6 @@ public class Navigation extends Module {
         );
     }
 
-    /**
-     * Renders current route information below the map.
-     *
-     * @param renderer HUD renderer
-     * @param left map left position
-     * @param top map top position
-     * @param gui GUI scale factor
-     */
     private void status(HudRenderer renderer, int left, int top, double gui) {
         String eta = this.time(this.route.time());
         int length = Math.round(this.route.distance());
@@ -807,15 +654,6 @@ public class Navigation extends Module {
         }, left * gui, top * gui, false, gui);
     }
 
-    /**
-     * Returns the highway currently under the mouse.
-     *
-     * @param mouse mouse position
-     * @param view current map view
-     * @param left map left position
-     * @param top map top position
-     * @return hovered highway, or null when none
-     */
     private Highways.Road road(Vec2f mouse, View view, double left, double top) {
         if (this.mc.currentScreen == null) return null;
 
@@ -841,10 +679,7 @@ public class Navigation extends Module {
     /**
      * Calculates screen distance from a point to a segment.
      *
-     * @param point screen point
      * @param first segment starting position
-     * @param second segment ending position
-     * @return shortest screen distance
      */
     private float distance(Vec2f point, Vec2f first, Vec2f second) {
         Vec2f vector = second.add(first.negate());
@@ -863,16 +698,6 @@ public class Navigation extends Module {
         return (float) Math.sqrt(point.distanceSquared(closest));
     }
 
-    /**
-     * Draws centered information above or below the map.
-     *
-     * @param renderer HUD renderer
-     * @param lines information lines
-     * @param left map left position
-     * @param top map top position
-     * @param upper true to draw above the map
-     * @param gui GUI scale factor
-     */
     private void box(HudRenderer renderer, String[] lines,
         double left, double top, boolean upper, double gui) {
 
@@ -908,8 +733,6 @@ public class Navigation extends Module {
     /**
      * Formats seconds using compact hour, minute and second units.
      *
-     * @param seconds seconds to format
-     * @return formatted time
      */
     private String time(float seconds) {
         int time = Math.max(0, Math.round(seconds));
@@ -952,11 +775,6 @@ public class Navigation extends Module {
         }
     }
 
-    /**
-     * Returns the currently pressed map drag button.
-     *
-     * @return mouse button, or -1 when dragging is inactive
-     */
     private int button() {
         if (this.mode.get() == Mode.Free &&
             Gui.pressed(GLFW.GLFW_MOUSE_BUTTON_LEFT)) {
@@ -971,12 +789,6 @@ public class Navigation extends Module {
         return -1;
     }
 
-    /**
-     * Starts map dragging from the current mouse position.
-     *
-     * @param mouse mouse position
-     * @param button active mouse button
-     */
     private void start(Vec2f mouse, int button) {
         if (this.hovered(mouse.x, mouse.y)) {
             this.drag = button;
@@ -985,11 +797,6 @@ public class Navigation extends Module {
         }
     }
 
-    /**
-     * Applies the current map drag movement.
-     *
-     * @param mouse mouse position
-     */
     private void shift(Vec2f mouse) {
         float dx = mouse.x - this.mx;
         float dy = mouse.y - this.my;
@@ -1032,32 +839,15 @@ public class Navigation extends Module {
         this.goal.set(point.getX() + " " + point.getZ());
     }
 
-    /**
-     * Returns the map left position.
-     *
-     * @return map left position
-     */
     private double left() {
         return this.mc.getWindow().getScaledWidth() -
             this.size.get() - margin + this.xoffset.get();
     }
 
-    /**
-     * Returns the map top position.
-     *
-     * @return map top position
-     */
     private double top() {
         return margin + this.yoffset.get();
     }
 
-    /**
-     * Checks whether the mouse is inside the map.
-     *
-     * @param mx mouse X position
-     * @param my mouse Y position
-     * @return true when the mouse is inside the map
-     */
     private boolean hovered(double mx, double my) {
         double size = this.size.get();
 
@@ -1073,7 +863,6 @@ public class Navigation extends Module {
     /**
      * Applies a destination change and delays Auto Pilot restart.
      *
-     * @param value typed destination value
      */
     private void change(String value) {
         BlockPos previous = this.point;
@@ -1090,9 +879,6 @@ public class Navigation extends Module {
         }
     }
 
-    /**
-     * Reactivates Auto Pilot once the destination has settled.
-     */
     private void restart() {
         if (this.restart == 0 || --this.restart > 0) return;
 
@@ -1103,7 +889,6 @@ public class Navigation extends Module {
     /**
      * Parses a destination in either 2D or 3D format.
      *
-     * @param value typed destination value
      */
     private void parse(String value) {
         String clean = value.trim();
@@ -1137,9 +922,6 @@ public class Navigation extends Module {
         } catch (NumberFormatException ignored) {}
     }
 
-    /**
-     * Delays rebuilding until the clip radius stops changing.
-     */
     private void queue() {
         if (this.isActive()) this.pending = rebuild;
     }
@@ -1153,9 +935,6 @@ public class Navigation extends Module {
         this.calculate();
     }
 
-    /**
-     * Recalculates the fastest route from the current position.
-     */
     private void calculate() {
         if (!Client.nether() || this.mc.player == null) {
             this.route = null;
@@ -1167,30 +946,15 @@ public class Navigation extends Module {
         );
     }
 
-    /**
-     * Returns the clip radius in nether coordinates.
-     *
-     * @return effective clip radius
-     */
     private float clip() {
         float radius = this.radius.get();
         return this.convert.get() ? radius / 8.0F : radius;
     }
 
-    /**
-     * Returns the configured destination.
-     *
-     * @return configured destination
-     */
     private Vec2f target() {
         return new Vec2f(this.point.getX(), this.point.getZ());
     }
 
-    /**
-     * Returns the highway speed used for route calculations.
-     *
-     * @return configured Bounce Fly highway speed
-     */
     private float speed() {
         BounceFly bounce = Modules.get().get(BounceFly.class);
         boolean faster = bounce != null && bounce.accelerated();
@@ -1203,15 +967,6 @@ public class Navigation extends Module {
      * Renders destination input with optional coordinate censorship.
      */
     public static class Mask implements WTextBox.Renderer {
-        /**
-         * Renders the destination text or its character mask.
-         *
-         * @param renderer GUI renderer
-         * @param tx text X position
-         * @param ty text Y position
-         * @param text actual destination text
-         * @param color text color
-         */
         @Override
         public void render(GuiRenderer renderer,
             double tx, double ty, String text, Color color) {
@@ -1224,12 +979,6 @@ public class Navigation extends Module {
         }
     }
 
-    /**
-     * Represents the current map center and world scale.
-     *
-     * @param center map center
-     * @param scale world blocks per screen pixel
-     */
     private record View(Vec2f center, double scale) {}
 
 }

@@ -19,22 +19,10 @@ public final class Hotbar {
 
     private Hotbar() {}
 
-    /**
-     * Finds an item in the hotbar.
-     *
-     * @param item item to find
-     * @return matching hotbar slot, or -1 when unavailable
-     */
     public static int find(Item item) {
         return find(stack -> stack.isOf(item));
     }
 
-    /**
-     * Finds the first matching stack in the hotbar.
-     *
-     * @param predicate stack condition
-     * @return matching hotbar slot, or -1 when unavailable
-     */
     public static int find(Predicate<ItemStack> predicate) {
         return find(0, 8, predicate);
     }
@@ -44,7 +32,6 @@ public final class Hotbar {
      *
      * @param first first hotbar slot
      * @param last last hotbar slot
-     * @param predicate stack condition
      * @return matching hotbar slot, or -1 when unavailable
      */
     public static int find(int first, int last,
@@ -63,7 +50,6 @@ public final class Hotbar {
     /**
      * Finds a matching stack while checking the selected slot first.
      *
-     * @param predicate stack condition
      * @return matching hotbar slot, or -1 when unavailable
      */
     public static int first(Predicate<ItemStack> predicate) {
@@ -81,13 +67,6 @@ public final class Hotbar {
         return -1;
     }
 
-    /**
-     * Finds the highest scoring stack in the hotbar.
-     *
-     * @param predicate stack condition
-     * @param score stack score
-     * @return matching hotbar slot, or -1 when unavailable
-     */
     public static int best(
         Predicate<ItemStack> predicate,
         ToIntFunction<ItemStack> score) {
@@ -133,12 +112,6 @@ public final class Hotbar {
         });
     }
 
-    /**
-     * Counts an item across the hotbar.
-     *
-     * @param item item to count
-     * @return total item count
-     */
     public static int count(Item item) {
         int count = 0;
 
@@ -150,39 +123,18 @@ public final class Hotbar {
         return count;
     }
 
-    /**
-     * Returns the currently selected hotbar slot.
-     *
-     * @return selected hotbar slot
-     */
     public static int selected() {
         return API.slot(client.player.getInventory());
     }
 
-    /**
-     * Returns a hotbar stack.
-     *
-     * @param slot hotbar slot
-     * @return item stack stored in the slot
-     */
     public static ItemStack stack(int slot) {
         return client.player.getInventory().getStack(slot);
     }
 
-    /**
-     * Changes the selected hotbar slot on the client.
-     *
-     * @param slot hotbar slot
-     */
     public static void set(int slot) {
         client.player.getInventory().setSelectedSlot(slot);
     }
 
-    /**
-     * Sends the selected hotbar slot to the server.
-     *
-     * @param slot hotbar slot
-     */
     public static void sync(int slot) {
         Packets.slot(slot);
     }
@@ -190,7 +142,6 @@ public final class Hotbar {
     /**
      * Changes the selected hotbar slot on the client and server.
      *
-     * @param slot hotbar slot
      */
     public static void select(int slot) {
         set(slot);

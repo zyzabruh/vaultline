@@ -11,11 +11,6 @@ public final class Client {
 
     private Client() {}
 
-    /**
-     * Checks whether the player and world are loaded.
-     *
-     * @return true when the player and world are available
-     */
     public static boolean loaded() {
         return client.player != null && client.world != null;
     }
@@ -29,31 +24,16 @@ public final class Client {
         return loaded() && client.getNetworkHandler() != null;
     }
 
-    /**
-     * Checks whether normal player interactions are available.
-     *
-     * @return true when the player can interact with the world
-     */
     public static boolean interaction() {
         return loaded() && client.interactionManager != null;
     }
 
-    /**
-     * Checks whether the current world is the overworld.
-     *
-     * @return true when the overworld is loaded
-     */
     public static boolean overworld() {
         return client.world != null && World.OVERWORLD.equals(
             client.world.getRegistryKey()
         );
     }
 
-    /**
-     * Checks whether the current world is the nether.
-     *
-     * @return true when the nether is loaded
-     */
     public static boolean nether() {
         return client.world != null && World.NETHER.equals(
             client.world.getRegistryKey()

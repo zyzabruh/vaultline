@@ -26,9 +26,7 @@ public final class ShulkerProtection {
     public static final String NAME = "name";
     /** A box renamed by the player, when renamed boxes are kept shut. */
     public static final String RENAMED = "renamed";
-    /** A box holding a single item type. */
     public static final String SINGLE_ITEM = "single-item";
-    /** A box holding armour, tools or weapons. */
     public static final String GEAR = "gear";
     /** A box holding an item from the keep-items list. */
     public static final String ITEM = "item";

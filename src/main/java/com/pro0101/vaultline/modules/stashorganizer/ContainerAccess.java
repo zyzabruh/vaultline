@@ -26,17 +26,11 @@ public interface ContainerAccess {
 
     int liveSlotId(int slot);
 
-    /**
-     * Opens a container and waits for its screen.
-     *
-     * @return 1 when the screen is open, 0 while waiting, -1 on failure
-     */
     int open(BlockPos pos);
 
     /** Resets the retry counters; call before starting to open a new container. */
     void resetOpen();
 
-    /** Reads the opened container into the session cache. */
     void read(BlockPos pos, boolean recordShulkers);
 
     StashContainer at(BlockPos pos);

@@ -28,11 +28,8 @@ import net.minecraft.util.math.MathHelper;
  * per-axis bound for whatever look this module hands it.
  */
 public class RocketCycle extends Module {
-    /** How the phase is chosen. */
     public enum Mode {
-        /** Holds a height band around the target altitude. */
         AUTOMATIC,
-        /** Follows the jump and sneak keys. */
         MANUAL
     }
 
@@ -217,11 +214,6 @@ public class RocketCycle extends Module {
         }
     }
 
-    /**
-     * Pitch of the current phase.
-     *
-     * @return degrees, positive looking down
-     */
     private double pitch() {
         return switch (this.phase) {
             case CLIMB -> this.upPitch.get();
@@ -230,9 +222,6 @@ public class RocketCycle extends Module {
         };
     }
 
-    /**
-     * Fires a rocket when the cooldown allows it.
-     */
     private void fire() {
         long now = System.currentTimeMillis();
         if (now - this.lastLaunchMs < this.cooldown.get()) return;
@@ -241,12 +230,6 @@ public class RocketCycle extends Module {
         this.lastLaunchMs = now;
     }
 
-    /**
-     * Moves a yaw onto the nearest diagonal.
-     *
-     * @param yaw current yaw
-     * @return yaw at 45 degrees to both axes
-     */
     private static float diagonal(float yaw) {
         return Math.round((yaw - 45.0F) / 90.0F) * 90.0F + 45.0F;
     }

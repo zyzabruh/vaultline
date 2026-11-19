@@ -78,9 +78,6 @@ public class FastPortal extends Module {
         this.validate();
     }
 
-    /**
-     * Clears the portal frame and placement state.
-     */
     @Override
     public void onDeactivate() {
         this.portal.clear();
@@ -90,11 +87,6 @@ public class FastPortal extends Module {
     }
 
 
-    /**
-     * Advances portal construction and places required blocks.
-     *
-     * @param event pre-tick event
-     */
     @EventHandler
     private void onTick(TickEvent.Pre event) {
         if (!Client.loaded()) return;
@@ -128,11 +120,6 @@ public class FastPortal extends Module {
         this.sync = timeout;
     }
 
-    /**
-     * Renders the remaining incomplete portal frame positions.
-     *
-     * @param event 3D render event
-     */
     @EventHandler
     private void onRender(Render3DEvent event) {
         if (!this.box.enabled()) return;
@@ -202,9 +189,6 @@ public class FastPortal extends Module {
         }
     }
 
-    /**
-     * Advances past frame positions that already contain obsidian.
-     */
     private void skip() {
         while (this.index < this.portal.size() &&
             this.obsidian(this.portal.get(this.index))) {
@@ -212,21 +196,12 @@ public class FastPortal extends Module {
         }
     }
 
-    /**
-     * Checks whether a position already contains obsidian.
-     *
-     * @param pos block position to check
-     * @return true when the position contains obsidian
-     */
     private boolean obsidian(BlockPos pos) {
         return this.mc.world.getBlockState(pos).isOf(Blocks.OBSIDIAN);
     }
 
 
 
-    /**
-     * Places the next required obsidian block.
-     */
     private void place() {
         BlockPos pos = this.portal.get(this.index);
 

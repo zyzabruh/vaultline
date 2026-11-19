@@ -22,12 +22,6 @@ public final class BlockFilter {
         Blacklist
     }
 
-    /**
-     * Creates block list and list mode settings.
-     *
-     * @param group setting group receiving the settings
-     * @param description block list description
-     */
     public BlockFilter(SettingGroup group, String description) {
         this.blocks = group.add(new BlockListSetting.Builder()
             .name("blocks")

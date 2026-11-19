@@ -24,7 +24,6 @@ public class StashContainer {
     public final BlockPos pos;
     public final Block block;
 
-    /** Other half of a double chest, if any. */
     public BlockPos partner;
     /** Number of slots of the container (27 for a chest/barrel/shulker, 54 for a double chest). */
     public int size = 27;
@@ -50,12 +49,10 @@ public class StashContainer {
      * layout instead of having every item moved to a fresh chest.
      */
     public String frameGroup;
-    /** Number of slots reserved for the planned groups. */
     public int reserved;
 
     /** Stacks this container gave away, because it held a group that belongs elsewhere. */
     public int movedOut;
-    /** Stacks another container delivered here. */
     public int movedIn;
     /** Stacks taken out of here to make room for the group this chest is supposed to hold. */
     public int evicted;
@@ -68,7 +65,6 @@ public class StashContainer {
      */
     public final Map<String, Integer> leftReasons = new LinkedHashMap<>();
 
-    /** Records why stacks were left in this chest. */
     public void explain(String reason, int stacks) {
         if (reason == null || stacks <= 0) return;
 

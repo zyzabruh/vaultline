@@ -53,9 +53,6 @@ public class EasyAccess extends Module {
         );
     }
 
-    /**
-     * Resets click state when the module starts.
-     */
     @Override
     public void onActivate() {
         this.lock = this.mc.options.useKey.isPressed();
@@ -63,9 +60,6 @@ public class EasyAccess extends Module {
         this.own = false;
     }
 
-    /**
-     * Clears click state when the module stops.
-     */
     @Override
     public void onDeactivate() {
         this.lock = false;
@@ -74,11 +68,6 @@ public class EasyAccess extends Module {
     }
 
 
-    /**
-     * Finds and opens a hidden container.
-     *
-     * @param event pre-tick event
-     */
     @EventHandler
     private void tick(TickEvent.Pre event) {
         if (!this.mc.options.useKey.isPressed()) {
@@ -92,7 +81,6 @@ public class EasyAccess extends Module {
     /**
      * Cancels the normal interaction after a hidden target was used.
      *
-     * @param event outgoing packet event
      */
     @EventHandler
     private void onPacket(PacketEvent.Send event) {
@@ -148,7 +136,6 @@ public class EasyAccess extends Module {
     /**
      * Finds the closest hidden block container in the view direction.
      *
-     * @param eye player eye position
      * @param end end of the interaction ray
      * @param reach maximum interaction range
      * @return closest block target, or null when none is available
@@ -191,7 +178,6 @@ public class EasyAccess extends Module {
     /**
      * Finds the closest hidden entity container in the view direction.
      *
-     * @param eye player eye position
      * @param end end of the interaction ray
      * @param reach maximum interaction range
      * @return closest entity target, or null when none is available
@@ -224,9 +210,6 @@ public class EasyAccess extends Module {
 
 
 
-    /**
-     * Opens the closest hidden container.
-     */
     private void access() {
         this.lock = true;
         this.cancel = false;
@@ -255,7 +238,6 @@ public class EasyAccess extends Module {
     /**
      * Checks whether an entity is a container or merchant.
      *
-     * @param entity entity to check
      * @return true when the entity is supported
      */
     private boolean container(Entity entity) {
@@ -270,22 +252,12 @@ public class EasyAccess extends Module {
             && donkey.isTame() && donkey.hasChest();
     }
 
-    /**
-     * Interacts with a supported block container.
-     *
-     * @param hit block interaction target
-     */
     private void block(BlockHitResult hit) {
         this.mc.interactionManager.interactBlock(
             this.mc.player, Hand.MAIN_HAND, hit
         );
     }
 
-    /**
-     * Interacts with a supported container entity.
-     *
-     * @param hit entity interaction target
-     */
     private void entity(EntityHitResult hit) {
         Entity entity = hit.getEntity();
 
