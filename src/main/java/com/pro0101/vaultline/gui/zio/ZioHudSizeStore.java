@@ -1,5 +1,6 @@
 package com.pro0101.vaultline.gui.zio;
 
+import com.pro0101.vaultline.VaultlineAddon;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -80,6 +81,7 @@ public final class ZioHudSizeStore {
         try {
             return parse(Files.readString(path, StandardCharsets.UTF_8));
         } catch (IOException failure) {
+            VaultlineAddon.LOG.warn("Could not read the ZIO HUD sizes from {}", path, failure);
             return new LinkedHashMap<>();
         }
     }
