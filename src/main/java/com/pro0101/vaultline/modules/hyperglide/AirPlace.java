@@ -140,9 +140,6 @@ public class AirPlace extends Module {
         return true;
     }
 
-    /**
-     * Checks whether Air Place can update its target.
-     */
     private boolean ready() {
         Entity entity = this.mc.getCameraEntity();
         if (Client.ready() && entity != null) {
@@ -154,9 +151,6 @@ public class AirPlace extends Module {
         return false;
     }
 
-    /**
-     * Checks whether the current target should be rendered.
-     */
     private boolean visible() {
         return this.box.enabled() &&
             this.hit != null && Client.ready() &&

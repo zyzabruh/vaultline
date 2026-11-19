@@ -1589,12 +1589,6 @@ public class BounceFly extends Module {
         return this.solid(pos.up()) || this.solid(pos.up(2));
     }
 
-    /**
-     * Checks whether a block can collide with the player.
-     *
-     * @param pos block position to check
-     * @return true when the block is solid and collidable
-     */
     private boolean solid(BlockPos pos) {
         BlockState state = this.mc.world.getBlockState(pos);
         return !state.getCollisionShape(this.mc.world, pos).isEmpty();

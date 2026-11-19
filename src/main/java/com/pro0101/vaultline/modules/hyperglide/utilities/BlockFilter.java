@@ -34,12 +34,6 @@ public final class BlockFilter {
         );
     }
 
-    /**
-     * Checks whether a block is allowed by the list.
-     *
-     * @param block block to check
-     * @return true when the block is allowed
-     */
     public boolean allowed(Block block) {
         return this.mode.get() == Mode.Blacklist
             ? !this.blocks.get().contains(block)

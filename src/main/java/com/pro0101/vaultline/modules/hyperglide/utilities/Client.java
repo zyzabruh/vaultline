@@ -12,11 +12,6 @@ public final class Client {
         return client.player != null && client.world != null;
     }
 
-    /**
-     * Checks whether the player, world and connection are available.
-     *
-     * @return true when the client is ready for network actions
-     */
     public static boolean ready() {
         return loaded() && client.getNetworkHandler() != null;
     }

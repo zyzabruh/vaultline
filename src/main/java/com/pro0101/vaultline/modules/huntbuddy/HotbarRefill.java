@@ -420,11 +420,6 @@ public class HotbarRefill extends Module {
         );
     }
 
-    /**
-     * Checks whether the player inventory is the open handler.
-     *
-     * @return true when clicks land on the player screen handler
-     */
     private boolean inPlayerMenu() {
         return this.mc.player.currentScreenHandler == this.mc.player.playerScreenHandler;
     }
