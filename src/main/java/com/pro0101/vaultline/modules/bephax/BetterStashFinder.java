@@ -411,7 +411,7 @@ public class BetterStashFinder extends Module
     @net.lenni0451.lambdaevents.EventHandler(priority = -1)
     public void onChunkData(ChunkDataEvent event) {
         if (event.seenChunk()) return;
-        // Check the distance.
+
         double chunkXAbs = Math.abs(event.chunk().getPos().x * 16);
         double chunkZAbs = Math.abs(event.chunk().getPos().z * 16);
         if (Math.sqrt(chunkXAbs * chunkXAbs + chunkZAbs * chunkZAbs) < minimumDistance.get()) return;
@@ -420,7 +420,6 @@ public class BetterStashFinder extends Module
 
         RegistryKey<World> currentDimension = mc.world.getRegistryKey();
 
-        // Check that the chunk is in old chunks
         if (onlyOldchunks.get())
         {
             ChunkPos chunkPos = chunk.chunkPos;
@@ -723,12 +722,10 @@ public class BetterStashFinder extends Module
 
     @Override
     public WWidget getWidget(GuiTheme theme) {
-        // Sort
         chunks.sort(Comparator.comparingInt(value -> -value.getTotal()));
 
         WVerticalList list = theme.verticalList();
 
-        // Clear
         WButton clear = list.add(theme.button("Clear")).widget();
 
         WTable table = new WTable();
@@ -740,7 +737,6 @@ public class BetterStashFinder extends Module
             table.clear();
         };
 
-        // Chunks
         fillTable(theme, table);
 
         return list;
@@ -786,7 +782,6 @@ public class BetterStashFinder extends Module
     private void load() {
         boolean loaded = false;
 
-        // Try to load json
         File file = getJsonFile();
         if (file.exists()) {
             try {
@@ -798,12 +793,11 @@ public class BetterStashFinder extends Module
 
                 loaded = true;
             } catch (Exception failure) {
-                VaultlineAddon.LOG.warn("Could not read {}, falling back to the CSV", file, failure);
+                VaultlineAddon.LOG.warn("Could not read {}, trying the CSV next", file, failure);
                 if (chunks == null) chunks = new ArrayList<>();
             }
         }
 
-        // Try to load csv
         file = getCsvFile();
         if (!loaded && file.exists()) {
             try {
@@ -919,7 +913,6 @@ public class BetterStashFinder extends Module
         int x = chunk.x;
         int z = chunk.z;
 
-        // dont add waypoint that already exists
         if (getWaypointByCoordinate(x, z) != null) return;
 
         String waypointName = getWaypointName(chunk);
@@ -1039,7 +1032,6 @@ public class BetterStashFinder extends Module
         public void initWidgets() {
             WTable t = add(theme.table()).expandX().widget();
 
-            // Total
             t.add(theme.label("Total:"));
             t.add(theme.label(chunk.getTotal() + ""));
             t.row();
@@ -1047,7 +1039,6 @@ public class BetterStashFinder extends Module
             t.add(theme.horizontalSeparator()).expandX();
             t.row();
 
-            // Separate
             t.add(theme.label("Chests:"));
             t.add(theme.label(chunk.chests + ""));
             t.row();
