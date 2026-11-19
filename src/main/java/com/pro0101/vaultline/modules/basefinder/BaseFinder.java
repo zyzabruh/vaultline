@@ -449,7 +449,10 @@ public class BaseFinder extends Module {
                     data.getHeightmap(),
                     data.getBlockEntities(packet.getChunkX(), packet.getChunkZ())
                 );
-            } catch (Exception ignored) {
+            } catch (Exception failure) {
+                VaultlineAddon.LOG.warn("Could not decode chunk {},{}; it is skipped", packet.getChunkX(), packet.getChunkZ(),
+                    failure);
+
                 return;
             }
 
@@ -820,10 +823,12 @@ public class BaseFinder extends Module {
 
                 try {
                     baseChunks.add(new ChunkPos(Integer.parseInt(parts[0].trim()), Integer.parseInt(parts[1].trim())));
-                } catch (NumberFormatException ignored) {
+                } catch (NumberFormatException failure) {
+                    VaultlineAddon.LOG.warn("Skipping a malformed base line: {}", line);
                 }
             }
-        } catch (IOException ignored) {
+        } catch (IOException failure) {
+            VaultlineAddon.LOG.warn("Could not read {}", file, failure);
         }
     }
 
@@ -839,7 +844,8 @@ public class BaseFinder extends Module {
                 StandardOpenOption.CREATE,
                 StandardOpenOption.APPEND
             );
-        } catch (IOException ignored) {
+        } catch (IOException failure) {
+            VaultlineAddon.LOG.warn("Could not append a find to bases.txt", failure);
         }
     }
 

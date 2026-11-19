@@ -1,5 +1,6 @@
 package com.pro0101.vaultline.modules.bephax.searcharea.modes;
 
+import com.pro0101.vaultline.VaultlineAddon;
 import com.pro0101.vaultline.modules.bephax.searcharea.SearchAreaMode;
 import com.pro0101.vaultline.modules.bephax.searcharea.SearchAreaModes;
 import meteordevelopment.meteorclient.utils.player.Rotations;
@@ -38,8 +39,8 @@ public class Spiral extends SearchAreaMode
                     pd = GSON.fromJson(reader, PathingDataSpiral.class);
                     reader.close();
                     info("Loaded previously saved path, heading to where you left off.");
-                } catch (Exception ignored) {
-
+                } catch (Exception failure) {
+                    VaultlineAddon.LOG.warn("Could not read the saved spiral path from {}", file, failure);
                 }
             }
 

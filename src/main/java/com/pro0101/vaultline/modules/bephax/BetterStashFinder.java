@@ -792,7 +792,8 @@ public class BetterStashFinder extends Module
                 for (Chunk chunk : chunks) chunk.calculatePos();
 
                 loaded = true;
-            } catch (Exception ignored) {
+            } catch (Exception failure) {
+                VaultlineAddon.LOG.warn("Could not read {}, falling back to the CSV", file, failure);
                 if (chunks == null) chunks = new ArrayList<>();
             }
         }
@@ -820,11 +821,15 @@ public class BetterStashFinder extends Module
                 }
 
                 reader.close();
-            } catch (Exception ignored) {
+            } catch (Exception failure) {
+                VaultlineAddon.LOG.warn("Could not read {}, starting empty", file, failure);
                 if (chunks == null) chunks = new ArrayList<>();
             }
         }
-        // TODO: Add all stashes as waypoints
+
+        // The found stashes are not written to Xaero waypoints here: the module has no waypoint
+        // library of its own, and the Xaero integration lives in the huntbuddy modules. Adding them
+        // would need that binding first, so the list stays in the module until then.
     }
 
     private void saveCsv() {

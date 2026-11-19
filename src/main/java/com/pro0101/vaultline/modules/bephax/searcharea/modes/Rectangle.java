@@ -1,5 +1,6 @@
 package com.pro0101.vaultline.modules.bephax.searcharea.modes;
 
+import com.pro0101.vaultline.VaultlineAddon;
 import com.pro0101.vaultline.modules.bephax.searcharea.SearchAreaMode;
 import com.pro0101.vaultline.modules.bephax.searcharea.SearchAreaModes;
 import meteordevelopment.meteorclient.systems.modules.Module;
@@ -42,8 +43,8 @@ public class Rectangle extends SearchAreaMode
                 FileReader reader = new FileReader(file);
                 pd = GSON.fromJson(reader, PathingDataRectangle.class);
                 reader.close();
-            } catch (Exception ignored) {
-
+            } catch (Exception failure) {
+                VaultlineAddon.LOG.warn("Could not read the saved rectangle path from {}", file, failure);
             }
         }
     }
