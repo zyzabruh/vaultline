@@ -1,7 +1,5 @@
 package com.pro0101.vaultline.modules.stashorganizer;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.ShulkerBoxBlock;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.tag.ItemTags;

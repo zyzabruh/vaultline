@@ -3,7 +3,6 @@ package com.pro0101.vaultline.modules.bephax.searcharea.modes;
 import com.pro0101.vaultline.VaultlineAddon;
 import com.pro0101.vaultline.modules.bephax.searcharea.SearchAreaMode;
 import com.pro0101.vaultline.modules.bephax.searcharea.SearchAreaModes;
-import meteordevelopment.meteorclient.systems.modules.Module;
 import meteordevelopment.meteorclient.systems.modules.Modules;
 import meteordevelopment.meteorclient.systems.modules.misc.AutoReconnect;
 import meteordevelopment.meteorclient.utils.player.Rotations;

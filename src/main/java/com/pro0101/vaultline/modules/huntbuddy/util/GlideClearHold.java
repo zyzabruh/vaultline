@@ -8,7 +8,6 @@ import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.network.listener.PacketListener;
 import net.minecraft.network.packet.Packet;
-import net.minecraft.network.packet.c2s.common.CommonPongC2SPacket;
 import net.minecraft.network.packet.s2c.common.CommonPingS2CPacket;
 import net.minecraft.network.packet.s2c.play.EntityTrackerUpdateS2CPacket;
 

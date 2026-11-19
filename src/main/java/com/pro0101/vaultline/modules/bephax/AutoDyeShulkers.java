@@ -2,7 +2,6 @@ package com.pro0101.vaultline.modules.bephax;
 
 import com.pro0101.vaultline.VaultlineAddon;
 import net.minecraft.item.Item;
-import net.minecraft.text.Text;
 import net.minecraft.item.Items;
 import com.pro0101.vaultline.modules.huntbuddy.util.MsgUtil;
 import net.minecraft.item.DyeItem;

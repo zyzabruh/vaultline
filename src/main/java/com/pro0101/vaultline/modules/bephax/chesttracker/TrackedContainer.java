@@ -1,10 +1,8 @@
 package com.pro0101.vaultline.modules.bephax.chesttracker;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import java.util.ArrayList;
 import java.util.HashMap;
