@@ -34,3 +34,6 @@ run/
 
 # Third-party addon sources, used only to port code. Never commit or push.
 .third-party/
+
+# Local GLSL compiler used by SkyboxShaderCompileTest; install with tools/install-glslang.sh.
+.tools/

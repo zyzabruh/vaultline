@@ -9,4 +9,4 @@ pluginManagement {
     }
 }
 
-rootProject.name = "stash-organizer"
+rootProject.name = "vaultline"

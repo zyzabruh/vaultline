@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
-  "id": "stash-organizer",
+  "id": "vaultline",
   "version": "${version}",
-  "name": "Stash Organizer",
-  "description": "Opens every nearby storage block and reorganises the stash in place: items are grouped, chests are labelled with item frames and shulker boxes are unpacked, packed or kept shut.",
+  "name": "Vaultline",
+  "description": "44 modules for stash organisation, travel and flight, base hunting and rendering, plus two GUI themes and the ClickGUI of the zio client. The stash organiser opens every nearby storage block and reorganises the stash in place: item groups, item frame labels, shulker packing.",
   "authors": [
     "pro0101"
   ],
   "license": "GPL-3.0-or-later",
   "contact": {
-    "sources": "https://github.com/pro0101/stash-organizer"
+    "sources": "https://github.com/pro0101/vaultline"
   },
-  "icon": "assets/stashorganizer/icon.png",
+  "icon": "assets/vaultline/icon.png",
   "environment": "client",
   "entrypoints": {
     "meteor": [
-      "com.pro0101.stashorganizer.StashOrganizerAddon"
+      "com.pro0101.vaultline.VaultlineAddon"
     ]
   },
   "mixins": [
-    "stash-organizer.mixins.json"
+    "vaultline.mixins.json"
   ],
-  "accessWidener": "stash-organizer.accesswidener",
+  "accessWidener": "vaultline.accesswidener",
   "custom": {
     "meteor-client:color": "90,200,120",
     "modmenu": {

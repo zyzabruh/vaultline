@@ -1,0 +1,9 @@
+{
+  "required": true,
+  "package": "com.pro0101.vaultline.mixins",
+  "compatibilityLevel": "JAVA_21",
+  "client": ["AnvilScreenAccessor", "AnvilScreenHandlerAccessor", "CameraMixin", "ClientAccessor", "ClientPlayerMixin", "DataTrackerMixin", "EntityGlowMixin", "EntityMixin", "EntityOutlineChainMixin", "FireworkMixin", "FogRendererMixin", "OutlineColorMixin", "InteractionMixin", "KeyBindingMixin", "LivingEntityMixin", "MiningTweaksMixin", "EntityAccessor", "EntityVelocityUpdateS2CPacketAccessor", "FireworkRocketEntityAccessor", "InputAccessor", "InteractionAccessor", "PlayerInventoryAccessor", "SignEditScreenAccessor", "SkyRenderingMixin", "SwingDurationMixin", "GameRendererMixin", "InGameOverlayRendererMixin", "WorldParticlesMixin", "FullBrightMixin", "HudOverlayMixin", "InGameHudMixin", "ScreenBackgroundMixin", "SkyColourMixin", "SwingOffsetMixin", "WeatherRendererMixin", "WorldRendererMixin", "WWidgetMixin", "WPressableMixin", "HudElementSizeMixin", "DrawContextStateAccessor", "HeldItemRendererMixin", "RenderLayerAccessor", "RenderSetupAccessor", "TextureSpecAccessor", "CloudRendererMixin"],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

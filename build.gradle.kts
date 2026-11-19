@@ -3,11 +3,11 @@ plugins {
 }
 
 loom {
-    accessWidenerPath.set(file("src/main/resources/stash-organizer.accesswidener"))
+    accessWidenerPath.set(file("src/main/resources/vaultline.accesswidener"))
 
     mixin {
         useLegacyMixinAp = true
-        defaultRefmapName.set("stash-organizer-refmap.json")
+        defaultRefmapName.set("vaultline-refmap.json")
     }
 }
 

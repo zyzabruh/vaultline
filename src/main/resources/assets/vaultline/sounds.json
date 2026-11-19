@@ -1,0 +1,17 @@
+{
+  "gui.hover": {
+    "sounds": [
+      { "name": "vaultline:gui/hover", "stream": false }
+    ]
+  },
+  "gui.click": {
+    "sounds": [
+      { "name": "vaultline:gui/click", "stream": false }
+    ]
+  },
+  "gui.rclick": {
+    "sounds": [
+      { "name": "vaultline:gui/rclick", "stream": false }
+    ]
+  }
+}

@@ -1,6 +1,6 @@
 # Credits
 
-Stash Organizer includes modules taken from three GPL-3.0 addons. Their code stays under the GNU General Public
+Vaultline includes modules taken from three GPL-3.0 addons. Their code stays under the GNU General Public
 License v3.0, keeps its original authorship, and is distributed here under the same license (see `LICENSE`).
 
 | Module | Source | Author | Commit | License |
@@ -9,12 +9,12 @@ License v3.0, keeps its original authorship, and is distributed here under the s
 | `fast-portal` (`FastPortal`) | [Ark223/Hyperglide](https://github.com/Ark223/Hyperglide) | Ark223 | `68a6768` | GPL-3.0 |
 | `easy-access` (`EasyAccess`) | [Ark223/Hyperglide](https://github.com/Ark223/Hyperglide) | Ark223 | `68a6768` | GPL-3.0 |
 | `overview` (`Overview`) | [Ark223/Hyperglide](https://github.com/Ark223/Hyperglide) | Ark223 | `68a6768` | GPL-3.0 |
-| `navigation` (`Navigation`) | [Ark223/Hyperglide](https://github.com/Ark223/Hyperglide) | Ark223 | `68a6768` | GPL-3.0 |
+| `navigation` (`Navigation`) and its A* `search` | [Ark223/Hyperglide](https://github.com/Ark223/Hyperglide) | Ark223 | `2aec0e6` | GPL-3.0 |
 | `auto-pilot` (`AutoPilot`) | [Ark223/Hyperglide](https://github.com/Ark223/Hyperglide) | Ark223 | `68a6768` | GPL-3.0 |
 | `elytra-tweaks` (`ElytraTweaks`) | [Ark223/Hyperglide](https://github.com/Ark223/Hyperglide) | Ark223 | `68a6768` | GPL-3.0 |
 | `bounce-fly` (`BounceFly`) | [Ark223/Hyperglide](https://github.com/Ark223/Hyperglide) | Ark223 | `68a6768` | GPL-3.0 |
 | `control-fly` (`ControlFly`) | [Ark223/Hyperglide](https://github.com/Ark223/Hyperglide) | Ark223 | `68a6768` | GPL-3.0 |
-| `air-place` (`AirPlace`) | [Ark223/Hyperglide](https://github.com/Ark223/Hyperglide) | Ark223 | `68a6768` | GPL-3.0 |
+| `air-place` (`AirPlace`) and the shared `placement` helper | [Ark223/Hyperglide](https://github.com/Ark223/Hyperglide) | Ark223 | `2aec0e6` | GPL-3.0 |
 | `mining-tweaks` (`MiningTweaks`) | [Ark223/Hyperglide](https://github.com/Ark223/Hyperglide) | Ark223 | `68a6768` | GPL-3.0 |
 | `shulker-sorter` (`ShulkerSorter`) and its `sorter` support package | [Likon69/HunterBuddy](https://github.com/Likon69/HunterBuddy) | Likon69 | `4cae4b1` | GPL-3.0 |
 | `sign-history` (`SignHistory`) and its `signs` support package | [Likon69/HunterBuddy](https://github.com/Likon69/HunterBuddy) | Likon69 | `4cae4b1` | GPL-3.0 |
@@ -34,31 +34,38 @@ module is written for this addon's settings and has no XaeroPlus dependency. Tro
 include a license file.
 
 `control-fly` is based on Hyperglide's module; the `porpoise` swing, the `alignment` control and the `chest-swap`
-delegation to `elytra-tweaks`' spoof mode are additions made here.
-
-`elytra-mace` follows the behaviour documented for BepHax's module of the same name: it predicts the target, dives,
-puts the chestplate on for the mace hit, restores the elytra and climbs out on rockets, with the `trigger`,
-`min-drop`, `min-fall`, `ignore-friends`, `enemies-only` with its `enemies` name list, `repeat`, `steer`, `escape`,
-`recover-pitch`, `recover-height` and `rocket-boost` controls. BepHax's current `ElytraMace` is not in the public GPL release, so this is an independent
-reimplementation of the documented behaviour; no upstream source file is copied.
+delegation to `elytra-tweaks`' spoof mode are additions made here, so it still follows the `68a6768` module
+while the rest of the imported Hyperglide code has been brought to `2aec0e6` (2026-11-16): the navigation
+search is the A* rewrite, and air-place places through the main hand instead of swapping to the offhand.
 
 `flow-esp` follows the behaviour documented for BepHax's module of the same name: it looks for lava above the Nether
 lava ocean and water below the Overworld sea level, keeps moving flows, draws colour-coded columns, and caches the
 finds on disk. BepHax's current `FlowESP` is not in the public GPL release, so this is an independent reimplementation
 of the documented behaviour; no upstream source file is copied.
 
-The rest of the addon (the Stash Organizer module and its planner, sorting, labelling, report and chest-placement
-code) is original work.
+The rest of the addon is original work: the Stash Organizer module and its planner, sorting, labelling, report and
+chest-placement code; `base-finder`, `flow-esp` and the render, particle and animation modules; the `Future` and `Zio`
+themes; and the ClickGUI ported from the zio client (`open-zio-main`), rebuilt in `gui/zio` from that client's own
+layout values and colours.
+
+## Assets taken from the zio client
+
+- `assets/vaultline/sounds/gui/{hover,click,rclick}.ogg` — the GUI sounds of that client, copied as they are.
+- `assets/vaultline/textures/gui/aero.png` — drawn for this addon by `build/gui/MakeAero.java`, standing in for the
+  frosted sheet that client ships; no image is copied.
+
+The text is still drawn with the game's own font: the client renders its labels from Arial through Java2D, and the
+bitmap sheet generated from it here was unreadable at eight pixels, so it was dropped.
 
 ## Changes made to the imported code
 
-- Java packages renamed to `com.pro0101.stashorganizer.modules.<origin>…`, all references updated.
+- Java packages renamed to `com.pro0101.vaultline.modules.<origin>…`, all references updated.
 - The addon categories of the three projects were merged into this addon's single `Stash` category.
 - HunterBuddy's `SorterSafety` no longer pauses on `SpawnerDetector` and `AutoFlyingRegear`: those two modules are not
   part of this addon, so the hook now only looks for visible players.
 - Hyperglide's cross-version `API` is imported in full, together with `EntityAccessor`, `InputAccessor` and
   `ClientAccessor`; `InteractionAccessor` and `SignEditScreenAccessor` complete the mixin set registered in
-  `stash-organizer.mixins.json`.
+  `vaultline.mixins.json`.
 - `AutoPilot` looks up `MiningTweaks`, `ElytraTweaks`, `BounceFly`, `AirPlace` and `ControlFly` directly, so those
   modules travel with their support code (`hyperglide.utilities`, `hyperglide.navigation`).
 - BepHax's Stardust messaging was replaced by Meteor's `ChatUtils`; the unused `StardustUtil` dependency was dropped.
