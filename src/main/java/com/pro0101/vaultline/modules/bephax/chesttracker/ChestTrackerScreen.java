@@ -249,14 +249,6 @@ public class ChestTrackerScreen extends Screen {
             false
         );
     }
-    private String formatNumber(int number) {
-        if (number >= 1000000) {
-            return String.format("%.1fM", number / 1000000.0);
-        } else if (number >= 1000) {
-            return String.format("%.1fK", number / 1000.0);
-        }
-        return String.valueOf(number);
-    }
     private void renderScrollbar(DrawContext context, int mouseX, int mouseY) {
         if (maxScroll <= 0) return;
         int panelWidth = (ITEMS_PER_ROW * ITEM_SIZE) + 20;
@@ -444,14 +436,6 @@ public class ChestTrackerScreen extends Screen {
     @Override
     public boolean shouldPause() {
         return false;
-    }
-    private String formatCount(int count) {
-        if (count >= 1000000) {
-            return String.format("%.1fM", count / 1000000.0);
-        } else if (count >= 1000) {
-            return String.format("%.1fK", count / 1000.0);
-        }
-        return String.valueOf(count);
     }
     private String formatCountFull(int count) {
         return String.format("%,d", count);
