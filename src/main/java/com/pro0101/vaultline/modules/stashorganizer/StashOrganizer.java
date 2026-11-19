@@ -410,6 +410,7 @@ public class StashOrganizer extends Module implements SessionHost {
         Fast,
         /** High latency server: long waits, small batches and a generous timeout. */
         Laggy,
+        /** Only scan and report, never move an item. */
         DryRun
     }
 

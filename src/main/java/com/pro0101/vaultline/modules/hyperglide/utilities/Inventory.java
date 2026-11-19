@@ -29,6 +29,7 @@ public final class Inventory {
     /**
      * Returns an item stack from a player screen slot.
      *
+     *
      * @return item stack stored in the slot
      */
     public static ItemStack stack(int slot) {
@@ -57,6 +58,7 @@ public final class Inventory {
     /**
      * Finds the first matching stack in the player inventory.
      *
+     *
      * @return matching player inventory slot, or -1 when unavailable
      */
     public static int find(Predicate<ItemStack> predicate) {
@@ -65,6 +67,7 @@ public final class Inventory {
 
     /**
      * Finds the first matching stack inside an inventory range.
+     *
      *
      * @param first first player inventory slot
      * @param last last player inventory slot
@@ -83,6 +86,7 @@ public final class Inventory {
 
     /**
      * Finds the highest scoring stack in the player inventory.
+     *
      *
      * @return matching player inventory slot, or -1 when unavailable
      */

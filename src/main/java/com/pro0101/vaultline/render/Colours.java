@@ -8,6 +8,7 @@ public final class Colours {
      * Converts a hue to a fully saturated, fully bright colour.
      *
      * @param hue hue in the range {@code [0, 1)}
+     * @return packed RGB, without alpha
      */
     public static int hsv(float hue) {
         float sector = hue * 6.0F;

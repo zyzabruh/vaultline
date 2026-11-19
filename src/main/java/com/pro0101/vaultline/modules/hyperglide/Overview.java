@@ -104,6 +104,7 @@ public class Overview extends Module {
     /**
      * Returns the dominant content icon for a container stack.
      *
+     *
      * @return dominant content item, or an empty stack when unavailable
      */
     private ItemStack icon(ItemStack stack) {

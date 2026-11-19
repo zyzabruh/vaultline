@@ -113,6 +113,7 @@ public final class ZioHudMargins {
         }
     }
 
+    /** The alpha of the side bands this frame. */
     public float horizontalOverlay(long nowMillis) {
         return horizontal.value(nowMillis);
     }

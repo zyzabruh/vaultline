@@ -18,6 +18,7 @@ public final class ZioRowFade {
     private ZioRowFade() {
     }
 
+    /** One frame of a row appearing or disappearing. */
     public static double next(double current, boolean visible, int fps) {
         return ZioAnim.approach(current, visible ? 1 : 0, SPEED, fps);
     }

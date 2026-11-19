@@ -139,6 +139,7 @@ public class EasyAccess extends Module {
     /**
      * Finds the closest hidden block container in the view direction.
      *
+     *
      * @param end end of the interaction ray
      * @param reach maximum interaction range
      * @return closest block target, or null when none is available
@@ -180,6 +181,7 @@ public class EasyAccess extends Module {
 
     /**
      * Finds the closest hidden entity container in the view direction.
+     *
      *
      * @param end end of the interaction ray
      * @param reach maximum interaction range
@@ -240,6 +242,7 @@ public class EasyAccess extends Module {
 
     /**
      * Checks whether an entity is a container or merchant.
+     *
      *
      * @return true when the entity is supported
      */

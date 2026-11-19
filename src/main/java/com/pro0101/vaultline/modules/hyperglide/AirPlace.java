@@ -64,12 +64,18 @@ public class AirPlace extends Module {
         );
     }
 
+    /**
+     * Resets the target and click state.
+     */
     @Override
     public void onActivate() {
         this.hit = null;
         this.wait = 0;
     }
 
+    /**
+     * Clears the target and click state.
+     */
     @Override
     public void onDeactivate() {
         this.hit = null;
@@ -95,6 +101,11 @@ public class AirPlace extends Module {
         }
     }
 
+    /**
+     * Renders the current air-place target.
+     *
+     * @param event 3D render event
+     */
     @EventHandler
     private void render(Render3DEvent event) {
         if (this.visible()) {
@@ -106,6 +117,7 @@ public class AirPlace extends Module {
 
     /**
      * Updates the current air-place target.
+     *
      *
      * @return true when a valid target is available
      */
@@ -161,6 +173,10 @@ public class AirPlace extends Module {
 
 
 
+    /**
+     * Places the selected item at the current target.
+     *
+     */
     private void click(ItemStack stack) {
         this.place(this.hit, stack);
         this.wait = delay;
@@ -207,6 +223,7 @@ public class AirPlace extends Module {
 
     /**
      * Places the selected item at the target.
+     *
      *
      * @param hit target block hit result
      */

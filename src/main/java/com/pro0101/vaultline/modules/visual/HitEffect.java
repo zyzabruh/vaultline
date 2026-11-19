@@ -97,6 +97,7 @@ public class HitEffect extends Module {
     /**
      * Draws the four lines while the marker is alive.
      *
+     * @param event 2D render event
      */
     @EventHandler
     private void onRender(Render2DEvent event) {

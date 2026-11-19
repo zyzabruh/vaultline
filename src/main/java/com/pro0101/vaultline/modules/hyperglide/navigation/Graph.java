@@ -98,6 +98,7 @@ public final class Graph {
     /**
      * Splits two graph parts at intersections or overlap boundaries.
      *
+     *
      * @param first first graph part
      */
     private void split(Part first, Part second) {

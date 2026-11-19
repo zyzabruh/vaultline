@@ -11,7 +11,6 @@ public final class Clipper {
     /**
      * Removes the part of a segment inside the given radius.
      *
-     *
      */
     public static List<Segment> cut(Segment segment, float radius) {
         if (radius <= 0.0F) return List.of(segment);
@@ -49,7 +48,6 @@ public final class Clipper {
 
     /**
      * Finds the part of a segment inside the given radius.
-     *
      *
      *
      * @return normalized range, or null when outside

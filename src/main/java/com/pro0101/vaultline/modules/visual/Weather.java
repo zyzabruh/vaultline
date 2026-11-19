@@ -89,6 +89,7 @@ public class Weather extends Module {
         .build()
     );
 
+    /** One flake, drawn every frame. */
     private static final class Flake {
         private final Vec3d velocity;
         private final float lifetime;

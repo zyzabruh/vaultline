@@ -115,6 +115,7 @@ public class TwoDESP extends Module {
      * the world pass left behind, and by the time 2D is drawn they are gone. The rectangles are
      * therefore computed here and only painted later.
      *
+     * @param event world render event
      */
     @EventHandler
     private void onProject(Render3DEvent event) {
@@ -142,6 +143,9 @@ public class TwoDESP extends Module {
         }
     }
 
+    /**
+     * @param event 2D render event
+     */
     @EventHandler
     private void onRender(Render2DEvent event) {
         if (this.rects.isEmpty()) return;

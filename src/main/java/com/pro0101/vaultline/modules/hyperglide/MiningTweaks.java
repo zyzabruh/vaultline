@@ -226,6 +226,9 @@ public class MiningTweaks extends Module {
         this.remine();
     }
 
+    /**
+     * @param event 3D render event
+     */
     @EventHandler
     private void onRender(Render3DEvent event) {
         if (!this.render.get()) return;
@@ -370,6 +373,7 @@ public class MiningTweaks extends Module {
     /**
      * Excludes paused time from a mining target.
      *
+     *
      * @param now current time in milliseconds
      */
     private void pause(Target target, long now) {
@@ -483,6 +487,9 @@ public class MiningTweaks extends Module {
             && this.progress(this.primary) < 1.0;
     }
 
+    /**
+     * Parks the primary target while preserving mining progress.
+     */
     private void park() {
         Target target = this.primary;
 
@@ -511,6 +518,10 @@ public class MiningTweaks extends Module {
         return this.rebreak(this.last.pos, state, side);
     }
 
+    /**
+     * Prepares a target and selects its best tool.
+     *
+     */
     private void begin(Target target) {
         target.side = this.face(target.pos, target.side);
         target.slot = this.best(target.state, target.pos);
@@ -554,6 +565,10 @@ public class MiningTweaks extends Module {
         if (target.instant) this.finish(target);
     }
 
+    /**
+     * Updates the current state of a mining target.
+     *
+     */
     private void update(Target target) {
         if (target == null) return;
 
@@ -673,6 +688,10 @@ public class MiningTweaks extends Module {
         this.stopped = System.currentTimeMillis();
     }
 
+    /**
+     * Checks whether a finished target was successfully broken.
+     *
+     */
     private void verify(Target target) {
         if (this.mc.world.getBlockState(target.pos).isAir()) {
             this.confirm(target);
@@ -723,6 +742,7 @@ public class MiningTweaks extends Module {
     /**
      * Removes an active target and updates secondary readiness.
      *
+     *
      * @param confirmed whether the target was successfully broken
      */
     private void remove(Target target, boolean confirmed) {
@@ -742,6 +762,7 @@ public class MiningTweaks extends Module {
     /**
      * Calculates normalized mining progress for a target.
      *
+     *
      * @return progress between zero and one
      */
     private double progress(Target target) {
@@ -756,6 +777,7 @@ public class MiningTweaks extends Module {
     /**
      * Estimates remaining mining time from the current breaking delta.
      *
+     *
      * @return expected remaining time in milliseconds
      */
     private long expected(Target target) {
@@ -769,6 +791,7 @@ public class MiningTweaks extends Module {
 
     /**
      * Returns the work limit required to finish a target.
+     *
      *
      * @return primary threshold or full secondary limit
      */
@@ -843,6 +866,7 @@ public class MiningTweaks extends Module {
     /**
      * Finds the fastest suitable hotbar tool for a block.
      *
+     *
      * @param state block state to mine
      * @param pos block position to mine
      */
@@ -866,6 +890,7 @@ public class MiningTweaks extends Module {
 
     /**
      * Evaluates a hotbar tool for the target block.
+     *
      *
      * @param state block state to mine
      * @param pos block position to mine
@@ -932,6 +957,7 @@ public class MiningTweaks extends Module {
 
     /**
      * Finds the nearest face visible from the player's eyes.
+     *
      *
      * @param pos block position
      * @return nearest visible face, or null when none is visible
@@ -1006,6 +1032,7 @@ public class MiningTweaks extends Module {
 
     /**
      * Checks whether a block is within a given mining reach.
+     *
      *
      * @param pos block position to check
      * @return true when the block is within reach
@@ -1104,6 +1131,9 @@ public class MiningTweaks extends Module {
      */
     private record Retry(Request request, long ready) {}
 
+    /**
+     * Tracks the state of an active mining target.
+     */
     private static class Target {
         private final BlockPos pos;
         private final BlockState state;
@@ -1128,6 +1158,7 @@ public class MiningTweaks extends Module {
 
         /**
          * Creates a mining target from a queued request.
+         *
          *
          * @param state initial block state
          * @param side selected block face

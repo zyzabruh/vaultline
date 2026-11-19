@@ -221,6 +221,7 @@ class HandShaderValidityTest {
     /**
      * Reads a shader stage that ships with the mod.
      *
+     *
      * @throws IOException when the resource is missing
      */
     private static String source(Identifier id, String extension) throws IOException {
@@ -235,6 +236,7 @@ class HandShaderValidityTest {
 
     /**
      * Opens the Minecraft jar the game classes come from, so its shader includes can be read.
+     *
      *
      * @throws IOException when the jar cannot be opened
      */
@@ -284,6 +286,8 @@ class HandShaderValidityTest {
      * <p>Preprocessor lines are kept on purpose: the version directive is one, and it has to be the
      * first thing the loader sees.
      *
+     * @param text shader source
+     * @return that line
      */
     private static String firstLine(String text) {
         for (String line : text.split("\n")) {
@@ -330,6 +334,8 @@ class HandShaderValidityTest {
      * <p>This is the check that would have caught a renamed attribute or sampler: a typo adds a use of
      * a name nothing declares, and the driver would otherwise answer with zeros or an empty texture.
      *
+     * @param text shader source
+     * @return the unexplained identifiers
      */
     private static List<String> unknownIdentifiers(String text) {
         String stripped = stripComments(text).replaceAll("(?m)^\\s*#.*$", "");

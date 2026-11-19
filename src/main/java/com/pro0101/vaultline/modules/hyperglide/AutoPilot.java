@@ -374,6 +374,7 @@ public class AutoPilot extends Module {
     /**
      * Checks whether the player is aligned with a highway leg.
      *
+     *
      * @return true when at highway level and within proximity
      */
     private boolean aligned(Route.Leg leg) {
@@ -390,6 +391,7 @@ public class AutoPilot extends Module {
 
     /**
      * Projects a point onto the nearest position of a route leg.
+     *
      *
      * @return closest point on the leg
      */
@@ -411,6 +413,7 @@ public class AutoPilot extends Module {
 
     /**
      * Converts a route point to a block position at highway level.
+     *
      *
      * @return block position at highway level
      */
@@ -1060,6 +1063,7 @@ public class AutoPilot extends Module {
     /**
      * Adjusts a clear space point for launch or exit use.
      *
+     *
      * @param start whether selecting a launch point
      * @return adjusted point to traverse to
      */
@@ -1105,6 +1109,7 @@ public class AutoPilot extends Module {
     /**
      * Checks whether a space contains only air or flowing lava.
      *
+     *
      * @return true when no solid block occupies the space
      */
     private boolean empty(int minx, int miny,
@@ -1126,6 +1131,7 @@ public class AutoPilot extends Module {
 
     /**
      * Checks whether all chunks in an area are loaded.
+     *
      *
      * @return true when every required chunk is loaded
      */

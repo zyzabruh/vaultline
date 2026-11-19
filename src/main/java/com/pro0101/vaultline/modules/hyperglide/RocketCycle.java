@@ -29,6 +29,7 @@ import net.minecraft.util.math.MathHelper;
  */
 public class RocketCycle extends Module {
     public enum Mode {
+        /** Holds a height band around the target altitude. */
         AUTOMATIC,
         MANUAL
     }
@@ -214,6 +215,9 @@ public class RocketCycle extends Module {
         }
     }
 
+    /**
+     * @return degrees, positive looking down
+     */
     private double pitch() {
         return switch (this.phase) {
             case CLIMB -> this.upPitch.get();

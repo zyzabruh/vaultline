@@ -27,6 +27,7 @@ public final class Packets {
     /**
      * Sends a player action through the sequenced interaction path.
      *
+     *
      * @param pos block position
      * @param side block face
      */
@@ -134,6 +135,7 @@ public final class Packets {
 
     /**
      * Copies the current input while replacing jump and sprint states.
+     *
      *
      * @param movement whether to preserve directional movement
      */

@@ -63,7 +63,6 @@ public final class Shapes {
      * Draws a rounded border as a ring, by filling the outer shape and then the inner one.
      *
      *
-     *
      * @param thickness border thickness in pixels
      * @param top       fill colour at the top edge, drawn over the inner shape
      * @param bottom    fill colour at the bottom edge
@@ -77,7 +76,6 @@ public final class Shapes {
 
     /**
      * Draws a soft halo around a rounded rectangle, used as a panel glow.
-     *
      *
      *
      * @param x        left edge of the shape the halo surrounds

@@ -75,7 +75,7 @@ public class Utils
     /**
      * Returns the position in the direction of the yaw.
      *
-     *
+     * @param yaw The yaw in degrees.
      * @param distance The distance to move in the direction of the yaw.
      */
     public static Vec3d positionInDirection(Vec3d pos, double yaw, double distance)
@@ -87,6 +87,7 @@ public class Utils
     /**
      * Converts a yaw in degrees to a direction vector.
      *
+     * @param yaw The yaw in degrees.
      */
     public static Vec3d yawToDirection(double yaw)
     {
@@ -120,7 +121,7 @@ public class Utils
 
     /**
      * Returns the angle rounded to the closest main 8 axis'.
-     *
+     * @param yaw The yaw in degrees.
      * @return The angle on the axis.
      */
     public static double angleOnAxis(double yaw)

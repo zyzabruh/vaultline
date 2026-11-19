@@ -119,6 +119,7 @@ public final class SkyboxImage {
     /**
      * Turns a file name into the path part of a texture identifier.
      *
+     *
      * @return identifier path, lowercase and free of separators
      */
     private static String sanitize(String name) {

@@ -42,6 +42,7 @@ public final class Timings {
     private static final int PICKUP_RETRY = 10;
     /** Pickup attempts before the dropped item is considered lost. */
     private static final int MAX_PICKUP_TRIES = 6;
+    /** Ticks between two item frame rotations. */
     private static final int FRAME_ROTATION = 6;
 
     private final Supplier<Latency> latency;

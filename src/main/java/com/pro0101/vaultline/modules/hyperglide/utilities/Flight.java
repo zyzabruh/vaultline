@@ -259,6 +259,7 @@ public final class Flight {
     /**
      * Runs an action now or remembers it for later.
      *
+     *
      * @return true when the action ran or was remembered
      */
     public boolean request(BooleanSupplier action) {

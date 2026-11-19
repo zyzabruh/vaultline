@@ -421,6 +421,7 @@ public class BounceFly extends Module {
      * does instead of releasing them or dropping the glide. Meteor fires the receive event on the
      * netty thread, so the counter is changed on the main thread.
      *
+     * @param event packet receive event
      */
     @EventHandler
     private void onReceive(PacketEvent.Receive event) {
@@ -448,6 +449,7 @@ public class BounceFly extends Module {
      * interactions go out as they arrive, so a burst can never swallow something the player typed
      * or a click that changes the inventory.
      *
+     * @param event packet send event
      */
     @EventHandler
     private void onSend(PacketEvent.Send event) {
@@ -473,6 +475,7 @@ public class BounceFly extends Module {
      * and the next tick cannot begin with the elytra still worn or the landing would cost it
      * durability, which is the whole point of the option.
      *
+     * @param event movement packet event
      */
     @EventHandler
     private void onSendMovement(SendMovementPacketsEvent.Pre event) {
@@ -489,6 +492,7 @@ public class BounceFly extends Module {
      *
      * <p>Only the local sound is dropped; the server still sees the swap.
      *
+     * @param event sound event
      */
     @EventHandler
     private void onPlaySound(PlaySoundEvent event) {
@@ -725,6 +729,7 @@ public class BounceFly extends Module {
      * <p>Meteor fires the receive event on the netty thread, so the sequence is handed to the main
      * thread before it is stored.
      *
+     * @param event packet receive event
      */
     private void intakeFakeFly(PacketEvent.Receive event) {
         if (!this.fakeFly.get() || this.mc.player == null) return;
@@ -1219,6 +1224,7 @@ public class BounceFly extends Module {
      * it with a segfault rather than an exception (cabaletta/baritone#4830), so the goal now stops
      * at the last loaded, standable, non-portal block between the player and the request.
      *
+     * @param target requested goal
      * @return furthest safe goal before the request, or the last loaded block when none is safe
      */
     private BlockPos safe(BlockPos target) {
@@ -1295,6 +1301,7 @@ public class BounceFly extends Module {
 
     /**
      * Finds a safe pathing goal beyond the detected obstacle.
+     *
      *
      * @param hit detected collision block
      */
@@ -1616,6 +1623,7 @@ public class BounceFly extends Module {
     /**
      * Checks whether a trail position is clear and supported.
      *
+     *
      * @return true when the position is valid
      */
     private boolean clear(BlockPos pos) {
@@ -1646,6 +1654,7 @@ public class BounceFly extends Module {
 
     /**
      * Rounds a coordinate to the nearest highway grid position.
+     *
      *
      * @return coordinate aligned to the highway grid
      */

@@ -636,6 +636,8 @@ public class ControlFly extends Module {
     /**
      * Converts a direction vector into a clamped flight pitch.
      *
+     *
+     * @return pitch angle in degrees
      */
     private float angle(Vec3d dir) {
         return MathHelper.clamp((float) -Math.toDegrees(
@@ -677,6 +679,7 @@ public class ControlFly extends Module {
 
     /**
      * Finds the pitch that most closely maintains the target altitude.
+     *
      *
      * @param boosted whether rocket acceleration should be predicted
      */
@@ -745,6 +748,7 @@ public class ControlFly extends Module {
     /**
      * Checks the column between two heights for blocks the swing would hit.
      *
+     *
      * @param from first height
      * @return true when the column is clear
      */
@@ -775,6 +779,7 @@ public class ControlFly extends Module {
     /**
      * Blends the steering yaw toward the player's current yaw. Zero leaves the
      * yaw untouched so Baritone can keep its own heading.
+     *
      *
      * @return yaw to send to the server
      */
@@ -865,6 +870,7 @@ public class ControlFly extends Module {
     /**
      * Calculates the maximum allowed speed for a flight direction.
      *
+     *
      * @return maximum speed in blocks per tick
      */
     private double maximum(Vec3d dir) {
@@ -880,6 +886,7 @@ public class ControlFly extends Module {
 
     /**
      * Predicts the next velocity from elytra and rocket physics.
+     *
      *
      * @param boosted whether rocket acceleration should be applied
      */
@@ -956,6 +963,7 @@ public class ControlFly extends Module {
 
     /**
      * Sends a firework and updates the current boost timer.
+     *
      *
      * @return true when the firework packet was sent
      */

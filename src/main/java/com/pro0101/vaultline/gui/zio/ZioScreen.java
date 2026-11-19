@@ -200,6 +200,7 @@ public class ZioScreen extends TabScreen {
     /** When this screen was first drawn, for its opening fade. */
     private long openedAt;
 
+    /** The scissor regions open this frame, outermost first. */
     private final ZioScissor scissors = new ZioScissor();
 
     private Panel draggingPanel;

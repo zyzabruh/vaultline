@@ -81,6 +81,7 @@ public class HandCommands implements RenderCommandQueue {
      * <p>The off look must not install a decorator at all: that is what makes "off means vanilla"
      * true at the queue level and not only at the layer level.
      *
+     * @param delegate queue to wrap
      * @param look look to draw with
      * @return the decorator, or the original queue when the look is off
      */
@@ -119,6 +120,7 @@ public class HandCommands implements RenderCommandQueue {
      * was built for, the vanilla layer goes through untouched. That is what keeps a decorator that
      * outlives its pass from repainting anything else.
      *
+     * @param layer vanilla layer
      * @return our layer, or the vanilla one when the pass is not running with this look
      */
     protected RenderLayer hand(RenderLayer layer) {

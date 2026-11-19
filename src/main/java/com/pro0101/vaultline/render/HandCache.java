@@ -16,6 +16,7 @@ import java.util.function.Function;
  * {@link HandFx.Look#OFF} never reaches the builder at all, so switching the toggles cannot carry a
  * pipeline, a sampler or a shader from the previous look into the next one.
  *
+ * @param <T> object being built
  */
 public final class HandCache<T> {
     private final Map<HandFx.Look, T> built = new EnumMap<>(HandFx.Look.class);
@@ -23,6 +24,7 @@ public final class HandCache<T> {
     /**
      * Returns the object of a look, building it once if needed.
      *
+     * @param look look to resolve
      * @param builder build to run on a miss
      * @param fallback value used for {@link HandFx.Look#OFF} and after a failed build
      * @return the cached object, the freshly built one, or the fallback

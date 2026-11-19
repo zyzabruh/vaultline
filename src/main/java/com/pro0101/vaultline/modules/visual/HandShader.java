@@ -57,6 +57,7 @@ public class HandShader extends Module {
      * <p>Both toggles off still gives the module a visible look: an enabled module that draws
      * nothing would be a setting the user has to guess.
      *
+     * @return current hand settings
      */
     public HandFx.Settings current() {
         return new HandFx.Settings(handFill(), handOutline());

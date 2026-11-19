@@ -264,6 +264,7 @@ public final class Baritone {
     /**
      * Checks whether the player is fully positioned on a block.
      *
+     *
      * @param pos source block position
      * @return true when the player is above the block
      */

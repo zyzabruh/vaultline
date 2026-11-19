@@ -461,6 +461,7 @@ public class FlowESP extends Module {
     /**
      * Finds every connected flow in one chunk and replaces that chunk's old records.
      *
+     *
      * @param nether whether this is the Nether
      */
     private void scanChunk(WorldChunk chunk, int chunkX, int chunkZ, String dimension, boolean nether) {
@@ -679,6 +680,7 @@ public class FlowESP extends Module {
     /**
      * Returns the alpha multiplier for a flow at a given distance.
      *
+     *
      * @param distanceSquared squared distance from the player
      * @return multiplier between zero and one
      */
@@ -818,6 +820,7 @@ public class FlowESP extends Module {
         }
     }
 
+    /** Reads the cache written by a previous run. */
     private void load() {
         File file;
 
@@ -877,6 +880,10 @@ public class FlowESP extends Module {
         return Integer.toString(this.flows.size());
     }
 
+    /**
+     * Saves the cache when the connection ends.
+     *
+     */
     @EventHandler
     private void onGameLeft(GameLeftEvent event) {
         if (this.save.get()) this.save();

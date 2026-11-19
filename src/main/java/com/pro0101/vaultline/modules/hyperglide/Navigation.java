@@ -328,6 +328,9 @@ public class Navigation extends Module {
         event.cancel();
     }
 
+    /**
+     * @param event 2D render event
+     */
     @EventHandler
     private void onRender2D(Render2DEvent event) {
         if (!this.render.get() || !Client.nether() ||
@@ -752,6 +755,8 @@ public class Navigation extends Module {
     /**
      * Formats seconds using compact hour, minute and second units.
      *
+     *
+     * @param seconds seconds to format
      */
     private String time(float seconds) {
         int time = Math.max(0, Math.round(seconds));

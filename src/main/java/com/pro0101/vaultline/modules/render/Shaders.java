@@ -43,8 +43,11 @@ import net.minecraft.entity.vehicle.MinecartEntity;
 public class Shaders extends Module {
     /** Presets that decide which of the three layers are drawn. */
     public enum Mode {
+        /** Solid rim only. */
         Outline,
+        /** Soft halo only. */
         Glow,
+        /** Translucent body only, the see-through look. */
         Chams,
         Full,
         /** Wide bright rim, tight halo and a faint body, for a neon sign look. */
@@ -294,6 +297,7 @@ public class Shaders extends Module {
      * its shader setting is hidden while it is selected. Every other preset keeps the shader
      * chosen in the setting, so switching to Bloom and back leaves the old choice intact.
      *
+     * @return chain style
      */
     public ChamsChain.Style chainStyle() {
         if (this.mode.get() == Mode.Bloom) return ChamsChain.Style.Bloom;
@@ -431,6 +435,7 @@ public class Shaders extends Module {
      * <p>The offset per entity id keeps neighbouring players from sharing the exact same colour,
      * which is what makes two overlapping outlines readable.
      *
+     * @param entity entity being drawn
      * @return hue in the range {@code [0, 1)}
      */
     private float hue(Entity entity) {
@@ -490,6 +495,7 @@ public class Shaders extends Module {
 
     /**
      * Classifies an entity against the enabled categories and the distance limit.
+     *
      *
      * @return its category, or null when it is not targeted
      */

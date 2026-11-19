@@ -88,6 +88,10 @@ public class FastFrame extends Module {
         this.off = this.held(Hand.OFF_HAND);
     }
 
+    /**
+     * Tracks item frame placement attempts.
+     *
+     */
     @EventHandler
     private void onPacket(PacketEvent.Send event) {
         if (event.packet instanceof PlayerInteractBlockC2SPacket packet) {
@@ -126,6 +130,9 @@ public class FastFrame extends Module {
         this.queue.addLast(new Pending(pos, this.frames(pos), life));
     }
 
+    /**
+     * Processes pending item frame placements.
+     */
     private void process() {
         Iterator<Pending> iterator = this.queue.iterator();
 
@@ -180,6 +187,7 @@ public class FastFrame extends Module {
 
     /**
      * Finds the newly spawned empty item frame for a placement.
+     *
      *
      * @return matching new item frame, or null when unavailable
      */
@@ -285,6 +293,7 @@ public class FastFrame extends Module {
     /**
      * Checks whether a hand currently holds an item frame.
      *
+     *
      * @return true when the hand contains an item frame
      */
     private boolean held(Hand hand) {
@@ -295,6 +304,7 @@ public class FastFrame extends Module {
     /**
      * Checks whether a hand held an item frame before the interaction.
      *
+     *
      * @return true when the hand previously contained an item frame
      */
     private boolean cached(Hand hand) {
@@ -303,6 +313,9 @@ public class FastFrame extends Module {
 
 
 
+    /**
+     * Stores a pending item frame placement.
+     */
     private static class Pending {
         private final BlockPos pos;
 

@@ -122,6 +122,7 @@ public final class ChamsChain {
      * Returns the chain for the requested shader and scalars, rebuilding it when they or the frame
      * size changed.
      *
+     *
      * @param externalTargets targets the game provides to the effect
      * @param style shader the chain is built around
      * @param radius glow radius in pixels

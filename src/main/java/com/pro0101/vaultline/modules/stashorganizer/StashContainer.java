@@ -65,6 +65,7 @@ public class StashContainer {
      */
     public final Map<String, Integer> leftReasons = new LinkedHashMap<>();
 
+    /** Records why stacks were left in this chest. */
     public void explain(String reason, int stacks) {
         if (reason == null || stacks <= 0) return;
 

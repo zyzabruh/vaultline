@@ -33,6 +33,7 @@ public final class Hotbar {
     /**
      * Finds the first matching stack inside a hotbar range.
      *
+     *
      * @param first first hotbar slot
      * @param last last hotbar slot
      * @return matching hotbar slot, or -1 when unavailable
@@ -52,6 +53,7 @@ public final class Hotbar {
 
     /**
      * Finds a matching stack while checking the selected slot first.
+     *
      *
      * @return matching hotbar slot, or -1 when unavailable
      */

@@ -78,6 +78,9 @@ public class FastPortal extends Module {
         this.validate();
     }
 
+    /**
+     * Clears the portal frame and placement state.
+     */
     @Override
     public void onDeactivate() {
         this.portal.clear();
@@ -123,6 +126,11 @@ public class FastPortal extends Module {
         this.sync = timeout;
     }
 
+    /**
+     * Renders the remaining incomplete portal frame positions.
+     *
+     * @param event 3D render event
+     */
     @EventHandler
     private void onRender(Render3DEvent event) {
         if (!this.box.enabled()) return;
@@ -192,6 +200,9 @@ public class FastPortal extends Module {
         }
     }
 
+    /**
+     * Advances past frame positions that already contain obsidian.
+     */
     private void skip() {
         while (this.index < this.portal.size() &&
             this.obsidian(this.portal.get(this.index))) {
