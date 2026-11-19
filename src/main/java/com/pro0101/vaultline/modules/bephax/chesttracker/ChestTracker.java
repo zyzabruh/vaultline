@@ -337,15 +337,7 @@ public class ChestTracker extends Module {
                         String containerType = getContainerType(trackPos);
                         data.trackContainer(trackPos, currentDim, containerType, items);
                         if (debugMode.get()) info("Manually tracked " + containerType + " (" + items.size() + " items)");
-                        int closeDelay = autoOpenCloseDelay.get();
-                        if (closeDelay == 0) {
-                            mc.player.closeHandledScreen();
-                            if (debugMode.get()) info("Closed immediately (0 tick delay)");
-                        } else {
-                            shouldAutoClose = true;
-                            ticksUntilClose = closeDelay;
-                            if (debugMode.get()) info("Set shouldAutoClose=true, ticksUntilClose=" + closeDelay);
-                        }
+                        this.scheduleAutoClose();
                         this.clearPending();
                     } else {
                         this.clearPending();
@@ -463,20 +455,23 @@ public class ChestTracker extends Module {
         data.trackContainer(trackPos, currentDim, containerType, items);
         if (debugMode.get()) info("Tracked " + containerType + " (" + items.size() + " items)");
         if (wasAutoOpened) {
-            int closeDelay = autoOpenCloseDelay.get();
-            if (debugMode.get()) info("Scheduling auto-close with delay: " + closeDelay + " ticks");
-            if (closeDelay == 0) {
-                mc.player.closeHandledScreen();
-                if (debugMode.get()) info("Closed immediately (0 tick delay)");
-            } else {
-                shouldAutoClose = true;
-                ticksUntilClose = closeDelay;
-                if (debugMode.get()) info("Set shouldAutoClose=true, ticksUntilClose=" + closeDelay);
-            }
+            this.scheduleAutoClose();
         }
         this.clearPending();
     }
 
+
+    private void scheduleAutoClose() {
+        int closeDelay = autoOpenCloseDelay.get();
+        if (closeDelay == 0) {
+            mc.player.closeHandledScreen();
+            if (debugMode.get()) info("Closed immediately (0 tick delay)");
+        } else {
+            shouldAutoClose = true;
+            ticksUntilClose = closeDelay;
+            if (debugMode.get()) info("Set shouldAutoClose=true, ticksUntilClose=" + closeDelay);
+        }
+    }
     /**
      * Drops any half-finished interaction so it cannot be matched with a
      * screen or a container position later on.
