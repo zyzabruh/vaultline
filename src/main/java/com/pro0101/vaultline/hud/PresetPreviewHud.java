@@ -138,15 +138,6 @@ public class PresetPreviewHud extends HudElement {
         }
     }
 
-    /**
-     * Builds one preset row.
-     *
-     * @param name preset name
-     * @param selected whether this preset is the active one
-     * @param moduleOn whether the owning module is on
-     * @param swatch colour of the preset, may be null
-     * @return the row
-     */
     private static Line row(String name, boolean selected, boolean moduleOn, SettingColor swatch) {
         String text = (selected ? "> " : "  ") + name;
         Color color = moduleOn ? (selected ? ACTIVE : INACTIVE) : OFF;
@@ -154,24 +145,10 @@ public class PresetPreviewHud extends HudElement {
         return new Line(text, color, true, selected ? swatch : null);
     }
 
-    /**
-     * Returns the marker appended to a section header.
-     *
-     * @param module module of the section, may be null
-     * @return empty when the module is on, a dimmed marker otherwise
-     */
     private static String stateOf(Module module) {
         return module != null && module.isActive() ? "" : "  (off)";
     }
 
-    /**
-     * One rendered row.
-     *
-     * @param text text to draw
-     * @param color text colour
-     * @param indent whether the row is indented under a header
-     * @param swatch colour square, may be null
-     */
     private record Line(String text, Color color, boolean indent, SettingColor swatch) {
     }
 }

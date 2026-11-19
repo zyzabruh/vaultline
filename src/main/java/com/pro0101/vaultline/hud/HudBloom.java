@@ -17,16 +17,6 @@ public final class HudBloom {
 
     private HudBloom() {}
 
-    /**
-     * Draws the halo behind a panel.
-     *
-     * @param renderer HUD renderer
-     * @param x panel left
-     * @param y panel top
-     * @param width panel width
-     * @param height panel height
-     * @param color accent colour of the panel
-     */
     public static void panel(HudRenderer renderer, double x, double y, double width, double height, Color color) {
         for (int i = 0; i < GROW.length; i++) {
             double grow = GROW[i];
@@ -41,11 +31,6 @@ public final class HudBloom {
     /**
      * Draws text with a soft halo of its own colour.
      *
-     * @param renderer HUD renderer
-     * @param text text to draw
-     * @param x text left
-     * @param y text top
-     * @param color text colour
      * @param shadow whether the game shadow is drawn too
      * @return width of the text, as {@link HudRenderer#text} returns it
      */

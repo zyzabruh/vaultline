@@ -7,7 +7,6 @@ import net.minecraft.command.CommandSource;
 
 import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 
-/** Opens the ported HUD editor. */
 public class HudEditorCommand extends Command {
     public HudEditorCommand() {
         super("hud-editor", "Opens the ported HUD editor.", "hudedit");

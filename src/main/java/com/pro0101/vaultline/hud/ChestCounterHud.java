@@ -47,7 +47,6 @@ public class ChestCounterHud extends HudElement {
     private static final Color SINGLE_COLOR = new Color(220, 220, 220);
     private static final double PADDING = 2;
 
-    /** How long a scan stays valid, in milliseconds. */
     private static final long RESCAN_MS = 1000;
 
     /** How far the player may move before the scan is redone, in blocks. */
@@ -124,12 +123,6 @@ public class ChestCounterHud extends HudElement {
         HudBloom.text(renderer, singleLine, textX, textY, SINGLE_COLOR, true);
     }
 
-    /**
-     * Reports whether the cached count is stale.
-     *
-     * @param pos current player position
-     * @return true when the world should be scanned again
-     */
     private boolean shouldScan(BlockPos pos) {
         if (this.lastPos == null) return true;
         if (System.currentTimeMillis() - this.lastScan >= RESCAN_MS) return true;
