@@ -206,13 +206,6 @@ class HandShaderValidityTest {
         }
     }
 
-    /**
-     * Collects the captures of every match.
-     *
-     * @param pattern pattern to run
-     * @param text text to search
-     * @return the captures, in source order
-     */
     private static Set<String> find(Pattern pattern, String text) {
         Set<String> found = new LinkedHashSet<>();
         Matcher matcher = pattern.matcher(text);
@@ -225,9 +218,6 @@ class HandShaderValidityTest {
     /**
      * Reads a shader stage that ships with the mod.
      *
-     * @param id shader identifier
-     * @param extension file extension
-     * @return its source
      * @throws IOException when the resource is missing
      */
     private static String source(Identifier id, String extension) throws IOException {
@@ -243,7 +233,6 @@ class HandShaderValidityTest {
     /**
      * Opens the Minecraft jar the game classes come from, so its shader includes can be read.
      *
-     * @return the jar
      * @throws IOException when the jar cannot be opened
      */
     private static ZipFile minecraftJar() throws IOException {
@@ -256,14 +245,6 @@ class HandShaderValidityTest {
         }
     }
 
-    /**
-     * Reads one Minecraft shader include.
-     *
-     * @param jar Minecraft jar
-     * @param name include name without extension
-     * @return its text, or null when it does not exist
-     * @throws IOException when the entry cannot be read
-     */
     private static String minecraftInclude(ZipFile jar, String name) throws IOException {
         ZipEntry entry = jar.getEntry("assets/minecraft/shaders/include/" + name + ".glsl");
 
@@ -274,11 +255,6 @@ class HandShaderValidityTest {
         }
     }
 
-    /**
-     * The attribute types the entity layout implies.
-     *
-     * @return attribute name to GLSL type
-     */
     private static Map<String, String> attributeTypes() {
         Map<String, String> types = new LinkedHashMap<>();
 
@@ -298,8 +274,6 @@ class HandShaderValidityTest {
      * <p>Preprocessor lines are kept on purpose: the version directive is one, and it has to be the
      * first thing the loader sees.
      *
-     * @param text shader source
-     * @return that line
      */
     private static String firstLine(String text) {
         for (String line : text.split("\n")) {
@@ -314,10 +288,6 @@ class HandShaderValidityTest {
     /**
      * Whether a pair of delimiters is balanced, ignoring comments.
      *
-     * @param text source
-     * @param open opening character
-     * @param close closing character
-     * @return true when balanced
      */
     private static boolean balanced(String text, char open, char close) {
         String stripped = stripComments(text);
@@ -332,13 +302,6 @@ class HandShaderValidityTest {
         return depth == 0;
     }
 
-    /**
-     * Counts non-overlapping occurrences.
-     *
-     * @param text source
-     * @param needle text to count
-     * @return the count
-     */
     private static int count(String text, String needle) {
         int total = 0;
         int index = text.indexOf(needle);
@@ -357,8 +320,6 @@ class HandShaderValidityTest {
      * <p>This is the check that would have caught a renamed attribute or sampler: a typo adds a use of
      * a name nothing declares, and the driver would otherwise answer with zeros or an empty texture.
      *
-     * @param text shader source
-     * @return the unexplained identifiers
      */
     private static List<String> unknownIdentifiers(String text) {
         String stripped = stripComments(text).replaceAll("(?m)^\\s*#.*$", "");
@@ -403,8 +364,6 @@ class HandShaderValidityTest {
     /**
      * Removes line and block comments, so neither braces nor identifiers inside them are counted.
      *
-     * @param text source
-     * @return the source without comments
      */
     private static String stripComments(String text) {
         return text.replaceAll("(?s)/\\*.*?\\*/", " ").replaceAll("(?m)//.*$", " ");

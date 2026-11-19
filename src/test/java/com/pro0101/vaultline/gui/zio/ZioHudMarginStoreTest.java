@@ -11,7 +11,6 @@ import java.nio.file.Path;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/** The safe margins surviving a restart. */
 class ZioHudMarginStoreTest {
     @TempDir
     Path folder;

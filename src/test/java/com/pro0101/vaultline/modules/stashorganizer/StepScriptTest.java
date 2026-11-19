@@ -9,7 +9,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/** The step contract every converted component relies on. */
 class StepScriptTest {
     private final List<String> calls = new ArrayList<>();
 

@@ -201,8 +201,6 @@ class HandChainTest {
     /**
      * Builds a real layer around a minimal pipeline, so the tests move actual layer objects.
      *
-     * @param name layer name
-     * @return the layer
      */
     private static RenderLayer layer(String name) {
         RenderPipeline pipeline = RenderPipeline.builder()
@@ -215,13 +213,6 @@ class HandChainTest {
         return RenderLayer.of("vaultline_test_" + name, RenderSetup.builder(pipeline).build());
     }
 
-    /**
-     * Reads a resource from the classpath.
-     *
-     * @param path absolute resource path
-     * @return the content
-     * @throws IOException when the resource is missing
-     */
     private static String resource(String path) throws IOException {
         try (InputStream stream = HandChainTest.class.getResourceAsStream(path)) {
             assertNotNull(stream, "missing resource " + path);
@@ -233,8 +224,6 @@ class HandChainTest {
     /**
      * Builds the JVM descriptor of a method, the way a mixin writes it.
      *
-     * @param method method to describe
-     * @return the descriptor
      */
     private static String descriptor(Method method) {
         StringBuilder builder = new StringBuilder("(");
@@ -244,12 +233,6 @@ class HandChainTest {
         return builder.append(')').append(type(method.getReturnType())).toString();
     }
 
-    /**
-     * Describes one type in JVM notation.
-     *
-     * @param type type to describe
-     * @return its descriptor
-     */
     private static String type(Class<?> type) {
         if (type == void.class) return "V";
         if (type == float.class) return "F";

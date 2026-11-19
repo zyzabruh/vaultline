@@ -8,7 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/** The font configuration the atlas is built from. */
 class ZioFontConfigTest {
     @BeforeEach
     @AfterEach

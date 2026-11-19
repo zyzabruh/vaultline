@@ -56,7 +56,6 @@ class SkyboxShaderCompileTest {
     /**
      * Creates the scratch directory and opens the Minecraft jar the includes live in.
      *
-     * @throws IOException when either fails
      */
     @BeforeAll
     static void prepare() throws IOException {
@@ -64,11 +63,6 @@ class SkyboxShaderCompileTest {
         minecraft = minecraftJar();
     }
 
-    /**
-     * Every skybox stage compiles.
-     *
-     * @throws Exception when the compiler cannot be run
-     */
     @Test
     void everyStageCompiles() throws Exception {
         Path tool = tool();
@@ -120,9 +114,7 @@ class SkyboxShaderCompileTest {
     /**
      * Collects one stage's interface declarations.
      *
-     * @param source shader source
      * @param qualifier {@code in} or {@code out}
-     * @return type by variable name
      */
     private static Map<String, String> varyings(String source, String qualifier) {
         Pattern pattern = Pattern.compile(
@@ -140,7 +132,6 @@ class SkyboxShaderCompileTest {
     /**
      * Writes one stage out preprocessed and compiles it.
      *
-     * @param tool compiler
      * @param file shader file name under the skybox core directory
      * @param stage {@code vert} or {@code frag}
      * @param failures list the failure is added to
@@ -165,15 +156,6 @@ class SkyboxShaderCompileTest {
         return staged;
     }
 
-    /**
-     * Runs the compiler and waits for it.
-     *
-     * @param tool compiler
-     * @param arguments its arguments
-     * @return the exit code and output
-     * @throws IOException when the process cannot be started
-     * @throws InterruptedException when the wait is interrupted
-     */
     private static Run run(Path tool, List<String> arguments) throws IOException, InterruptedException {
         List<String> command = new ArrayList<>();
         command.add(tool.toString());
@@ -200,8 +182,6 @@ class SkyboxShaderCompileTest {
      * <p>The root file's version directive is kept and every include's is dropped: a hashed include
      * carrying {@code #version} would be a redefinition in the middle of the translation unit.
      *
-     * @param source shader source
-     * @return the standalone GLSL
      * @throws IOException when an import cannot be resolved
      */
     private static String preprocess(String source) throws IOException {
@@ -211,8 +191,6 @@ class SkyboxShaderCompileTest {
     /**
      * Replaces every import with the include's text, recursively.
      *
-     * @param source source to expand
-     * @param depth recursion depth
      * @return the expanded text without version directives
      * @throws IOException when an import cannot be read
      */
@@ -237,9 +215,6 @@ class SkyboxShaderCompileTest {
     /**
      * Reads one include, from the Minecraft jar or from the addon's own resources.
      *
-     * @param namespace include namespace
-     * @param path include path
-     * @return its text
      * @throws IOException when the include does not exist
      */
     private static String readInclude(String namespace, String path) throws IOException {
@@ -258,13 +233,6 @@ class SkyboxShaderCompileTest {
         return read("/assets/" + namespace + "/shaders/" + resolved);
     }
 
-    /**
-     * Reads a resource from the test classpath.
-     *
-     * @param path absolute resource path
-     * @return the text
-     * @throws IOException when the resource is missing
-     */
     private static String read(String path) throws IOException {
         try (InputStream stream = SkyboxShaderCompileTest.class.getResourceAsStream(path)) {
             assertNotNull(stream, "missing resource " + path);
@@ -273,11 +241,6 @@ class SkyboxShaderCompileTest {
         }
     }
 
-    /**
-     * Finds the compiler, preferring the project-local copy.
-     *
-     * @return the executable, or null when it is not installed
-     */
     private static Path tool() {
         if (Files.isExecutable(TOOL)) return TOOL.toAbsolutePath();
 
@@ -289,7 +252,6 @@ class SkyboxShaderCompileTest {
     /**
      * Opens the Minecraft jar the game classes come from, so the shader includes can be read from it.
      *
-     * @return the jar
      * @throws IOException when the jar cannot be opened
      */
     private static ZipFile minecraftJar() throws IOException {
@@ -304,18 +266,7 @@ class SkyboxShaderCompileTest {
         }
     }
 
-    /**
-     * The result of one compiler run.
-     *
-     * @param exit exit code
-     * @param output what the compiler said
-     */
     private record Run(int exit, String output) {
-        /**
-         * Whether the compiler refused the input.
-         *
-         * @return true on a non-zero exit or a reported error
-         */
         boolean failed() {
             return exit != 0 || output.contains("ERROR:");
         }

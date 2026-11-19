@@ -10,11 +10,9 @@ import java.util.List;
  * back exactly the calls that would have reached the renderer.
  */
 final class RecordingCanvas implements ZioCanvas {
-    /** A filled rectangle as it was submitted. */
     record Fill(int x1, int y1, int x2, int y2, int argb, int gradientTo) {
     }
 
-    /** A line of text as it was submitted. */
     record Line(String value, float x, float y, int argb, float scale) {
     }
 

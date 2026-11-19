@@ -175,14 +175,6 @@ class SkyboxTest {
         assertEquals(0.0F, negative.red(), 0.001F, "channels must clamp at zero");
     }
 
-    /**
-     * Whether a pair of delimiters is balanced.
-     *
-     * @param text source
-     * @param open opening character
-     * @param close closing character
-     * @return true when balanced
-     */
     private static boolean balanced(String text, char open, char close) {
         int depth = 0;
 
@@ -195,13 +187,6 @@ class SkyboxTest {
         return depth == 0;
     }
 
-    /**
-     * Reads a resource from the classpath.
-     *
-     * @param path absolute resource path
-     * @return its text
-     * @throws IOException when the resource is missing
-     */
     private static String resource(String path) throws IOException {
         try (InputStream stream = SkyboxTest.class.getResourceAsStream(path)) {
             assertNotNull(stream, "missing resource " + path);

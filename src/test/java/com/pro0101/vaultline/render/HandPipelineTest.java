@@ -46,9 +46,6 @@ class HandPipelineTest {
     private static final Pattern SAMPLER = Pattern.compile("(?m)^\\s*uniform\\s+sampler2D\\s+(\\w+)\\s*;");
     private static final Pattern IMPORT = Pattern.compile("#moj_import\\s+<minecraft:(\\w+)\\.glsl>");
 
-    /**
-     * The off look has no pipeline to describe.
-     */
     @Test
     void offLookHasNoSpec() {
         assertNull(HandFx.spec(HandFx.Look.OFF));
@@ -242,9 +239,6 @@ class HandPipelineTest {
         assertTrue(outline.contains("vertexNormal"), "outline stage lost the normal it traces");
     }
 
-    /**
-     * Both toggles means both terms, in one program.
-     */
     @Test
     void glowStageHasBothTerms() throws IOException {
         String glow = read(HandFx.spec(HandFx.Look.GLOW).fragmentShader(), "fsh");
@@ -306,14 +300,6 @@ class HandPipelineTest {
         assertFalse(outline.contains("mix(texel.rgb, TINT"), "outline mixes a fill tint");
     }
 
-    /**
-     * Reads one shader stage of a spec.
-     *
-     * @param id shader identifier
-     * @param extension file extension
-     * @return the source
-     * @throws IOException when the resource is missing or unreadable
-     */
     private static String read(Identifier id, String extension) throws IOException {
         String path = "/assets/" + id.getNamespace() + "/shaders/" + id.getPath() + "." + extension;
 
@@ -324,13 +310,6 @@ class HandPipelineTest {
         }
     }
 
-    /**
-     * Collects the first capture group of every match.
-     *
-     * @param pattern pattern to run
-     * @param source text to search
-     * @return the captures, in source order
-     */
     private static Set<String> find(Pattern pattern, String source) {
         Set<String> found = new LinkedHashSet<>();
         Matcher matcher = pattern.matcher(source);
