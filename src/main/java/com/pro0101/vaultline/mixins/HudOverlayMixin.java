@@ -76,11 +76,6 @@ public abstract class HudOverlayMixin {
         if (module != null && module.noOverlayMessage()) info.cancel();
     }
 
-    /**
-     * Reports whether the scoreboard should be skipped.
-     *
-     * @return true when the scoreboard is off
-     */
     private boolean vaultline$off() {
         RenderOptimizer module = Modules.get().get(RenderOptimizer.class);
 
