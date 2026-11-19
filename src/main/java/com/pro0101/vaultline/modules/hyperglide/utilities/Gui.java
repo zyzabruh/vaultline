@@ -10,9 +10,6 @@ public final class Gui {
 
     private Gui() {}
 
-    /**
-     * Checks whether chat or a Meteor GUI screen can receive mouse input.
-     */
     public static boolean interactive() {
         if (client.currentScreen == null) return false;
         if (client.currentScreen instanceof ChatScreen) return true;
@@ -22,9 +19,6 @@ public final class Gui {
         );
     }
 
-    /**
-     * Checks whether a vanilla screen other than chat is open.
-     */
     public static boolean vanilla() {
         if (client.currentScreen == null ||
             client.currentScreen instanceof ChatScreen) return false;

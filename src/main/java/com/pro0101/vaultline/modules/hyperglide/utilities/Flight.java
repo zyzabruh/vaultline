@@ -282,9 +282,6 @@ public final class Flight {
         return this.prepared();
     }
 
-    /**
-     * Checks whether the chestplate and elytra are in place.
-     */
     private boolean prepared() {
         if (Elytra.equipped()) return false;
 

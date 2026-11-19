@@ -395,9 +395,6 @@ public class Shaders extends Module {
         };
     }
 
-    /**
-     * Returns the body brightness to hand to the chain.
-     */
     public float chainFillBrightness() {
         return this.fillBrightness.get().floatValue();
     }

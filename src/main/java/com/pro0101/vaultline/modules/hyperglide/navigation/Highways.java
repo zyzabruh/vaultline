@@ -260,9 +260,6 @@ public final class Highways {
         return number + suffix;
     }
 
-    /**
-     * Checks whether a configured square exists at a radius.
-     */
     private static boolean exists(float radius) {
         for (float square : squares) {
             if (square == radius) return true;

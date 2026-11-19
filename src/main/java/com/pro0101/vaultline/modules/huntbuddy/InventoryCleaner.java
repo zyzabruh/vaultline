@@ -170,9 +170,6 @@ public class InventoryCleaner extends Module {
         this.thrownThisPass++;
     }
 
-    /**
-     * Checks whether the open screen is one the option allows cleaning in.
-     */
     private boolean screen() {
         if (this.mc.currentScreen == null) return this.inventoryScreen.get();
         if (this.mc.currentScreen instanceof InventoryScreen) return this.inventoryScreen.get();

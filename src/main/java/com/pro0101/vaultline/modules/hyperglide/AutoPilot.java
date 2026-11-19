@@ -368,9 +368,6 @@ public class AutoPilot extends Module {
         return best;
     }
 
-    /**
-     * Checks whether the player is aligned with a highway leg.
-     */
     private boolean aligned(Route.Leg leg) {
         if (this.mc.player.getY() < level - 1.0) {
             return false;
@@ -1308,9 +1305,6 @@ public class AutoPilot extends Module {
         this.join = false;
     }
 
-    /**
-     * Checks whether Baritone is processing or following a path.
-     */
     private boolean pathing() {
         return Baritone.elytra() || Baritone.pathing();
     }

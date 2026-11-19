@@ -241,10 +241,6 @@ public final class ChamsChain {
         }
     }
 
-    /**
-     * Returns the fragment shader of a single-pass style.
-     *
-     */
     private static Identifier fragment(Style style) {
         return switch (style) {
             case Edge -> EDGE_FRAGMENT;

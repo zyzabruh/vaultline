@@ -25,9 +25,6 @@ public record Segment(Vec2f start, Vec2f end) {
         return vector.multiply(1.0F / length);
     }
 
-    /**
-     * Checks whether another segment continues in the same direction.
-     */
     public boolean forward(Segment other) {
         Vec2f first = this.vector();
         Vec2f second = other.vector();

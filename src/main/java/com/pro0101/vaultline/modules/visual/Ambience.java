@@ -142,10 +142,6 @@ public class Ambience extends Module {
         return this.fog.get();
     }
 
-    /**
-     * Returns the fog colour to hand to the renderer.
-     *
-     */
     public SettingColor fog() {
         return this.fogColor.get();
     }

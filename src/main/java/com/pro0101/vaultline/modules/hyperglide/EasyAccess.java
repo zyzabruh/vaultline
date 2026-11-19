@@ -236,9 +236,6 @@ public class EasyAccess extends Module {
         this.mc.player.swingHand(Hand.MAIN_HAND);
     }
 
-    /**
-     * Checks whether an entity is a container or merchant.
-     */
     private boolean container(Entity entity) {
         if (!entity.isAlive() || entity.isSpectator()) {
             return false;

@@ -84,9 +84,6 @@ public final class Takeoff {
         return this.active;
     }
 
-    /**
-     * Checks whether the sequence may begin on the ground.
-     */
     public boolean ground() {
         return this.ground;
     }

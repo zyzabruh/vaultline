@@ -47,10 +47,6 @@ public final class Player {
         client.player.setBodyYaw(yaw);
     }
 
-    /**
-     * Checks whether the player is in water or lava.
-     *
-     */
     public static boolean liquid() {
         return client.player.isTouchingWater()
             || client.player.isInLava();

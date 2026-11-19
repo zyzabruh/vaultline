@@ -23,9 +23,6 @@ public final class Inventory {
             == client.player.playerScreenHandler;
     }
 
-    /**
-     * Returns an item stack from a player screen slot.
-     */
     public static ItemStack stack(int slot) {
         return handler().getSlot(slot).getStack();
     }

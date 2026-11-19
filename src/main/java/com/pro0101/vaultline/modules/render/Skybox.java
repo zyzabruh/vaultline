@@ -206,10 +206,6 @@ public class Skybox extends Module {
         return this.mode.get();
     }
 
-    /**
-     * Returns the tint applied to the sky, for previews.
-     *
-     */
     public SettingColor tintColor() {
         return this.tint.get();
     }

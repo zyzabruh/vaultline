@@ -31,9 +31,6 @@ public final class Elytra {
         ));
     }
 
-    /**
-     * Checks whether a stack can be worn as a chestplate.
-     */
     public static boolean chestplate(ItemStack stack) {
         if (stack.isEmpty() || stack.isOf(Items.ELYTRA)) {
             return false;

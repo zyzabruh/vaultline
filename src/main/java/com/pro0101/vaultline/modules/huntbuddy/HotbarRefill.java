@@ -316,9 +316,6 @@ public class HotbarRefill extends Module {
         if (refills > 0) this.waitTicks = this.pauseTicks.get();
     }
 
-    /**
-     * Checks whether a hotbar stack is due for a top-up.
-     */
     private boolean wantsRefill(int slot, ItemStack stack) {
         int count = stack.getCount();
 
@@ -333,9 +330,6 @@ public class HotbarRefill extends Module {
         return count <= this.topUpAt.get() && count < stack.getMaxCount();
     }
 
-    /**
-     * Checks whether a stack is one of the kinds the option asks for.
-     */
     private boolean isConcerned(ItemStack stack) {
         Item item = stack.getItem();
         String path = Registries.ITEM.getId(item).getPath();
@@ -482,9 +476,6 @@ public class HotbarRefill extends Module {
         };
     }
 
-    /**
-     * Checks whether an inventory stack may feed a hotbar stack.
-     */
     private boolean isCandidate(ItemStack target, ItemStack candidate) {
         if (candidate.isEmpty() || candidate.getItem() != target.getItem()) return false;
         if (target.getMaxCount() <= 1) return true;

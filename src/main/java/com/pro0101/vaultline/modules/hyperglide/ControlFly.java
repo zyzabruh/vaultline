@@ -468,10 +468,6 @@ public class ControlFly extends Module {
         this.boost.expiry = this.mc.player.age + timeout;
     }
 
-    /**
-     * Stores how long the firework can boost the player.
-     *
-     */
     private void duration(ItemStack stack) {
         FireworksComponent fireworks = stack.get(DataComponentTypes.FIREWORKS);
 
@@ -819,9 +815,6 @@ public class ControlFly extends Module {
         if (changed) this.remember();
     }
 
-    /**
-     * Checks whether the rotation changed since the previous update.
-     */
     private boolean changed() {
         return !this.turn.active ||
             Math.abs(MathHelper.wrapDegrees(
@@ -990,18 +983,10 @@ public class ControlFly extends Module {
             && this.view.active && this.mc.player.isGliding();
     }
 
-    /**
-     * Returns the independent camera yaw used for movement control.
-     *
-     */
     public float yaw() {
         return this.view.active ? this.view.yaw : this.mc.player.getYaw();
     }
 
-    /**
-     * Returns the independent camera pitch used for movement control.
-     *
-     */
     public float pitch() {
         return this.view.active ? this.view.pitch : this.mc.player.getPitch();
     }
@@ -1024,9 +1009,6 @@ public class ControlFly extends Module {
         return tweaks != null && tweaks.halted();
     }
 
-    /**
-     * Checks whether a firework rocket is available in the hotbar.
-     */
     private boolean stocked() {
         return this.stack().isOf(Items.FIREWORK_ROCKET);
     }

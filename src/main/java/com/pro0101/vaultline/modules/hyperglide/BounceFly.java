@@ -689,9 +689,6 @@ public class BounceFly extends Module {
         }
     }
 
-    /**
-     * Checks whether the chest slot holds what the last swap asked for.
-     */
     private boolean swapped() {
         ItemStack worn = this.mc.player.getEquippedStack(EquipmentSlot.CHEST);
         return this.fakeWant ? GliderSwap.isGlider(worn) : GliderSwap.isChestPiece(worn);
@@ -1411,9 +1408,6 @@ public class BounceFly extends Module {
 
 
 
-    /**
-     * Stores the highway direction from the player's yaw.
-     */
     private void face() {
         float yaw = this.mc.player.getYaw();
         float sector = (yaw + 22.5F) / 45.0F;
@@ -1432,9 +1426,6 @@ public class BounceFly extends Module {
         this.nz = this.dz / len;
     }
 
-    /**
-     * Stores the snapped center line of the current highway.
-     */
     private void center() {
         double px = this.mc.player.getX();
         double pz = this.mc.player.getZ();
@@ -1486,9 +1477,6 @@ public class BounceFly extends Module {
         return this.isActive() && this.mc.player != null && this.freelook.get();
     }
 
-    /**
-     * Checks whether the custom camera rotation should be applied.
-     */
     public boolean camera() {
         return this.isActive() && this.mc.player != null && this.viewActive;
     }
@@ -1586,9 +1574,6 @@ public class BounceFly extends Module {
         );
     }
 
-    /**
-     * Checks whether a trail position is clear and supported.
-     */
     private boolean clear(BlockPos pos) {
         return !this.column(pos) && this.solid(pos.down());
     }

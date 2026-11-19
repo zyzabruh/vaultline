@@ -302,10 +302,6 @@ public final class Search {
         return path;
     }
 
-    /**
-     * Creates a direct standard route using a normal speed.
-     *
-     */
     private Route direct(Vec2f start, Vec2f end, float speed) {
         float distance = this.distance(start, end);
         Leg leg = new Route.Leg(start, end, null, Route.Type.Normal);
