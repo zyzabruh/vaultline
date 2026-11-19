@@ -7,7 +7,6 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.lenni0451.lambdaevents.EventHandler;
-//import meteordevelopment.orbit.EventHandler;
 import net.minecraft.item.Item;
 import xaero.common.minimap.waypoints.Waypoint;
 import meteordevelopment.meteorclient.MeteorClient;
@@ -854,7 +853,7 @@ public class BetterStashFinder extends Module
 
             writer.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            VaultlineAddon.LOG.error("Could not save the stash CSV", e);
         }
     }
 
@@ -866,7 +865,7 @@ public class BetterStashFinder extends Module
             GSON.toJson(chunks, writer);
             writer.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            VaultlineAddon.LOG.error("Could not save the stash JSON", e);
         }
     }
 

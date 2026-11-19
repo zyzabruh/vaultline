@@ -1,5 +1,6 @@
 package com.pro0101.vaultline.modules.bephax.searcharea;
 
+import com.pro0101.vaultline.VaultlineAddon;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import meteordevelopment.meteorclient.MeteorClient;
@@ -98,7 +99,7 @@ public class SearchAreaMode
             GSON.toJson(pd, writer);
             writer.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            VaultlineAddon.LOG.error("Could not save the search area path", e);
         }
     }
 
