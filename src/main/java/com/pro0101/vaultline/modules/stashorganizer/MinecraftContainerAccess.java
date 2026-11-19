@@ -83,8 +83,6 @@ public final class MinecraftContainerAccess implements ContainerAccess {
     }
 
     /**
-     * Opens a container and waits for its screen.
-     *
      * @return 1 when the screen is open, 0 while waiting, -1 on failure
      */
     @Override

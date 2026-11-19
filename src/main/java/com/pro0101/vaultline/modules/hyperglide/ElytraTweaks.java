@@ -277,8 +277,6 @@ public class ElytraTweaks extends Module {
     }
 
     /**
-     * Finishes any temporary spoof swap.
-     *
      * @param event post-tick event
      */
     @EventHandler
@@ -370,8 +368,6 @@ public class ElytraTweaks extends Module {
     }
 
     /**
-     * Changes automatic elytra deployment for Baritone.
-     *
      * @param active requested auto deploy state
      */
     public void deploy(boolean active) {
@@ -381,8 +377,6 @@ public class ElytraTweaks extends Module {
     }
 
     /**
-     * Checks whether collision avoidance has stopped movement.
-     *
      * @return true while movement is halted for collision avoidance
      */
     public boolean halted() {
@@ -390,8 +384,6 @@ public class ElytraTweaks extends Module {
     }
 
     /**
-     * Checks whether automatic takeoff is active.
-     *
      * @return true while takeoff input is active
      */
     public boolean deploying() {
@@ -403,8 +395,6 @@ public class ElytraTweaks extends Module {
     }
 
     /**
-     * Checks whether elytra flight is available.
-     *
      * @return true when any flight mode can be started
      */
     private boolean ready() {
@@ -412,8 +402,6 @@ public class ElytraTweaks extends Module {
     }
 
     /**
-     * Checks whether normal elytra equipment is required.
-     *
      * @return true when spoofing must stay disabled
      */
     private boolean normal() {
@@ -421,8 +409,6 @@ public class ElytraTweaks extends Module {
     }
 
     /**
-     * Checks whether spoof mode may currently run.
-     *
      * @return true when spoofing is enabled
      */
     private boolean spoofing() {
@@ -430,8 +416,6 @@ public class ElytraTweaks extends Module {
     }
 
     /**
-     * Checks whether Auto Pilot is currently active.
-     *
      * @return true while Auto Pilot controls movement
      */
     private boolean pilot() {
@@ -440,8 +424,6 @@ public class ElytraTweaks extends Module {
     }
 
     /**
-     * Checks whether Bounce Fly is currently active.
-     *
      * @return true while Bounce Fly is active
      */
     private boolean bounce() {
@@ -614,8 +596,6 @@ public class ElytraTweaks extends Module {
     }
 
     /**
-     * Equips an armor item from the hotbar.
-     *
      * @param slot hotbar slot containing the armor item
      * @return true when the equip interaction was sent
      */
@@ -637,8 +617,6 @@ public class ElytraTweaks extends Module {
     }
 
     /**
-     * Finds an elytra or chestplate in the hotbar.
-     *
      * @param elytra whether an elytra or chestplate is requested
      * @return matching hotbar slot, or -1 when unavailable
      */
@@ -649,8 +627,6 @@ public class ElytraTweaks extends Module {
 
 
     /**
-     * Equips the most damaged elytra for repair.
-     *
      * @return true when a repair swap starts
      */
     private boolean mend() {
@@ -729,8 +705,6 @@ public class ElytraTweaks extends Module {
     }
 
     /**
-     * Finds the healthiest replacement elytra in the inventory.
-     *
      * @return player inventory slot, or -1 when no safe spare exists
      */
     private int spare() {
@@ -744,8 +718,6 @@ public class ElytraTweaks extends Module {
     }
 
     /**
-     * Performs a normal click in the player inventory.
-     *
      * @param slot player screen slot to click
      * @return true when the click was sent
      */
@@ -943,8 +915,6 @@ public class ElytraTweaks extends Module {
 
 
     /**
-     * Tracks the firework currently boosting the player.
-     *
      * @param rocket player-owned firework rocket
      */
     public void track(FireworkRocketEntity rocket) {
@@ -958,8 +928,6 @@ public class ElytraTweaks extends Module {
     }
 
     /**
-     * Checks whether the tracked rocket is still active.
-     * 
      * @return true while the rocket is alive
      */
     private boolean active() {
@@ -967,8 +935,6 @@ public class ElytraTweaks extends Module {
     }
 
     /**
-     * Uses an available firework rocket.
-     *
      * @return true when the rocket was used
      */
     private boolean rocket() {
@@ -976,8 +942,6 @@ public class ElytraTweaks extends Module {
     }
 
     /**
-     * Uses an available firework rocket immediately.
-     *
      * @return true when the rocket interaction was accepted
      */
     private boolean firework() {
@@ -1032,8 +996,6 @@ public class ElytraTweaks extends Module {
     }
 
     /**
-     * Retries elytra deployment after the requested delay.
-     *
      * @param timeout ticks to wait before retrying
      */
     private void redeploy(int timeout) {
@@ -1044,8 +1006,6 @@ public class ElytraTweaks extends Module {
     }
 
     /**
-     * Controls jump input while escaping liquid.
-     *
      * @param pressed whether jump should remain held
      */
     private void swim(boolean pressed) {
@@ -1056,8 +1016,6 @@ public class ElytraTweaks extends Module {
     }
 
     /**
-     * Checks whether Baritone flight recovery can run.
-     *
      * @return true when recovery is available
      */
     private boolean recoverable() {
@@ -1068,8 +1026,6 @@ public class ElytraTweaks extends Module {
 
 
     /**
-     * Predicts whether a collision would cause damage.
-     *
      * @return true when predicted speed loss causes damage
      */
     private boolean danger(Vec3d motion) {
@@ -1085,8 +1041,6 @@ public class ElytraTweaks extends Module {
     }
 
     /**
-     * Checks projected hitbox rays for collisions.
-     *
      * @param motion movement vector to project
      */
     private int collision(Vec3d motion) {
@@ -1203,8 +1157,6 @@ public class ElytraTweaks extends Module {
     }
 
     /**
-     * Resumes elytra flight in a safe direction.
-     *
      * @param safe safe direction to continue flying
      */
     private void resume(PlayerMoveEvent event, Vec3d safe) {
@@ -1227,8 +1179,6 @@ public class ElytraTweaks extends Module {
     }
 
     /**
-     * Finds a safe direction to continue flying.
-     *
      * @return safe movement for continuing flight
      */
     private Vec3d safe() {
@@ -1258,8 +1208,6 @@ public class ElytraTweaks extends Module {
     }
 
     /**
-     * Keeps sneak pressed during collision recovery.
-     *
      * @param pressed whether sneak should stay pressed
      */
     private void sneak(boolean pressed) {
@@ -1268,8 +1216,6 @@ public class ElytraTweaks extends Module {
     }
 
     /**
-     * Checks whether collision avoidance should run.
-     *
      * @return true when collision avoidance is active
      */
     private boolean avoiding(PlayerMoveEvent event) {

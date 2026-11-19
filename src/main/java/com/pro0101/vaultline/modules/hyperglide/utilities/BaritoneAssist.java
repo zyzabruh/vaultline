@@ -25,8 +25,6 @@ public final class BaritoneAssist implements AbstractGameEventListener {
     }
 
     /**
-     * Aligns the player before Baritone follows its movement.
-     *
      * @param event Baritone player update event
      */
     @Override

@@ -196,8 +196,6 @@ public class ControlFly extends Module {
 
 
     /**
-     * Updates boost, takeoff and active flight control.
-     *
      * @param event pre-tick event
      */
     @EventHandler
@@ -263,8 +261,6 @@ public class ControlFly extends Module {
 
 
     /**
-     * Checks whether automatic takeoff is active.
-     *
      * @return true while takeoff input is active
      */
     public boolean deploying() {
@@ -410,8 +406,6 @@ public class ControlFly extends Module {
     }
 
     /**
-     * Controls horizontal movement and ceiling collision acceleration.
-     *
      * @param ceiling whether the player is colliding with a ceiling
      * @return adjusted horizontal movement, or null when unchanged
      */
@@ -444,8 +438,6 @@ public class ControlFly extends Module {
 
 
     /**
-     * Tracks the firework currently boosting the player.
-     *
      * @param rocket player-owned firework rocket
      */
     public void track(FireworkRocketEntity rocket) {
@@ -498,8 +490,6 @@ public class ControlFly extends Module {
     }
 
     /**
-     * Checks whether the tracked rocket is currently active.
-     *
      * @return true when the tracked rocket is alive
      */
     private boolean active() {
@@ -631,8 +621,6 @@ public class ControlFly extends Module {
     }
 
     /**
-     * Checks whether the movement direction changes sharply.
-     *
      * @param first previous movement direction
      * @return true when the turn requires a brake tick
      */
@@ -662,8 +650,6 @@ public class ControlFly extends Module {
 
 
     /**
-     * Selects manual pitch control or automatic altitude leveling.
-     *
      * @param boosted whether an active rocket is boosting the player
      * @param manual whether vertical movement input is controlling pitch
      */
@@ -807,8 +793,6 @@ public class ControlFly extends Module {
     }
 
     /**
-     * Searches pitch values for the best leveling result.
-     *
      * @param boosted whether rocket acceleration should be predicted
      * @param start first pitch value
      * @param count number of pitch increments
@@ -827,8 +811,6 @@ public class ControlFly extends Module {
     }
 
     /**
-     * Scores a leveling pitch from predicted flight behavior.
-     *
      * @param boosted whether rocket acceleration should be predicted
      */
     private double score(Vec3d velocity, float pitch, double desired, boolean boosted) {
@@ -921,8 +903,6 @@ public class ControlFly extends Module {
     }
 
     /**
-     * Calculates firework acceleration for one velocity axis.
-     *
      * @param rotation rotation direction on the same axis
      * @return acceleration applied to the axis
      */
@@ -933,8 +913,6 @@ public class ControlFly extends Module {
 
 
     /**
-     * Checks whether another rocket should be launched.
-     *
      * @param boosted whether an active rocket is boosting the player
      * @param redirect whether controlled movement changed direction
      * @return true when direction or speed requires another rocket
@@ -1015,8 +993,6 @@ public class ControlFly extends Module {
 
 
     /**
-     * Activates and initializes the independent camera rotation.
-     *
      * @return true when camera control is available
      */
     public boolean view() {
@@ -1024,8 +1000,6 @@ public class ControlFly extends Module {
     }
 
     /**
-     * Activates camera control for the current movement input.
-     *
      * @return true when camera control is available
      */
     private boolean view(Vec3d input) {
@@ -1058,8 +1032,6 @@ public class ControlFly extends Module {
     }
 
     /**
-     * Checks whether independent camera control is currently active.
-     *
      * @return true when the custom camera rotation should be used
      */
     public boolean camera() {
@@ -1097,8 +1069,6 @@ public class ControlFly extends Module {
 
 
     /**
-     * Checks whether Elytra Tweaks currently stops movement.
-     *
      * @return true while collision avoidance is stopping movement
      */
     private boolean halted() {

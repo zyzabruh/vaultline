@@ -38,8 +38,6 @@ public final class Packets {
     }
 
     /**
-     * Sends a player action directly without sequence handling.
-     *
      * @param pos block position
      * @param side block face
      */
@@ -187,8 +185,6 @@ public final class Packets {
     }
 
     /**
-     * Synchronizes a selected hotbar slot with the server.
-     *
      * @param slot hotbar slot to select
      */
     public static void slot(int slot) {

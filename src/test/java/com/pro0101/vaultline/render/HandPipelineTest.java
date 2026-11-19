@@ -301,8 +301,6 @@ class HandPipelineTest {
     }
 
     /**
-     * Reads one shader stage of a spec.
-     *
      * @throws IOException when the resource is missing or unreadable
      */
     private static String read(Identifier id, String extension) throws IOException {
@@ -316,8 +314,6 @@ class HandPipelineTest {
     }
 
     /**
-     * Collects the first capture group of every match.
-     *
      * @return the captures, in source order
      */
     private static Set<String> find(Pattern pattern, String source) {

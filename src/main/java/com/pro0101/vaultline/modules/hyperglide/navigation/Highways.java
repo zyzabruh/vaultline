@@ -43,8 +43,6 @@ public final class Highways {
     }
 
     /**
-     * Returns the highway network with segments removed.
-     *
      * @param radius radius to remove from the network
      */
     public static List<Road> roads(float radius) {

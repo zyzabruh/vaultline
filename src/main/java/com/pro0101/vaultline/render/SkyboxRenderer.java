@@ -92,11 +92,11 @@ public final class SkyboxRenderer {
     /**
      * Scales a tint into the accent the shaders draw with.
      *
+     *
      * @param red tint red, 0 to 1
      * @param green tint green, 0 to 1
      * @param blue tint blue, 0 to 1
      * @param scale brightness, time of day and rain folded into one factor
-     * @return the accent colour
      */
     public static Accent accent(float red, float green, float blue, float scale) {
         return new Accent(red * scale, green * scale, blue * scale);
@@ -120,8 +120,6 @@ public final class SkyboxRenderer {
     }
 
     /**
-     * How much a downpour dims the accent.
-     *
      * @param rainGradient rain gradient, 0 to 1
      * @return 1 when dry, 0.45 in the heaviest rain
      */
@@ -130,11 +128,8 @@ public final class SkyboxRenderer {
     }
 
     /**
-     * Hermite interpolation between two edges.
-     *
      * @param edge0 lower edge
      * @param edge1 upper edge
-     * @param value value to map
      * @return 0 below the lower edge, 1 above the upper one
      */
     private static double smoothstep(double edge0, double edge1, double value) {
@@ -144,9 +139,6 @@ public final class SkyboxRenderer {
     }
 
     /**
-     * Clamps a channel into [0, 1].
-     *
-     * @param value channel value
      * @return the clamped value
      */
     private static float clamp(float value) {
@@ -154,8 +146,6 @@ public final class SkyboxRenderer {
     }
 
     /**
-     * Reports whether every procedural skybox pipeline was built.
-     *
      * @return true when the skybox can be drawn
      */
     public static boolean available() {
@@ -163,8 +153,6 @@ public final class SkyboxRenderer {
     }
 
     /**
-     * Draws the sky for one mode.
-     *
      * @param mode skybox mode to draw
      * @param red tint red, from 0 to 1
      * @param green tint green, from 0 to 1
@@ -243,7 +231,7 @@ public final class SkyboxRenderer {
     /**
      * Builds the pipeline and layer of one procedural mode.
      *
-     * @param mode mode to build
+     *
      * @return layer, or null when the pipeline could not be created
      */
     private static RenderLayer build(Skybox.Mode mode) {
@@ -281,8 +269,6 @@ public final class SkyboxRenderer {
     }
 
     /**
-     * Builds the pipeline shared by every mode.
-     *
      * @param name shader and pipeline suffix
      * @return a builder the caller finishes, so the image mode can declare its sampler
      */

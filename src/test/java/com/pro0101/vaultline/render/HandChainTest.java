@@ -214,8 +214,6 @@ class HandChainTest {
     }
 
     /**
-     * Reads a resource from the classpath.
-     *
      * @throws IOException when the resource is missing
      */
     private static String resource(String path) throws IOException {

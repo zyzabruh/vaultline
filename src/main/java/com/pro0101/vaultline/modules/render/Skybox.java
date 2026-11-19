@@ -271,8 +271,6 @@ public class Skybox extends Module {
     }
 
     /**
-     * Reports whether the vanilla clouds should be cancelled.
-     *
      * @return true when the clouds are hidden
      */
     public boolean hideClouds() {

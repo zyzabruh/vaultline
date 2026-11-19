@@ -39,8 +39,6 @@ public final class Gui {
     }
 
     /**
-     * Checks whether a mouse button is held.
-     *
      * @return true when the button is held
      */
     public static boolean pressed(int button) {

@@ -89,8 +89,6 @@ public class WorldParticles extends Module {
     }
 
     /**
-     * Spawns the particles earned by the current rate.
-     *
      * @param event post-tick event
      */
     @EventHandler

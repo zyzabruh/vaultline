@@ -19,8 +19,6 @@ public final class Takeoff {
     }
 
     /**
-     * Starts the input with optional ground jumping.
-     *
      * @param ground whether the sequence covers ground
      */
     public void start(boolean ground) {
@@ -51,8 +49,6 @@ public final class Takeoff {
     }
 
     /**
-     * Checks whether the takeoff sequence may continue.
-     *
      * @return true while takeoff can continue
      */
     private boolean ready() {
@@ -91,8 +87,6 @@ public final class Takeoff {
     }
 
     /**
-     * Checks whether the input sequence is active.
-     *
      * @return true while jump input is being controlled
      */
     public boolean active() {

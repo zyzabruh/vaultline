@@ -62,8 +62,6 @@ public abstract class FireworkMixin {
     /**
      * Replaces the vanilla boost speed while Rocket Boost is active.
      *
-     * @param original vanilla speed constant
-     * @return configured boost speed
      */
     @ModifyConstant(method = "tick", constant = @Constant(doubleValue = 1.5))
     private double vaultline$speed(double original) {

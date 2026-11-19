@@ -69,8 +69,6 @@ public class EasyAccess extends Module {
 
 
     /**
-     * Finds and opens a hidden container.
-     *
      * @param event pre-tick event
      */
     @EventHandler
@@ -258,8 +256,6 @@ public class EasyAccess extends Module {
     }
 
     /**
-     * Interacts with a supported block container.
-     *
      * @param hit block interaction target
      */
     private void block(BlockHitResult hit) {

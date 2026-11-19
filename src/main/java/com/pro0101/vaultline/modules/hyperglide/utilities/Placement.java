@@ -19,8 +19,6 @@ public final class Placement {
     private Placement() {}
 
     /**
-     * Places a block at the requested position.
-     *
      * @param pos destination block position
      */
     public static void place(BlockPos pos) {
@@ -28,8 +26,6 @@ public final class Placement {
     }
 
     /**
-     * Places a block from the requested hotbar slot.
-     *
      * @param pos destination block position
      * @param slot hotbar slot containing the block
      * @return true when the placement interaction was sent
@@ -73,8 +69,6 @@ public final class Placement {
     }
 
     /**
-     * Places a block using the supplied hit result.
-     *
      * @param hit target block hit result
      */
     public static void place(BlockHitResult hit) {
@@ -112,8 +106,6 @@ public final class Placement {
     }
 
     /**
-     * Checks whether a block position can be replaced.
-     *
      * @param pos block position to check
      * @return true when the block can be replaced
      */
@@ -125,18 +117,15 @@ public final class Placement {
     /**
      * Plays the local placement sound for a block item.
      *
+     *
      * @param item placed block item
-     * @param pos placement position
      */
     public static void sound(BlockItem item, BlockPos pos) {
         sound(item.getBlock(), pos);
     }
 
     /**
-     * Plays the local placement sound for a block.
-     *
      * @param block placed block
-     * @param pos placement position
      */
     public static void sound(Block block, BlockPos pos) {
         API.sound(client.world, block, pos);

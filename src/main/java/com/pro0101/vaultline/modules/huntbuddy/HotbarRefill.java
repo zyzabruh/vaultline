@@ -238,8 +238,6 @@ public class HotbarRefill extends Module {
     }
 
     /**
-     * Reports how many top-ups are still queued.
-     *
      * @return queue size, or null when nothing is waiting
      */
     @Override
@@ -342,7 +340,7 @@ public class HotbarRefill extends Module {
     /**
      * Checks whether a stack is one of the kinds the option asks for.
      *
-     * @param stack stack to classify
+     *
      * @return true when the stack may be refilled
      */
     private boolean isConcerned(ItemStack stack) {
@@ -373,9 +371,6 @@ public class HotbarRefill extends Module {
     }
 
     /**
-     * Checks whether an item is a tool.
-     *
-     * @param item item to check
      * @param path registry path of the item
      * @return true when the item is a tool
      */
@@ -385,9 +380,6 @@ public class HotbarRefill extends Module {
     }
 
     /**
-     * Checks whether an item is a weapon.
-     *
-     * @param item item to check
      * @param path registry path of the item
      * @return true when the item is a weapon
      */
@@ -429,8 +421,6 @@ public class HotbarRefill extends Module {
     }
 
     /**
-     * Moves one inventory stack into a hotbar slot.
-     *
      * @param source inventory slot to take from
      * @param slot hotbar slot to fill
      * @return true when the move was started
@@ -457,8 +447,6 @@ public class HotbarRefill extends Module {
     }
 
     /**
-     * Sends a shift-click on an inventory slot.
-     *
      * @param source inventory slot to move
      */
     private void quickMove(int source) {
@@ -480,8 +468,6 @@ public class HotbarRefill extends Module {
     /**
      * Returns the display name of a stack, custom name first.
      *
-     * @param stack stack to name
-     * @return display name
      */
     private String displayName(ItemStack stack) {
         Text custom = stack.get(DataComponentTypes.CUSTOM_NAME);
@@ -516,9 +502,6 @@ public class HotbarRefill extends Module {
     }
 
     /**
-     * Compares two source stacks under the chosen preference.
-     *
-     * @param count candidate stack size
      * @param bestCount size of the current best stack
      * @return true when the candidate is preferred
      */

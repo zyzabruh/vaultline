@@ -64,8 +64,6 @@ public abstract class FullBrightMixin {
     }
 
     /**
-     * Reports whether full bright is on.
-     *
      * @return true when the lightmap should be flat white
      */
     private static boolean vaultline$enabled() {

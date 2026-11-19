@@ -2942,7 +2942,6 @@ public class ChunkRadar extends Module {
 
     /**
      * @param toDiscord false keeps it to chat and the feed, for the events that
-     *                  are information rather than news
      */
     private void alert(String title, String message, boolean toDiscord) {
         info("%s: %s", title, message);

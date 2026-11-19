@@ -27,8 +27,6 @@ public interface ContainerAccess {
     int liveSlotId(int slot);
 
     /**
-     * Opens a container and waits for its screen.
-     *
      * @return 1 when the screen is open, 0 while waiting, -1 on failure
      */
     int open(BlockPos pos);

@@ -47,9 +47,9 @@ public abstract class MiningTweaksMixin {
     /**
      * Forwards breaking to the module and skips vanilla handling.
      *
+     *
      * @param pos block position
      * @param side block side
-     * @param info injection callback
      */
     @Unique
     private void vaultline$mine(BlockPos pos, Direction side, CallbackInfoReturnable<Boolean> info) {

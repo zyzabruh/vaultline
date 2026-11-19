@@ -85,8 +85,6 @@ public class RenderOptimizer extends Module {
     }
 
     /**
-     * Reports whether the fire overlay should be skipped.
-     *
      * @return true when the overlay is off
      */
     public boolean noFireOverlay() {
@@ -94,8 +92,6 @@ public class RenderOptimizer extends Module {
     }
 
     /**
-     * Reports whether the hurt tilt should be skipped.
-     *
      * @return true when the tilt is off
      */
     public boolean noHurtCam() {
@@ -103,8 +99,6 @@ public class RenderOptimizer extends Module {
     }
 
     /**
-     * Reports whether particles should be dropped.
-     *
      * @return true when particles are off
      */
     public boolean noParticles() {
@@ -112,8 +106,6 @@ public class RenderOptimizer extends Module {
     }
 
     /**
-     * Reports whether the weather pass should be skipped.
-     *
      * @return true when weather is off
      */
     public boolean noWeather() {
@@ -121,8 +113,6 @@ public class RenderOptimizer extends Module {
     }
 
     /**
-     * Reports whether the scoreboard should be skipped.
-     *
      * @return true when the scoreboard is off
      */
     public boolean noScoreboard() {
@@ -130,8 +120,6 @@ public class RenderOptimizer extends Module {
     }
 
     /**
-     * Reports whether titles should be skipped.
-     *
      * @return true when titles are off
      */
     public boolean noTitle() {
@@ -139,8 +127,6 @@ public class RenderOptimizer extends Module {
     }
 
     /**
-     * Reports whether the action bar should be skipped.
-     *
      * @return true when the action bar is off
      */
     public boolean noOverlayMessage() {
@@ -157,8 +143,6 @@ public class RenderOptimizer extends Module {
     }
 
     /**
-     * Reports whether the screen background should be skipped.
-     *
      * @return true when the screen background is off
      */
     public boolean noGuiBackground() {

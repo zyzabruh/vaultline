@@ -254,8 +254,6 @@ public class MiningTweaks extends Module {
 
 
     /**
-     * Checks whether instant remine is enabled.
-     *
      * @return true when instant remine is enabled
      */
     public boolean instant() {
@@ -263,8 +261,6 @@ public class MiningTweaks extends Module {
     }
 
     /**
-     * Changes the instant remine setting.
-     *
      * @param enabled whether instant remine should be enabled
      */
     public void instant(boolean enabled) {
@@ -324,8 +320,6 @@ public class MiningTweaks extends Module {
     }
 
     /**
-     * Checks whether a block should use vanilla mining.
-     *
      * @param pos block position to check
      * @return true when vanilla mining should handle the block
      */
@@ -346,8 +340,6 @@ public class MiningTweaks extends Module {
     }
 
     /**
-     * Queues a block for packet mining.
-     *
      * @param pos block position to mine
      * @param side preferred block face
      * @return true when the block is tracked or queued
@@ -504,8 +496,6 @@ public class MiningTweaks extends Module {
 
 
     /**
-     * Rebreaks the last confirmed block after replacement.
-     *
      * @return true when an instant rebreak packet was sent
      */
     private boolean remine() {
@@ -788,8 +778,6 @@ public class MiningTweaks extends Module {
     }
 
     /**
-     * Calculates block breaking delta using the selected tool.
-     *
      * @return block breaking delta per tick
      */
     private float delta(Target target) {
@@ -806,8 +794,6 @@ public class MiningTweaks extends Module {
     }
 
     /**
-     * Calculates smooth mining progress between client ticks.
-     *
      * @return interpolated progress between zero and one
      */
     private double visual(Target target) {
@@ -827,8 +813,6 @@ public class MiningTweaks extends Module {
     }
 
     /**
-     * Renders mining progress as a shrinking box.
-     *
      * @param event active 3D render event
      */
     private void box(Render3DEvent event, Target target,
@@ -901,8 +885,6 @@ public class MiningTweaks extends Module {
     }
 
     /**
-     * Selects the preferred tool between two candidates.
-     *
      * @param required whether the block requires a suitable tool
      */
     private Tool better(Tool best, Tool tool, boolean required) {
@@ -913,8 +895,6 @@ public class MiningTweaks extends Module {
     }
 
     /**
-     * Synchronizes a selected hotbar slot with the server.
-     *
      * @param slot hotbar slot to select
      */
     private void select(int slot) {
@@ -924,8 +904,6 @@ public class MiningTweaks extends Module {
     }
 
     /**
-     * Sends a sequenced player action packet.
-     *
      * @param action mining action to send
      * @param pos packet block position
      * @param side block face used by the packet
@@ -937,8 +915,6 @@ public class MiningTweaks extends Module {
     }
 
     /**
-     * Creates the fake position used by burst packets.
-     *
      * @param pos source block position
      * @return fake position with the configured height
      */
@@ -949,8 +925,6 @@ public class MiningTweaks extends Module {
 
 
     /**
-     * Finds the nearest visible face of a block.
-     *
      * @param pos block position
      * @param fallback fallback face when no visible face is found
      * @return selected block face
@@ -998,8 +972,6 @@ public class MiningTweaks extends Module {
     }
 
     /**
-     * Finds the nearest block face without visibility checks.
-     *
      * @param pos block position
      * @return nearest block face
      */
@@ -1117,16 +1089,12 @@ public class MiningTweaks extends Module {
 
 
     /**
-     * Represents an evaluated hotbar tool.
-     *
      * @param suitable whether the tool is suitable for the block
      * @param speed block breaking speed
      */
     private record Tool(int slot, boolean suitable, float speed) {}
 
     /**
-     * Represents a queued mining request.
-     *
      * @param pos block position
      * @param side preferred block face
      */
@@ -1137,8 +1105,6 @@ public class MiningTweaks extends Module {
     }
 
     /**
-     * Represents a mining request waiting for another attempt.
-     *
      * @param ready time when another attempt may begin
      */
     private record Retry(Request request, long ready) {}

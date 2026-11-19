@@ -42,8 +42,6 @@ public class Animations extends Module {
     }
 
     /**
-     * Returns the multiplier applied to the swing duration.
-     *
      * @return multiplier, clamped away from zero
      */
     public double multiplier() {

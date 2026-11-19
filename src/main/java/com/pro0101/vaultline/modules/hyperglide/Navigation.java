@@ -390,8 +390,6 @@ public class Navigation extends Module {
     }
 
     /**
-     * Returns the current calculated route.
-     *
      * @return current route, or null when unavailable
      */
     public Route route() {
@@ -429,8 +427,6 @@ public class Navigation extends Module {
     }
 
     /**
-     * Returns the current world blocks per screen pixel.
-     *
      * @return world blocks per screen pixel
      */
     private double scale() {
@@ -451,8 +447,6 @@ public class Navigation extends Module {
     }
 
     /**
-     * Converts a map screen position to world coordinates.
-     *
      * @return world block position
      */
     private BlockPos world(Vec2f point, View view, double left, double top) {
@@ -553,8 +547,6 @@ public class Navigation extends Module {
     }
 
     /**
-     * Draws a world-space line inside the map.
-     *
      * @param first line starting position
      */
     private void draw(DrawContext context, Vec2f first, Vec2f second,
@@ -572,8 +564,6 @@ public class Navigation extends Module {
     }
 
     /**
-     * Draws a clipped line with configurable thickness.
-     *
      * @param x1 line starting X position
      * @param y1 line starting Y position
      * @param x2 line ending X position
@@ -597,8 +587,6 @@ public class Navigation extends Module {
     }
 
     /**
-     * Clips a line to the map rectangle.
-     *
      * @param x1 line starting X position
      * @param y1 line starting Y position
      * @param x2 line ending X position
@@ -694,8 +682,6 @@ public class Navigation extends Module {
     }
 
     /**
-     * Returns the highway currently under the mouse.
-     *
      * @return hovered highway, or null when none
      */
     private Highways.Road road(Vec2f mouse, View view, double left, double top) {
@@ -743,8 +729,6 @@ public class Navigation extends Module {
     }
 
     /**
-     * Draws centered information above or below the map.
-     *
      * @param upper true to draw above the map
      */
     private void box(HudRenderer renderer, String[] lines,
@@ -825,8 +809,6 @@ public class Navigation extends Module {
     }
 
     /**
-     * Returns the currently pressed map drag button.
-     *
      * @return mouse button, or -1 when dragging is inactive
      */
     private int button() {
@@ -903,8 +885,6 @@ public class Navigation extends Module {
     }
 
     /**
-     * Checks whether the mouse is inside the map.
-     *
      * @return true when the mouse is inside the map
      */
     private boolean hovered(double mx, double my) {
@@ -1017,8 +997,6 @@ public class Navigation extends Module {
     }
 
     /**
-     * Returns the highway speed used for route calculations.
-     *
      * @return configured Bounce Fly highway speed
      */
     private float speed() {
@@ -1043,8 +1021,6 @@ public class Navigation extends Module {
     }
 
     /**
-     * Represents the current map center and world scale.
-     *
      * @param scale world blocks per screen pixel
      */
     private record View(Vec2f center, double scale) {}

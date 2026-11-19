@@ -23,8 +23,6 @@ public final class Search {
     }
 
     /**
-     * Builds a search over the supplied highway network.
-     *
      * @param roads roads available for routing
      */
     public Search(List<Highways.Road> roads) {
@@ -32,8 +30,6 @@ public final class Search {
     }
 
     /**
-     * Calculates the fastest route between two positions.
-     *
      * @param start starting X/Z position
      * @param end destination X/Z position
      */
@@ -89,8 +85,6 @@ public final class Search {
     }
 
     /**
-     * Calculates both approach points on a highway edge.
-     *
      * @return optimal candidates for both travel directions
      */
     private List<Graph.Node> candidates(List<Graph.Node> nodes,
@@ -124,8 +118,6 @@ public final class Search {
     }
 
     /**
-     * Connects ordered points along a highway segment.
-     *
      * @param points points belonging to the segment
      * @param road highway containing the segment
      */
@@ -174,8 +166,6 @@ public final class Search {
     }
 
     /**
-     * Adds bidirectional travel between two route nodes.
-     *
      * @param start first node
      * @param road owning road, or null for free flight
      */
@@ -203,8 +193,6 @@ public final class Search {
     }
 
     /**
-     * Checks whether an equivalent connection already exists.
-     *
      * @return true if an equivalent connection exists
      */
     private boolean duplicate(List<Link> links, Link link) {
@@ -222,8 +210,6 @@ public final class Search {
     }
 
     /**
-     * Calculates distance between two positions.
-     *
      * @param first first position
      * @return distance between both positions
      */
@@ -236,8 +222,6 @@ public final class Search {
     //region Route pathfinding
 
     /**
-     * Finds the fastest connections through the network.
-     *
      * @return predecessor links for the fastest route
      */
     private Map<Graph.Node, Link> search(
@@ -319,8 +303,6 @@ public final class Search {
     }
 
     /**
-     * Traces the fastest route through predecessor links.
-     *
      * @return ordered links, or null if unreachable
      */
     private List<Link> path(Graph.Node start,
@@ -356,8 +338,6 @@ public final class Search {
     //region Data structures
 
     /**
-     * Represents a connection used during route calculation.
-     *
      * @param road highway, or null for free flight
      */
     private record Link(Graph.Node start, Graph.Node end,
@@ -370,8 +350,6 @@ public final class Search {
     ) {}
 
     /**
-     * Represents a node queued during pathfinding.
-     *
      * @param priority estimated total travel time
      */
     private record State(

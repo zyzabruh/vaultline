@@ -17,8 +17,6 @@ public final class Hotbar {
     private Hotbar() {}
 
     /**
-     * Finds an item in the hotbar.
-     *
      * @return matching hotbar slot, or -1 when unavailable
      */
     public static int find(Item item) {
@@ -26,8 +24,6 @@ public final class Hotbar {
     }
 
     /**
-     * Finds the first matching stack in the hotbar.
-     *
      * @return matching hotbar slot, or -1 when unavailable
      */
     public static int find(Predicate<ItemStack> predicate) {
@@ -75,8 +71,6 @@ public final class Hotbar {
     }
 
     /**
-     * Finds the highest scoring stack in the hotbar.
-     *
      * @return matching hotbar slot, or -1 when unavailable
      */
     public static int best(
@@ -140,8 +134,6 @@ public final class Hotbar {
     }
 
     /**
-     * Returns a hotbar stack.
-     *
      * @return item stack stored in the slot
      */
     public static ItemStack stack(int slot) {

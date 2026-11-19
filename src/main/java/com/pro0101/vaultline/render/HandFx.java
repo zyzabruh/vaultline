@@ -146,8 +146,6 @@ public final class HandFx {
         }
 
         /**
-         * Whether a toggle selects a look explicitly.
-         *
          * @return true when at least one toggle is on
          */
         public boolean anyToggle() {
@@ -560,8 +558,6 @@ public final class HandFx {
     }
 
     /**
-     * Describes one look.
-     *
      * @param depthWrite whether the look writes depth
      */
     private static Spec spec(Look look, boolean depthWrite) {

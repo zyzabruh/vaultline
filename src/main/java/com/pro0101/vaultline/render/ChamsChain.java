@@ -167,8 +167,6 @@ public final class ChamsChain {
     }
 
     /**
-     * Builds the chain from scratch.
-     *
      * @param externalTargets targets the game provides to the effect
      * @param style shader the chain is built around
      * @param radius glow radius in pixels

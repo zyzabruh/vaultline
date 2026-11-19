@@ -17,8 +17,6 @@ public final class HeightBand {
     private HeightBand() {}
 
     /**
-     * Phase for a height band.
-     *
      * @param band half-height of the band, in blocks
      * @param minimum altitude below which the cycle always climbs
      */
@@ -31,8 +29,6 @@ public final class HeightBand {
     }
 
     /**
-     * Phase for the keys the player is holding.
-     *
      * @param climb whether the climb key is held
      * @param dive whether the dive key is held
      */

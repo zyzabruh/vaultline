@@ -124,8 +124,6 @@ public class ChestCounterHud extends HudElement {
     }
 
     /**
-     * Reports whether the cached count is stale.
-     *
      * @return true when the world should be scanned again
      */
     private boolean shouldScan(BlockPos pos) {

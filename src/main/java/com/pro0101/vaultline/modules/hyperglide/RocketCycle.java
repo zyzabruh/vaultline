@@ -231,8 +231,6 @@ public class RocketCycle extends Module {
     }
 
     /**
-     * Moves a yaw onto the nearest diagonal.
-     *
      * @return yaw at 45 degrees to both axes
      */
     private static float diagonal(float yaw) {

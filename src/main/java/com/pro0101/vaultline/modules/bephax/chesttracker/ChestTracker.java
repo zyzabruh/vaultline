@@ -267,7 +267,6 @@ public class ChestTracker extends Module {
      * identify the position; Fabric API's use-block callback is not available
      * in this addon.
      *
-     * @param event outgoing packet event
      */
     @EventHandler
     private void onSend(PacketEvent.Send event) {

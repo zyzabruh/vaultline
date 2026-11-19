@@ -19,8 +19,6 @@ public final class Inventory {
     private Inventory() {}
 
     /**
-     * Checks whether the normal player inventory is active.
-     *
      * @return true when player inventory slots can be used
      */
     public static boolean ready() {
@@ -50,8 +48,6 @@ public final class Inventory {
     }
 
     /**
-     * Finds an item in the player inventory.
-     *
      * @return matching player inventory slot, or -1 when unavailable
      */
     public static int find(Item item) {
@@ -112,8 +108,6 @@ public final class Inventory {
     }
 
     /**
-     * Finds the first matching player screen slot.
-     *
      * @return matching screen slot, or -1 when unavailable
      */
     public static int search(Predicate<ItemStack> predicate) {
@@ -124,8 +118,6 @@ public final class Inventory {
     }
 
     /**
-     * Finds the highest scoring player screen stack.
-     *
      * @return matching screen slot, or -1 when unavailable
      */
     public static int search(
@@ -178,8 +170,6 @@ public final class Inventory {
     }
 
     /**
-     * Finds the first empty player screen slot.
-     *
      * @return empty screen slot, or -1 when unavailable
      */
     public static int empty() {
@@ -200,8 +190,6 @@ public final class Inventory {
     }
 
     /**
-     * Finds the first two matching player screen slots.
-     *
      * @return matching screen slots, or null when fewer than two exist
      */
     public static int[] pair(Predicate<ItemStack> predicate) {
@@ -221,8 +209,6 @@ public final class Inventory {
     }
 
     /**
-     * Performs an action on a player inventory slot.
-     *
      * @param button mouse button or action data
      */
     public static void click(int slot, int button, SlotActionType action) {
@@ -275,8 +261,6 @@ public final class Inventory {
     }
 
     /**
-     * Returns an item stack from the player inventory.
-     *
      * @return item stack stored in the slot
      */
     private static ItemStack item(int slot) {

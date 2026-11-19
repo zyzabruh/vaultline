@@ -18,13 +18,6 @@ public final class HudBloom {
     private HudBloom() {}
 
     /**
-     * Draws the halo behind a panel.
-     *
-     * @param renderer HUD renderer
-     * @param x panel left
-     * @param y panel top
-     * @param width panel width
-     * @param height panel height
      * @param color accent colour of the panel
      */
     public static void panel(HudRenderer renderer, double x, double y, double width, double height, Color color) {

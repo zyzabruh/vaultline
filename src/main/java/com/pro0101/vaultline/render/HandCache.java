@@ -51,8 +51,6 @@ public final class HandCache<T> {
     }
 
     /**
-     * Whether a look already built something.
-     *
      * @return true when the look is cached
      */
     public boolean has(HandFx.Look look) {

@@ -403,8 +403,6 @@ public class Shaders extends Module {
     }
 
     /**
-     * Reports whether this entity should own an outline.
-     *
      * @param entity entity about to be rendered
      * @return true when the module targets it
      */
@@ -527,8 +525,6 @@ public class Shaders extends Module {
     }
 
     /**
-     * Maps a category to its configured colour.
-     *
      * @param kind category, may be null
      * @return colour, or null when there is nothing to draw
      */

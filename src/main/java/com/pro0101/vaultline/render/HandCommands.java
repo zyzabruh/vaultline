@@ -45,8 +45,6 @@ public class HandCommands implements RenderCommandQueue {
      */
     public interface LayerResolver {
         /**
-         * Resolves the layer to submit.
-         *
          * @param look look the pass runs with
          */
         RenderLayer resolve(RenderLayer layer, HandFx.Look look);
@@ -67,8 +65,6 @@ public class HandCommands implements RenderCommandQueue {
     }
 
     /**
-     * Wraps a queue for one look.
-     *
      * @param delegate queue every call is forwarded to
      * @param look look the submissions are retargeted to
      * @param resolver layer builder to use for every submission

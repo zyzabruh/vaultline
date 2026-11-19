@@ -62,8 +62,6 @@ public final class API {
     }
 
     /**
-     * Sends the specified sneaking state to the server.
-     *
      * @param player player whose state is sent
      */
     public static void sneak(ClientPlayerEntity player, boolean value) {
@@ -75,8 +73,6 @@ public final class API {
     }
 
     /**
-     * Plays the local placement sound for a block.
-     *
      * @param block placed block
      */
     public static void sound(World world, Block block, BlockPos pos) {

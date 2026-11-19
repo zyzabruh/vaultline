@@ -205,8 +205,6 @@ public class InventoryCleaner extends Module {
     }
 
     /**
-     * Checks whether a stack should be thrown out.
-     *
      * @return true when the stack matches the mode
      */
     private boolean throwable(ItemStack stack) {

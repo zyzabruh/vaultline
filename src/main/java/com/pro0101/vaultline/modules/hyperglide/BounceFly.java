@@ -372,8 +372,6 @@ public class BounceFly extends Module {
 
 
     /**
-     * Controls normal bounce movement and obstacle handling.
-     *
      * @param event pre-tick event
      */
     @EventHandler
@@ -551,8 +549,6 @@ public class BounceFly extends Module {
     }
 
     /**
-     * Checks whether outgoing movement is being held back.
-     *
      * @return true while fake lag applies
      */
     private boolean holding() {
@@ -780,8 +776,6 @@ public class BounceFly extends Module {
     }
 
     /**
-     * Finds a chestplate in the hotbar.
-     *
      * @return matching hotbar slot, or -1 when unavailable
      */
     private int chestSlot() {
@@ -795,8 +789,6 @@ public class BounceFly extends Module {
     }
 
     /**
-     * Reports a fakefly problem once per change.
-     *
      * @param reason reason the pair cannot be used
      */
     private void blocked(String reason) {
@@ -826,8 +818,6 @@ public class BounceFly extends Module {
 
 
     /**
-     * Checks whether bounce input should be forced.
-     *
      * @return true while normal bounce movement is active
      */
     public boolean enabled() {
@@ -842,8 +832,6 @@ public class BounceFly extends Module {
     }
 
     /**
-     * Checks whether acceleration mode is enabled.
-     *
      * @return true when acceleration mode is enabled
      */
     public boolean accelerated() {
@@ -881,8 +869,6 @@ public class BounceFly extends Module {
 
 
     /**
-     * Checks whether bounce movement is available.
-     *
      * @return true when Bounce Fly can control movement
      */
     private boolean available() {
@@ -890,8 +876,6 @@ public class BounceFly extends Module {
     }
 
     /**
-     * Validates equipped elytra and clears bounce state.
-     *
      * @return true when an elytra is equipped
      */
     private boolean equipped() {
@@ -989,8 +973,6 @@ public class BounceFly extends Module {
 
 
     /**
-     * Manages active obstacle passing and mining.
-     *
      * @return true while obstacle handling is active
      */
     private boolean pathing() {
@@ -1043,8 +1025,6 @@ public class BounceFly extends Module {
     }
 
     /**
-     * Starts obstacle handling when a collision is detected.
-     *
      * @return true when obstacle handling was started
      */
     private boolean blocked() {
@@ -1185,8 +1165,6 @@ public class BounceFly extends Module {
     }
 
     /**
-     * Starts obstacle mining before pathing onward.
-     *
      * @param goal safe pathing goal after the obstacle
      */
     private void mine(BlockPos goal) {
@@ -1281,8 +1259,6 @@ public class BounceFly extends Module {
     }
 
     /**
-     * Checks whether Baritone may stand on a block.
-     *
      * @param pos block position to check
      * @return true when the block is clear, supported and not a portal
      */
@@ -1379,8 +1355,6 @@ public class BounceFly extends Module {
     }
 
     /**
-     * Saves the breakable blocks from a trail column.
-     *
      * @param pos lower block of the column
      */
     private void collect(BlockPos pos) {
@@ -1402,8 +1376,6 @@ public class BounceFly extends Module {
 
 
     /**
-     * Finds the closest obstacle along the highway direction.
-     *
      * @return closest collision block, or null when undetected
      */
     private BlockPos collision() {
@@ -1450,8 +1422,6 @@ public class BounceFly extends Module {
     }
 
     /**
-     * Raycasts between two points using block collision shapes.
-     *
      * @return block raycast result
      */
     private BlockHitResult ray(Vec3d start, Vec3d end) {
@@ -1574,8 +1544,6 @@ public class BounceFly extends Module {
     }
 
     /**
-     * Projects a position onto the stored highway line.
-     *
      * @return projected center block
      */
     private BlockPos point(double px, double pz) {
@@ -1584,8 +1552,6 @@ public class BounceFly extends Module {
     }
 
     /**
-     * Projects a position onto a cardinal highway line.
-     *
      * @return projected center block
      */
     private BlockPos cardinal(double px, double pz) {
@@ -1594,8 +1560,6 @@ public class BounceFly extends Module {
     }
 
     /**
-     * Projects a position onto the diagonal highway line.
-     *
      * @return projected center block
      */
     private BlockPos diagonal(double px, double pz) {
@@ -1615,8 +1579,6 @@ public class BounceFly extends Module {
     }
 
     /**
-     * Scores clear positions along the highway center line.
-     *
      * @param level highway level to check
      * @return number of valid center positions
      */
@@ -1637,8 +1599,6 @@ public class BounceFly extends Module {
 
 
     /**
-     * Creates a block position on the highway level.
-     *
      * @return block position on the highway level
      */
     private BlockPos block(double px, double pz) {
@@ -1646,8 +1606,6 @@ public class BounceFly extends Module {
     }
 
     /**
-     * Creates a block position at a specific level.
-     *
      * @return block position
      */
     private BlockPos block(double px, int py, double pz) {

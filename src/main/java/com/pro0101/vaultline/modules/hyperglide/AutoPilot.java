@@ -154,8 +154,6 @@ public class AutoPilot extends Module {
 
 
     /**
-     * Advances travel along the saved route.
-     *
      * @param event pre-tick event
      */
     @EventHandler
@@ -323,8 +321,6 @@ public class AutoPilot extends Module {
     }
 
     /**
-     * Updates the route from the current position.
-     *
      * @return true when route progress is available
      */
     private boolean refresh() {
@@ -347,8 +343,6 @@ public class AutoPilot extends Module {
     }
 
     /**
-     * Finds the closest remaining route leg.
-     *
      * @return route leg index, or -1 when unavailable
      */
     private int progress() {
@@ -406,8 +400,6 @@ public class AutoPilot extends Module {
     }
 
     /**
-     * Finds a nearby point for entering a highway.
-     *
      * @return closest point shifted forward along the leg
      */
     private Vec2f entry(Route.Leg leg) {
@@ -512,8 +504,6 @@ public class AutoPilot extends Module {
     }
 
     /**
-     * Waits for the launch position before collecting blocks.
-     *
      * @return true when the support column is ready
      */
     private boolean settled() {
@@ -846,8 +836,6 @@ public class AutoPilot extends Module {
     }
 
     /**
-     * Prepares the transition after reaching a highway endpoint.
-     *
      * @param exiting whether the route leaves the highway next
      * @return true when the player can stop for the transition
      */
@@ -881,8 +869,6 @@ public class AutoPilot extends Module {
     }
 
     /**
-     * Waits before searching again for a highway exit.
-     *
      * @param exiting whether the route leaves the highway next
      * @return true while the retry delay is still active
      */
@@ -961,8 +947,6 @@ public class AutoPilot extends Module {
 
 
     /**
-     * Finds the nearest clear space below the player.
-     *
      * @param start whether the first box starts from player
      * @return closest point in a clear space, or null
      */
@@ -1033,8 +1017,6 @@ public class AutoPilot extends Module {
     }
 
     /**
-     * Searches the vertical positions at a horizontal offset.
-     *
      * @param distance nearest distance already found
      * @return closest clear position, or null
      */
@@ -1061,8 +1043,6 @@ public class AutoPilot extends Module {
     }
 
     /**
-     * Finds the closest point inside a tested box.
-     *
      * @param center center of the tested box
      * @return box point closest to the reference position
      */
@@ -1168,8 +1148,6 @@ public class AutoPilot extends Module {
 
 
     /**
-     * Collects minable blocks in a selected vertical column.
-     *
      * @param point upper position of the column
      * @param bottom lowest included block level
      * @return column blocks ordered from highest to lowest
@@ -1198,8 +1176,6 @@ public class AutoPilot extends Module {
     }
 
     /**
-     * Moves toward and mines the highest remaining block.
-     *
      * @return true when no blocks remain
      */
     private boolean excavate() {
@@ -1263,8 +1239,6 @@ public class AutoPilot extends Module {
     }
 
     /**
-     * Collects the blocks directly below the player.
-     *
      * @return one to four fixed platform blocks
      */
     private List<BlockPos> platform() {
@@ -1288,8 +1262,6 @@ public class AutoPilot extends Module {
     }
 
     /**
-     * Places the saved landing platform.
-     *
      * @return true when every required block is present
      */
     private boolean support() {
@@ -1306,8 +1278,6 @@ public class AutoPilot extends Module {
     }
 
     /**
-     * Places netherrack at a specific position.
-     *
      * @param pos target block position
      * @return true when the placement packet was sent
      */
@@ -1321,8 +1291,6 @@ public class AutoPilot extends Module {
 
 
     /**
-     * Starts Baritone elytra pathing toward a destination.
-     *
      * @param exact whether Y must be part of the goal
      * @return true when elytra pathing was started
      */
@@ -1350,8 +1318,6 @@ public class AutoPilot extends Module {
     }
 
     /**
-     * Starts normal Baritone pathing toward a destination.
-     *
      * @param exact whether Y must be part of the goal
      */
     private void walk(BlockPos pos, boolean exact) {
@@ -1401,8 +1367,6 @@ public class AutoPilot extends Module {
 
 
     /**
-     * Moves toward the center of a block.
-     *
      * @param pos block position to move toward
      */
     private void toward(BlockPos pos) {
@@ -1443,8 +1407,6 @@ public class AutoPilot extends Module {
     }
 
     /**
-     * Requests a firework for the current flight.
-     *
      * @return true when the request was accepted
      */
     private boolean rocket() {
@@ -1473,8 +1435,6 @@ public class AutoPilot extends Module {
 
 
     /**
-     * Returns the Navigation module.
-     *
      * @return Navigation module, or null when unavailable
      */
     private Navigation navigation() {
@@ -1482,8 +1442,6 @@ public class AutoPilot extends Module {
     }
 
     /**
-     * Finds netherrack in the hotbar.
-     *
      * @return hotbar slot, or -1 when unavailable
      */
     private int netherrack() {
@@ -1492,8 +1450,6 @@ public class AutoPilot extends Module {
     }
 
     /**
-     * Checks horizontal proximity to a route point.
-     *
      * @return true when the point is within range
      */
     private boolean close(Vec2f point, double radius) {
@@ -1503,8 +1459,6 @@ public class AutoPilot extends Module {
     }
 
     /**
-     * Checks horizontal proximity to a block position.
-     *
      * @param pos block position
      * @return true when the position is within range
      */
@@ -1515,8 +1469,6 @@ public class AutoPilot extends Module {
     }
 
     /**
-     * Checks the exact proximity to a block position.
-     *
      * @param pos block position
      * @return true when the position is within range
      */
@@ -1551,8 +1503,6 @@ public class AutoPilot extends Module {
     }
 
     /**
-     * Checks whether the required client state is available.
-     *
      * @return true when ready to run the module
      */
     private boolean valid() {

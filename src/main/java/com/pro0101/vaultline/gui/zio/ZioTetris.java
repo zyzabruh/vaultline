@@ -211,7 +211,6 @@ public final class ZioTetris extends ZioGridGame {
     /**
      * Removes every full row at once and drops the rows above it by as many rows as were removed.
      *
-     * @return how many rows went
      */
     int removeFullLines() {
         int removed = 0;

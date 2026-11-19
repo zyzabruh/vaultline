@@ -87,7 +87,6 @@ public class ItemESP extends Module {
     /**
      * Draws the nearest items, one box and label each.
      *
-     * @param event world render event
      */
     @EventHandler
     private void onRender(Render3DEvent event) {

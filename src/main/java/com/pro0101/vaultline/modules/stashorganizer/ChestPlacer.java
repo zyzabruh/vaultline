@@ -64,8 +64,6 @@ public final class ChestPlacer {
     }
 
     /**
-     * Places one chest. Runs over several ticks.
-     *
      * @param group group to pre-assign to the new chest, or null for the overflow plan
      * @return 0 = working, 1 = placed, -1 = failed
      */

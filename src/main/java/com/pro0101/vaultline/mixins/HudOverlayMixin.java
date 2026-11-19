@@ -77,8 +77,6 @@ public abstract class HudOverlayMixin {
     }
 
     /**
-     * Reports whether the scoreboard should be skipped.
-     *
      * @return true when the scoreboard is off
      */
     private boolean vaultline$off() {

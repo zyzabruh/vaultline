@@ -276,8 +276,6 @@ public class BlockShader extends Module {
     }
 
     /**
-     * Fills the reusable colours for one box.
-     *
      * @param pos block being drawn
      * @param distance distance from the camera
      * @param limit configured range, zero when unlimited

@@ -122,7 +122,6 @@ public class JumpCircles extends Module {
     /**
      * Draws the rings, each expanding from zero to the configured radius.
      *
-     * @param event world render event
      */
     @EventHandler
     private void onRender(Render3DEvent event) {

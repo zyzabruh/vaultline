@@ -144,8 +144,6 @@ public class StorageESP extends Module {
     }
 
     /**
-     * Rescans the area at the configured interval.
-     *
      * @param event post-tick event
      */
     @EventHandler

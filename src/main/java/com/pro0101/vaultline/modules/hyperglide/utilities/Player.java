@@ -21,8 +21,6 @@ public final class Player {
     }
 
     /**
-     * Returns the block directly below the player.
-     *
      * @return block below the player's feet
      */
     public static BlockPos floor() {
@@ -59,8 +57,6 @@ public final class Player {
     }
 
     /**
-     * Checks whether the player is eating or drinking.
-     *
      * @return true while consuming an item
      */
     public static boolean consuming() {

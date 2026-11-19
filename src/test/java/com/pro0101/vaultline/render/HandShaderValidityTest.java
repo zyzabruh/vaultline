@@ -207,8 +207,6 @@ class HandShaderValidityTest {
     }
 
     /**
-     * Collects the captures of every match.
-     *
      * @return the captures, in source order
      */
     private static Set<String> find(Pattern pattern, String text) {
@@ -251,8 +249,6 @@ class HandShaderValidityTest {
     }
 
     /**
-     * Reads one Minecraft shader include.
-     *
      * @param name include name without extension
      * @return its text, or null when it does not exist
      * @throws IOException when the entry cannot be read
@@ -268,8 +264,6 @@ class HandShaderValidityTest {
     }
 
     /**
-     * The attribute types the entity layout implies.
-     *
      * @return attribute name to GLSL type
      */
     private static Map<String, String> attributeTypes() {

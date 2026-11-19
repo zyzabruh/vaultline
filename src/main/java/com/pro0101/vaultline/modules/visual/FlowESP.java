@@ -591,8 +591,6 @@ public class FlowESP extends Module {
     }
 
     /**
-     * Tests one block for the fluid being scanned.
-     *
      * @param chunk chunk holding the block
      * @param tag fluid tag to match
      * @return true when the block holds that fluid

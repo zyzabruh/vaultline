@@ -7,8 +7,6 @@ public record Segment(Vec2f start, Vec2f end) {
     private static final float epsilon = 1.0E-4F;
 
     /**
-     * Calculates the segment length.
-     *
      * @return distance between segment endpoints
      */
     public float length() {
@@ -16,8 +14,6 @@ public record Segment(Vec2f start, Vec2f end) {
     }
 
     /**
-     * Returns the segment direction vector.
-     *
      * @return vector from start to end
      */
     public Vec2f vector() {
@@ -25,8 +21,6 @@ public record Segment(Vec2f start, Vec2f end) {
     }
 
     /**
-     * Returns the normalized segment direction.
-     *
      * @return normalized direction, or zero for an empty segment
      */
     public Vec2f unit() {
@@ -40,7 +34,7 @@ public record Segment(Vec2f start, Vec2f end) {
     /**
      * Checks whether another segment continues in the same direction.
      *
-     * @param other segment to compare
+     *
      * @return true when both directions are parallel and forward
      */
     public boolean forward(Segment other) {
@@ -53,18 +47,13 @@ public record Segment(Vec2f start, Vec2f end) {
     }
 
     /**
-     * Returns a clamped point along the segment.
-     *
      * @param ratio normalized position along the segment
-     * @return point on the segment
      */
     public Vec2f point(float ratio) {
         return this.line(MathHelper.clamp(ratio, 0.0F, 1.0F));
     }
 
     /**
-     * Returns a point along the infinite segment line.
-     *
      * @param ratio normalized position along the line
      * @return point on the segment line
      */
@@ -73,9 +62,6 @@ public record Segment(Vec2f start, Vec2f end) {
     }
 
     /**
-     * Calculates the normalized projection onto the segment line.
-     *
-     * @param point point to project
      * @return normalized projection along the line
      */
     public float projection(Vec2f point) {
@@ -89,9 +75,6 @@ public record Segment(Vec2f start, Vec2f end) {
     }
 
     /**
-     * Checks whether a point lies on the segment.
-     *
-     * @param point point to check
      * @return true when the point lies on the segment
      */
     public boolean contains(Vec2f point) {
@@ -108,7 +91,7 @@ public record Segment(Vec2f start, Vec2f end) {
     /**
      * Checks whether another segment lies on the same infinite line.
      *
-     * @param other segment to compare
+     *
      * @return true when both segments are collinear
      */
     public boolean collinear(Segment other) {
@@ -127,9 +110,6 @@ public record Segment(Vec2f start, Vec2f end) {
     }
 
     /**
-     * Finds the single intersection point with another segment.
-     *
-     * @param other segment to intersect
      * @return intersection point, or null when none or overlapping
      */
     public Vec2f intersection(Segment other) {
@@ -153,11 +133,7 @@ public record Segment(Vec2f start, Vec2f end) {
     }
 
     /**
-     * Calculates the 2D cross product magnitude.
-     *
      * @param first first vector
-     * @param second second vector
-     * @return signed cross product magnitude
      */
     public static float cross(Vec2f first, Vec2f second) {
         return first.x * second.y - first.y * second.x;

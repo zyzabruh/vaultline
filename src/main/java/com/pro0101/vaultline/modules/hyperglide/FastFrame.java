@@ -96,8 +96,6 @@ public class FastFrame extends Module {
     }
 
     /**
-     * Finds and fills newly placed item frames.
-     *
      * @param event post-tick event
      */
     @EventHandler
@@ -314,8 +312,6 @@ public class FastFrame extends Module {
         private int life;
 
         /**
-         * Creates a pending entry for tracking an update.
-         *
          * @param pos target block position
          * @param frames known frame entity ids
          */

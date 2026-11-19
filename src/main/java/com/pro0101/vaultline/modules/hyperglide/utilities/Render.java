@@ -60,8 +60,6 @@ public final class Render {
     }
 
     /**
-     * Checks whether rendering is enabled.
-     *
      * @return true when rendering should run
      */
     public boolean enabled() {
@@ -69,8 +67,6 @@ public final class Render {
     }
 
     /**
-     * Renders a box around a block position.
-     *
      * @param event active 3D render event
      * @param pos block position
      */
@@ -79,8 +75,6 @@ public final class Render {
     }
 
     /**
-     * Renders a box using world coordinates.
-     *
      * @param event active 3D render event
      */
     public void box(Render3DEvent event, Box box) {
@@ -88,8 +82,6 @@ public final class Render {
     }
 
     /**
-     * Renders a line using the configured line color.
-     *
      * @param event active 3D render event
      */
     public void line(Render3DEvent event, Vec3d start, Vec3d end) {
@@ -97,8 +89,6 @@ public final class Render {
     }
 
     /**
-     * Renders a box around a block position.
-     *
      * @param event active 3D render event
      * @param pos block position
      */
@@ -108,8 +98,6 @@ public final class Render {
     }
 
     /**
-     * Renders a box using world coordinates.
-     *
      * @param event active 3D render event
      */
     public static void box(Render3DEvent event, Box box,
@@ -118,8 +106,6 @@ public final class Render {
     }
 
     /**
-     * Renders a line between two world positions.
-     *
      * @param event active 3D render event
      */
     public static void line(Render3DEvent event, Vec3d start, Vec3d end, Color color) {

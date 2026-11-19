@@ -9,8 +9,6 @@ public final class Client {
     private Client() {}
 
     /**
-     * Checks whether the player and world are loaded.
-     *
      * @return true when the player and world are available
      */
     public static boolean loaded() {
@@ -27,8 +25,6 @@ public final class Client {
     }
 
     /**
-     * Checks whether normal player interactions are available.
-     *
      * @return true when the player can interact with the world
      */
     public static boolean interaction() {
@@ -36,8 +32,6 @@ public final class Client {
     }
 
     /**
-     * Checks whether the current world is the overworld.
-     *
      * @return true when the overworld is loaded
      */
     public static boolean overworld() {
@@ -47,8 +41,6 @@ public final class Client {
     }
 
     /**
-     * Checks whether the current world is the nether.
-     *
      * @return true when the nether is loaded
      */
     public static boolean nether() {

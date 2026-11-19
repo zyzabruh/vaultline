@@ -20,7 +20,6 @@ public abstract class CameraMixin {
     /**
      * Replaces the camera rotation while the module owns the view.
      *
-     * @param args camera rotation arguments
      */
     @ModifyArgs(method = "update", at = @At(value = "INVOKE",
         target = "Lnet/minecraft/client/render/Camera;setRotation(FF)V"
