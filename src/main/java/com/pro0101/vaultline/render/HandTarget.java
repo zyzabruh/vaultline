@@ -10,9 +10,6 @@ package com.pro0101.vaultline.render;
  * private on a mixin class, and a private constant could not be checked from a test.
  */
 public final class HandTarget {
-    /**
-     * Descriptor of the first-person pass.
-     */
     public static final String RENDER_ITEM =
         "renderItem(FLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/command/OrderedRenderCommandQueue;"
             + "Lnet/minecraft/client/network/ClientPlayerEntity;I)V";

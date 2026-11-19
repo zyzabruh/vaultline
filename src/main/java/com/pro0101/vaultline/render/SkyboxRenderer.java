@@ -96,7 +96,6 @@ public final class SkyboxRenderer {
      * @param green tint green, 0 to 1
      * @param blue tint blue, 0 to 1
      * @param scale brightness, time of day and rain folded into one factor
-     * @return the accent colour
      */
     public static Accent accent(float red, float green, float blue, float scale) {
         return new Accent(red * scale, green * scale, blue * scale);
@@ -119,59 +118,24 @@ public final class SkyboxRenderer {
         return (float) (1.0 - smoothstep(-0.15, 0.1, sunHeight));
     }
 
-    /**
-     * How much a downpour dims the accent.
-     *
-     * @param rainGradient rain gradient, 0 to 1
-     * @return 1 when dry, 0.45 in the heaviest rain
-     */
     public static float rainFactor(float rainGradient) {
         return 1.0F - 0.55F * clamp(rainGradient);
     }
 
-    /**
-     * Hermite interpolation between two edges.
-     *
-     * @param edge0 lower edge
-     * @param edge1 upper edge
-     * @param value value to map
-     * @return 0 below the lower edge, 1 above the upper one
-     */
     private static double smoothstep(double edge0, double edge1, double value) {
         double t = Math.min(1.0, Math.max(0.0, (value - edge0) / (edge1 - edge0)));
 
         return t * t * (3.0 - 2.0 * t);
     }
 
-    /**
-     * Clamps a channel into [0, 1].
-     *
-     * @param value channel value
-     * @return the clamped value
-     */
     private static float clamp(float value) {
         return Math.min(1.0F, Math.max(0.0F, value));
     }
 
-    /**
-     * Reports whether every procedural skybox pipeline was built.
-     *
-     * @return true when the skybox can be drawn
-     */
     public static boolean available() {
         return available;
     }
 
-    /**
-     * Draws the sky for one mode.
-     *
-     * @param mode skybox mode to draw
-     * @param red tint red, from 0 to 1
-     * @param green tint green, from 0 to 1
-     * @param blue tint blue, from 0 to 1
-     * @param imageName panorama file used by the image mode
-     * @param speed animation multiplier, carried to the shader in the tint alpha
-     */
     public static void render(Skybox.Mode mode, Accent accent, String imageName, float speed) {
         if (mode == Skybox.Mode.Image) {
             renderImage(accent, imageName, speed);
@@ -243,7 +207,6 @@ public final class SkyboxRenderer {
     /**
      * Builds the pipeline and layer of one procedural mode.
      *
-     * @param mode mode to build
      * @return layer, or null when the pipeline could not be created
      */
     private static RenderLayer build(Skybox.Mode mode) {
@@ -280,12 +243,6 @@ public final class SkyboxRenderer {
         }
     }
 
-    /**
-     * Builds the pipeline shared by every mode.
-     *
-     * @param name shader and pipeline suffix
-     * @return a builder the caller finishes, so the image mode can declare its sampler
-     */
     private static RenderPipeline.Builder pipelineBuilder(String name) {
         return RenderPipeline.builder()
             .withLocation(Identifier.of("vaultline", "pipeline/skybox_" + name))

@@ -38,11 +38,6 @@ public final class HandQueue extends HandCommands implements OrderedRenderComman
         super(delegate, look, resolver);
     }
 
-    /**
-     * The ordered queue this decorator forwards to.
-     *
-     * @return the decorated queue
-     */
     public OrderedRenderCommandQueue ordered() {
         return (OrderedRenderCommandQueue) delegate();
     }

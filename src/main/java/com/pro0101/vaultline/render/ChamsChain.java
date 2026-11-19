@@ -72,7 +72,6 @@ public final class ChamsChain {
     /** Target the game renders entity silhouettes into, and the one the chain writes back to. */
     public static final Identifier OUTLINE_TARGET = Identifier.of("minecraft", "entity_outline");
 
-    /** Fragment shader the chain is built around. */
     public enum Style {
         /** Separable gaussian: a rim, a soft halo and a fill, in two passes. */
         Soft,
@@ -126,7 +125,6 @@ public final class ChamsChain {
      * @param externalTargets targets the game provides to the effect
      * @param style shader the chain is built around
      * @param radius glow radius in pixels
-     * @param intensity glow strength
      * @param fillAlpha opacity of the solid fill
      * @param outlineWidth rim thickness in pixels
      * @param fillBrightness multiplier applied to the body colour
@@ -168,19 +166,6 @@ public final class ChamsChain {
         return cached;
     }
 
-    /**
-     * Builds the chain from scratch.
-     *
-     * @param externalTargets targets the game provides to the effect
-     * @param style shader the chain is built around
-     * @param radius glow radius in pixels
-     * @param intensity glow strength
-     * @param fillAlpha opacity of the solid fill
-     * @param outlineWidth rim thickness in pixels
-     * @param fillBrightness multiplier applied to the body colour
-     * @param innerGlow how much the body is brightened by the spread silhouette
-     * @return the chain, or null when loading failed
-     */
     private static PostEffectProcessor build(Set<Identifier> externalTargets, Style style, int radius, float intensity, float fillAlpha, int outlineWidth, float fillBrightness, float innerGlow) {
         try {
             if (projection == null) {
@@ -257,8 +242,6 @@ public final class ChamsChain {
     /**
      * Returns the fragment shader of a single-pass style.
      *
-     * @param style style to map
-     * @return fragment shader identifier
      */
     private static Identifier fragment(Style style) {
         return switch (style) {

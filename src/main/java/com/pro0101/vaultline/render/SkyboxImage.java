@@ -27,7 +27,6 @@ import java.util.Locale;
  * possible without restarting the game.
  */
 public final class SkyboxImage {
-    /** Folder the panorama files are read from. */
     public static final Path DIRECTORY = FabricLoader.getInstance().getConfigDir()
         .resolve("vaultline")
         .resolve("skybox");
@@ -57,7 +56,6 @@ public final class SkyboxImage {
         return loadedId;
     }
 
-    /** Releases the texture currently held, if any. */
     public static void unload() {
         TextureManager manager = MinecraftClient.getInstance().getTextureManager();
 
@@ -110,7 +108,6 @@ public final class SkyboxImage {
     /**
      * Keeps a repeated failure to one line in the log.
      *
-     * @param message warning to log
      */
     private static void warnOnce(String message) {
         if (warned) return;
@@ -122,7 +119,6 @@ public final class SkyboxImage {
     /**
      * Turns a file name into the path part of a texture identifier.
      *
-     * @param name file name
      * @return identifier path, lowercase and free of separators
      */
     private static String sanitize(String name) {

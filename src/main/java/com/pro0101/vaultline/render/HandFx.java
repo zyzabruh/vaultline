@@ -50,10 +50,8 @@ public final class HandFx {
     /** Default of the hand-outline option: off, and the default look covers it. */
     public static final boolean DEFAULT_HAND_OUTLINE = false;
 
-    /** Shader stage every hand pipeline shares. */
     private static final Identifier VERTEX_SHADER = Identifier.of("vaultline", "core/hand");
 
-    /** Uniform blocks the hand stages read. */
     private static final List<String> UNIFORMS = List.of("DynamicTransforms", "Projection");
 
     /**
@@ -87,20 +85,14 @@ public final class HandFx {
 
     /** What the hands are drawn as. Off is the vanilla path. */
     public enum Look {
-        /** Vanilla render types, vanilla pipelines, no layer built. */
         OFF,
-        /** Tinted fill, no rim. */
         FILL,
-        /** Rim only, no fill. */
         OUTLINE,
-        /** Fill plus rim in one draw. */
         GLOW;
 
         /**
          * Picks the look the two toggles name, without the module-level default.
          *
-         * @param fill hand fill toggle
-         * @param outline hand outline toggle
          * @return FILL, OUTLINE, GLOW, or OFF when both toggles are off
          */
         public static Look of(boolean fill, boolean outline) {
@@ -114,7 +106,6 @@ public final class HandFx {
         /**
          * Lower-case name used in identifiers and layer names.
          *
-         * @return the name
          */
         public String id() {
             return name().toLowerCase(Locale.ROOT);
@@ -138,7 +129,6 @@ public final class HandFx {
         /**
          * The look the toggles name, with OFF for both off.
          *
-         * @return the explicit look
          */
         public Look explicitLook() {
             return Look.of(this.handFill, this.handOutline);
@@ -155,11 +145,6 @@ public final class HandFx {
             return explicit == Look.OFF ? DEFAULT_LOOK : explicit;
         }
 
-        /**
-         * Whether a toggle selects a look explicitly.
-         *
-         * @return true when at least one toggle is on
-         */
         public boolean anyToggle() {
             return explicitLook() != Look.OFF;
         }
@@ -203,14 +188,9 @@ public final class HandFx {
      * which blend/depth/cull state it draws with — can be checked without a game running and without
      * a driver.
      *
-     * @param location pipeline identifier
-     * @param vertexShader vertex stage
-     * @param fragmentShader fragment stage
      * @param uniforms uniform blocks the stages read
      * @param samplers samplers the stages read, with what binds each one
      * @param vertexFormat vertex layout the geometry is written in
-     * @param mode draw mode
-     * @param depthTest depth comparison
      * @param depthWrite whether the look writes depth
      * @param blend blend state, null for none
      * @param cull whether back faces are culled
@@ -236,11 +216,6 @@ public final class HandFx {
             samplers = List.copyOf(samplers);
         }
 
-        /**
-         * The sampler names, in declaration order.
-         *
-         * @return the names
-         */
         public List<String> samplerNames() {
             return this.samplers.stream().map(Sampler::name).toList();
         }
@@ -280,7 +255,6 @@ public final class HandFx {
     /**
      * The pipeline description of one look.
      *
-     * @param look look to describe
      * @return the spec, or null for {@link Look#OFF}, which has no pipeline
      */
     public static Spec spec(Look look) {
@@ -303,7 +277,6 @@ public final class HandFx {
     /**
      * The look the hand pass runs with, or {@link Look#OFF} outside the pass.
      *
-     * @return the active look
      */
     public static Look activeLook() {
         return active;
@@ -312,7 +285,6 @@ public final class HandFx {
     /**
      * Whether a look changes the render type at all.
      *
-     * @param look look to test
      * @return true when the look has its own pipeline
      */
     public static boolean retargets(Look look) {
@@ -395,8 +367,6 @@ public final class HandFx {
      *
      * @param look look the pass draws with
      * @param body work to run inside the pass
-     * @param <T> result type
-     * @return the body's result
      */
     public static <T> T handPass(Look look, Supplier<T> body) {
         Look previous = enter(look);
@@ -411,7 +381,6 @@ public final class HandFx {
     /**
      * The pipeline of one look.
      *
-     * @param look look to draw
      * @return the pipeline, or null when the look is {@link Look#OFF} or its build failed
      */
     public static RenderPipeline pipeline(Look look) {
@@ -421,7 +390,6 @@ public final class HandFx {
     /**
      * The pipeline of one look for one geometry layout.
      *
-     * @param look look to draw
      * @param format vertex layout the geometry is written in
      * @param mode draw mode the geometry is written in
      * @return the pipeline, or null when the look is {@link Look#OFF} or its build failed
@@ -449,7 +417,6 @@ public final class HandFx {
      * another layout — the glint, a held map — has no values for some of them, and drawing it with
      * our pipeline would hand the shader garbage, so those layers keep their vanilla pipeline.
      *
-     * @param format layout to test
      * @return true when every attribute the stage reads is written by the layout
      */
     public static boolean readable(VertexFormat format) {
@@ -555,7 +522,6 @@ public final class HandFx {
      * look, the pipeline and both shader stages, on one unbroken line.
      *
      * @param look look that started drawing
-     * @return the line to log
      */
     static String announcement(Look look) {
         Spec spec = spec(look);
@@ -569,7 +535,6 @@ public final class HandFx {
     /**
      * The line logged when a look cannot be built.
      *
-     * @param look look that failed
      * @return the message, logged with the exception so the stack is in the log too
      */
     static String failure(Look look) {
@@ -589,13 +554,6 @@ public final class HandFx {
         reset();
     }
 
-    /**
-     * Describes one look.
-     *
-     * @param look look to describe
-     * @param depthWrite whether the look writes depth
-     * @return its pipeline description
-     */
     private static Spec spec(Look look, boolean depthWrite) {
         return new Spec(
             Identifier.of("vaultline", "pipeline/hand_" + look.id()),
@@ -615,8 +573,6 @@ public final class HandFx {
     /**
      * Builds the pipeline of one look from its spec.
      *
-     * @param look look to build
-     * @return the pipeline
      */
     private static RenderPipeline buildPipeline(Look look, VertexFormat format, VertexFormat.DrawMode mode) {
         Spec spec = spec(look);

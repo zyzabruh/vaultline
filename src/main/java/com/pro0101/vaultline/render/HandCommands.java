@@ -44,13 +44,6 @@ public class HandCommands implements RenderCommandQueue {
      * delegate received the sentinel. Production uses {@link HandFx#layer(RenderLayer, HandFx.Look)}.
      */
     public interface LayerResolver {
-        /**
-         * Resolves the layer to submit.
-         *
-         * @param layer vanilla layer
-         * @param look look the pass runs with
-         * @return the layer to submit
-         */
         RenderLayer resolve(RenderLayer layer, HandFx.Look look);
     }
 
@@ -68,13 +61,6 @@ public class HandCommands implements RenderCommandQueue {
         this(delegate, look, HandFx::layer);
     }
 
-    /**
-     * Wraps a queue for one look.
-     *
-     * @param delegate queue every call is forwarded to
-     * @param look look the submissions are retargeted to
-     * @param resolver layer builder to use for every submission
-     */
     public HandCommands(RenderCommandQueue delegate, HandFx.Look look, LayerResolver resolver) {
         this.delegate = delegate;
         this.look = look;
@@ -87,7 +73,6 @@ public class HandCommands implements RenderCommandQueue {
      * <p>The off look must not install a decorator at all: that is what makes "off means vanilla"
      * true at the queue level and not only at the layer level.
      *
-     * @param delegate queue to wrap
      * @param look look to draw with
      * @return the decorator, or the original queue when the look is off
      */
@@ -98,7 +83,6 @@ public class HandCommands implements RenderCommandQueue {
     /**
      * Wraps a queue with an explicit layer builder, or leaves it alone when the effect is off.
      *
-     * @param delegate queue to wrap
      * @param look look to draw with
      * @param resolver layer builder to use
      * @return the decorator, or the original queue when the look is off
@@ -109,29 +93,14 @@ public class HandCommands implements RenderCommandQueue {
         return new HandCommands(delegate, look, resolver);
     }
 
-    /**
-     * The queue calls are forwarded to.
-     *
-     * @return the decorated queue
-     */
     public RenderCommandQueue delegate() {
         return this.delegate;
     }
 
-    /**
-     * The look this queue retargets to.
-     *
-     * @return the look
-     */
     public HandFx.Look look() {
         return this.look;
     }
 
-    /**
-     * The layer builder this queue uses.
-     *
-     * @return the resolver
-     */
     public LayerResolver resolver() {
         return this.resolver;
     }
@@ -143,7 +112,6 @@ public class HandCommands implements RenderCommandQueue {
      * was built for, the vanilla layer goes through untouched. That is what keeps a decorator that
      * outlives its pass from repainting anything else.
      *
-     * @param layer vanilla layer
      * @return our layer, or the vanilla one when the pass is not running with this look
      */
     protected RenderLayer hand(RenderLayer layer) {

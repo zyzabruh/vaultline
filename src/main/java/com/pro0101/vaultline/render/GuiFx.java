@@ -257,7 +257,6 @@ public final class GuiFx {
         return true;
     }
 
-    /** The std140 block the two shaders read. */
     private record Data(float[] rects, int count, int width, int height, float radius, int accent, float bloom)
         implements net.minecraft.client.gl.DynamicUniformStorage.Uploadable {
 
