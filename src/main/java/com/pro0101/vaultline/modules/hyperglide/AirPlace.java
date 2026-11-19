@@ -241,7 +241,7 @@ public class AirPlace extends Module {
     /**
      * Checks whether an item can be placed using Air Place.
      *
-     * @param stack item stack to check
+     *
      * @return true when the stack contains a block or spawn egg
      */
     private boolean valid(ItemStack stack) {

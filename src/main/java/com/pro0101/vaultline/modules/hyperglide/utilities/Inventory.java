@@ -179,7 +179,7 @@ public final class Inventory {
     /**
      * Finds the first empty slot from the supplied screen slots.
      *
-     * @param slots screen slots to check
+     *
      * @return empty screen slot, or -1 when unavailable
      */
     public static int empty(int... slots) {

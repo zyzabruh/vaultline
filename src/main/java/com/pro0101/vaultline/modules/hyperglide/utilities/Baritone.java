@@ -165,9 +165,6 @@ public final class Baritone {
         input(Input.MOVE_RIGHT, state);
     }
 
-    /**
-     * @param state whether sprint is pressed
-     */
     public static void sprint(boolean state) {
         input(Input.SPRINT, state);
     }

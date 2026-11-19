@@ -277,7 +277,6 @@ public class BlockShader extends Module {
 
     /**
      * @param pos block being drawn
-     * @param distance distance from the camera
      * @param limit configured range, zero when unlimited
      * @param time seconds, for the animated styles
      */

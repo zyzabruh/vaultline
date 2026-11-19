@@ -122,7 +122,7 @@ public class Overview extends Module {
     /**
      * Retrieves container or bundle content data from an item stack.
      *
-     * @param stack item stack to inspect
+     *
      * @return container data, bundle data or null when unavailable
      */
     private Object data(ItemStack stack) {

@@ -37,7 +37,7 @@ public final class Elytra {
     /**
      * Checks whether a stack can be worn as a chestplate.
      *
-     * @param stack item stack to inspect
+     *
      * @return true when the stack uses the chest slot
      */
     public static boolean chestplate(ItemStack stack) {
@@ -63,9 +63,6 @@ public final class Elytra {
         );
     }
 
-    /**
-     * @param stack item stack to check
-     */
     public static int remaining(ItemStack stack) {
         if (!stack.isDamageable()) return Integer.MAX_VALUE;
         return stack.getMaxDamage() - stack.getDamage();
@@ -142,7 +139,6 @@ public final class Elytra {
     /**
      * Applies the remaining elytra movement for the current tick.
      *
-     * @param cosine pitch-derived lift factor
      */
     private static Vec3d glide(Vec3d velocity, Vec3d rotation,
         double length, double speed, double cosine) {
@@ -154,9 +150,6 @@ public final class Elytra {
         return velocity.multiply(0.99, 0.98, 0.99);
     }
 
-    /**
-     * @param cosine pitch-derived lift factor
-     */
     private static Vec3d fall(Vec3d velocity,
         Vec3d rotation, double length, double cosine) {
 

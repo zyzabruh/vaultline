@@ -128,8 +128,6 @@ public final class SkyboxRenderer {
     }
 
     /**
-     * @param edge0 lower edge
-     * @param edge1 upper edge
      * @return 0 below the lower edge, 1 above the upper one
      */
     private static double smoothstep(double edge0, double edge1, double value) {
@@ -153,7 +151,6 @@ public final class SkyboxRenderer {
     }
 
     /**
-     * @param mode skybox mode to draw
      * @param red tint red, from 0 to 1
      * @param green tint green, from 0 to 1
      * @param blue tint blue, from 0 to 1
@@ -176,10 +173,10 @@ public final class SkyboxRenderer {
     /**
      * Draws the user's panorama, or the Sunset sky when there is no usable image.
      *
+     *
      * @param red tint red, from 0 to 1
      * @param green tint green, from 0 to 1
      * @param blue tint blue, from 0 to 1
-     * @param imageName panorama file to draw
      * @param speed animation multiplier, carried to the shader in the tint alpha
      */
     private static void renderImage(Accent accent, String imageName, float speed) {
@@ -204,12 +201,12 @@ public final class SkyboxRenderer {
     /**
      * Submits the fullscreen quad to a layer.
      *
-     * @param layer layer to draw with
+     *              uniform block of its own
+     *
      * @param red tint red, from 0 to 1
      * @param green tint green, from 0 to 1
      * @param blue tint blue, from 0 to 1
      * @param speed animation multiplier, written to the alpha so the shader receives it without a
-     *              uniform block of its own
      */
     private static void draw(RenderLayer layer, Accent accent, float speed) {
         BufferBuilder buffer = Tessellator.getInstance().begin(
@@ -269,7 +266,6 @@ public final class SkyboxRenderer {
     }
 
     /**
-     * @param name shader and pipeline suffix
      * @return a builder the caller finishes, so the image mode can declare its sampler
      */
     private static RenderPipeline.Builder pipelineBuilder(String name) {

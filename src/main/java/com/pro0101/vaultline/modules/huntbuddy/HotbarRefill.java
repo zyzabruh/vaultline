@@ -319,8 +319,7 @@ public class HotbarRefill extends Module {
     /**
      * Checks whether a hotbar stack is due for a top-up.
      *
-     * @param slot hotbar slot to check
-     * @param stack stack in that slot
+     *
      * @return true when the stack should be topped up
      */
     private boolean wantsRefill(int slot, ItemStack stack) {
@@ -390,7 +389,7 @@ public class HotbarRefill extends Module {
     /**
      * Finds a source stack and moves it into the hotbar.
      *
-     * @param slot hotbar slot to fill
+     *
      * @param stack stack currently in that slot
      * @return true when a move was started
      */
@@ -422,7 +421,6 @@ public class HotbarRefill extends Module {
 
     /**
      * @param source inventory slot to take from
-     * @param slot hotbar slot to fill
      * @return true when the move was started
      */
     private boolean moveToHotbar(int source, int slot) {
@@ -446,9 +444,6 @@ public class HotbarRefill extends Module {
         return true;
     }
 
-    /**
-     * @param source inventory slot to move
-     */
     private void quickMove(int source) {
         this.mc.interactionManager.clickSlot(
             this.mc.player.playerScreenHandler.syncId, source, 0,
@@ -477,7 +472,7 @@ public class HotbarRefill extends Module {
     /**
      * Finds the inventory stack that should feed a hotbar stack.
      *
-     * @param target hotbar stack to feed
+     *
      * @return matching inventory slot, or -1 when there is none
      */
     private int findSource(ItemStack target) {
@@ -516,8 +511,7 @@ public class HotbarRefill extends Module {
     /**
      * Checks whether an inventory stack may feed a hotbar stack.
      *
-     * @param target hotbar stack to feed
-     * @param candidate inventory stack to inspect
+     *
      * @return true when the candidate matches
      */
     private boolean isCandidate(ItemStack target, ItemStack candidate) {

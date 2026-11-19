@@ -26,7 +26,6 @@ public record Route(List<Leg> legs, float distance, float time) {
     /**
      * Merges connected legs that continue in the same direction.
      *
-     * @param legs route legs to simplify
      */
     private static List<Leg> simplify(List<Leg> legs) {
         List<Leg> result = new ArrayList<>();
@@ -50,7 +49,7 @@ public record Route(List<Leg> legs, float distance, float time) {
     /**
      * Checks whether two route legs can be represented as one.
      *
-     * @param first previous route leg
+     *
      * @return true when both legs continue in the same direction
      */
     private static boolean merge(Leg first, Leg second) {

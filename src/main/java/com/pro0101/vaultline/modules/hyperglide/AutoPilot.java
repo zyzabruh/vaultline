@@ -193,7 +193,6 @@ public class AutoPilot extends Module {
     /**
      * Stops Auto Pilot when Baritone starts an emergency landing.
      *
-     * @param event received chat message event
      */
     @EventHandler
     private void message(ReceiveMessageEvent event) {
@@ -755,7 +754,6 @@ public class AutoPilot extends Module {
     /**
      * Starts Bounce Fly toward the end of a highway leg.
      *
-     * @param leg highway route leg index
      */
     private void start(int leg) {
         List<Leg> legs = this.route.legs();
@@ -985,10 +983,8 @@ public class AutoPilot extends Module {
     /**
      * Searches one horizontal ring for the nearest clear space.
      *
+     *
      * @param range horizontal search range
-     * @param base initial vertical center offset
-     * @param limit lowest vertical search offset
-     * @param distance nearest distance already found
      * @return a closer usable point, or null when none is found
      */
     private BlockPos scan(BlockPos origin, int range,
@@ -1017,7 +1013,6 @@ public class AutoPilot extends Module {
     }
 
     /**
-     * @param distance nearest distance already found
      * @return closest clear position, or null
      */
     private BlockPos vertical(BlockPos origin, int px,
@@ -1086,7 +1081,7 @@ public class AutoPilot extends Module {
     /**
      * Checks whether a space contains only air or flowing lava.
      *
-     * @param center center of the space
+     *
      * @return true when the entire space is loaded and clear
      */
     private boolean clear(BlockPos center) {

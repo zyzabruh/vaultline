@@ -618,7 +618,6 @@ public class MiningTweaks extends Module {
     /**
      * Accumulates mining work since the target's previous update.
      *
-     * @param target target receiving accumulated work
      */
     private void advance(Target target) {
         long now = System.currentTimeMillis();
@@ -829,8 +828,8 @@ public class MiningTweaks extends Module {
     /**
      * Refreshes target data and sends a mining action packet.
      *
+     *
      * @param target target associated with the action
-     * @param action mining action to send
      * @param pos packet block position
      */
     private void action(Target target, Action action, BlockPos pos) {
@@ -894,9 +893,6 @@ public class MiningTweaks extends Module {
         return tool.speed > best.speed ? tool : best;
     }
 
-    /**
-     * @param slot hotbar slot to select
-     */
     private void select(int slot) {
         if (Hotbar.selected() != slot) {
             Hotbar.select(slot);
@@ -904,7 +900,6 @@ public class MiningTweaks extends Module {
     }
 
     /**
-     * @param action mining action to send
      * @param pos packet block position
      * @param side block face used by the packet
      */

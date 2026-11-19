@@ -288,9 +288,6 @@ class SkyboxShaderCompileTest {
         }
     }
 
-    /**
-     * @param output what the compiler said
-     */
     private record Run(int exit, String output) {
         /**
          * @return true on a non-zero exit or a reported error

@@ -1579,7 +1579,6 @@ public class BounceFly extends Module {
     }
 
     /**
-     * @param level highway level to check
      * @return number of valid center positions
      */
     private int trail(int level) {

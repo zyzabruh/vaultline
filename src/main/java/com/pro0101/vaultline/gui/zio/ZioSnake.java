@@ -179,7 +179,7 @@ public final class ZioSnake extends ZioGridGame {
     /**
      * The keys the copied component reads: R starts over and the four arrows turn.
      *
-     * @param keyCode a GLFW key code
+     *
      * @return whether the game used the key
      */
     public boolean keyPressed(int keyCode) {

@@ -184,9 +184,6 @@ public final class Packets {
         );
     }
 
-    /**
-     * @param slot hotbar slot to select
-     */
     public static void slot(int slot) {
         client.getNetworkHandler().sendPacket(
             new UpdateSelectedSlotC2SPacket(slot)

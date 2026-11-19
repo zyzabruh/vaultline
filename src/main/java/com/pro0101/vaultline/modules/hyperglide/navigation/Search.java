@@ -22,17 +22,10 @@ public final class Search {
         this(Highways.roads());
     }
 
-    /**
-     * @param roads roads available for routing
-     */
     public Search(List<Highways.Road> roads) {
         this.graph = new Graph(roads);
     }
 
-    /**
-     * @param start starting X/Z position
-     * @param end destination X/Z position
-     */
     public Route find(Vec2f start, Vec2f end, float highway, float normal) {
         Route undefined = new Route(List.of(), 0.0F, 0.0F);
 
@@ -119,7 +112,6 @@ public final class Search {
 
     /**
      * @param points points belonging to the segment
-     * @param road highway containing the segment
      */
     private void highway(Map<Graph.Node, List<Link>> links,
         List<Graph.Node> points, Segment segment, Highways.Road road) {
@@ -183,7 +175,6 @@ public final class Search {
     /**
      * Adds a route link unless an equivalent link already exists.
      *
-     * @param link route link to add
      */
     private void add(Map<Graph.Node, List<Link>> links, Link link) {
         Function<Graph.Node, List<Link>> create = key -> new ArrayList<>();
@@ -349,9 +340,6 @@ public final class Search {
         Map<Graph.Node, List<Link>> links
     ) {}
 
-    /**
-     * @param priority estimated total travel time
-     */
     private record State(
         Graph.Node node, float cost, float priority
     ) {}

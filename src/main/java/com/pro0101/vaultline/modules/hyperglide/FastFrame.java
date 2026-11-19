@@ -209,7 +209,7 @@ public class FastFrame extends Module {
     /**
      * Places the first configured hotbar item into a frame.
      *
-     * @param frame item frame to fill
+     *
      * @return true when the interaction was accepted
      */
     private boolean fill(ItemFrameEntity frame) {
@@ -247,7 +247,7 @@ public class FastFrame extends Module {
     /**
      * Finds an interaction point on an item frame.
      *
-     * @param frame item frame to target
+     *
      * @return frame hit result, or null when the frame is out of range
      */
     private EntityHitResult hit(ItemFrameEntity frame) {
@@ -313,7 +313,6 @@ public class FastFrame extends Module {
 
         /**
          * @param pos target block position
-         * @param frames known frame entity ids
          */
         private Pending(BlockPos pos, Set<Integer> frames, int life) {
             this.pos = pos;

@@ -592,7 +592,6 @@ public class FlowESP extends Module {
 
     /**
      * @param chunk chunk holding the block
-     * @param tag fluid tag to match
      * @return true when the block holds that fluid
      */
     private FluidState fluidAt(WorldChunk chunk, int x, int y, int z, TagKey<Fluid> tag) {

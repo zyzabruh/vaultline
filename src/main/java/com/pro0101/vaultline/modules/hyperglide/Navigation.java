@@ -546,9 +546,6 @@ public class Navigation extends Module {
         API.border(context, left, top, size, size, color);
     }
 
-    /**
-     * @param first line starting position
-     */
     private void draw(DrawContext context, Vec2f first, Vec2f second,
         View view, double left, double top, Color color, int width) {
 
@@ -563,12 +560,6 @@ public class Navigation extends Module {
         );
     }
 
-    /**
-     * @param x1 line starting X position
-     * @param y1 line starting Y position
-     * @param x2 line ending X position
-     * @param y2 line ending Y position
-     */
     private void line(DrawContext context, double x1, double y1, double x2, double y2,
         double left, double top, double right, double bottom, Color color, int width) {
 
@@ -587,10 +578,6 @@ public class Navigation extends Module {
     }
 
     /**
-     * @param x1 line starting X position
-     * @param y1 line starting Y position
-     * @param x2 line ending X position
-     * @param y2 line ending Y position
      * @return clipped coordinates, or null when outside
      */
     private double[] clip(double x1, double y1, double x2, double y2,
@@ -709,7 +696,6 @@ public class Navigation extends Module {
     /**
      * Calculates screen distance from a point to a segment.
      *
-     * @param first segment starting position
      */
     private float distance(Vec2f point, Vec2f first, Vec2f second) {
         Vec2f vector = second.add(first.negate());

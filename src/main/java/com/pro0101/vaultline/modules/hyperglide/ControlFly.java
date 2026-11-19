@@ -437,9 +437,6 @@ public class ControlFly extends Module {
 
 
 
-    /**
-     * @param rocket player-owned firework rocket
-     */
     public void track(FireworkRocketEntity rocket) {
         if (!Client.ready() || this.boost.rocket == rocket) {
             return;
@@ -621,7 +618,6 @@ public class ControlFly extends Module {
     }
 
     /**
-     * @param first previous movement direction
      * @return true when the turn requires a brake tick
      */
     private boolean sharp(Vec3d first, Vec3d second) {
@@ -795,7 +791,6 @@ public class ControlFly extends Module {
     /**
      * @param boosted whether rocket acceleration should be predicted
      * @param start first pitch value
-     * @param count number of pitch increments
      */
     private Choice search(Vec3d velocity, boolean boosted,
         double desired, float start, float step, int count, Choice choice) {

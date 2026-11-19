@@ -223,7 +223,6 @@ public final class Highways {
     /**
      * Removes segment parts that fall inside the given radius.
      *
-     * @param radius radius around the origin
      */
     private static List<Road> cut(List<Road> roads, float radius) {
         List<Road> result = new ArrayList<>();
@@ -268,7 +267,7 @@ public final class Highways {
     /**
      * Checks whether a configured square exists at a radius.
      *
-     * @param radius square radius to check
+     *
      * @return true when the square exists
      */
     private static boolean exists(float radius) {

@@ -249,7 +249,6 @@ class HandShaderValidityTest {
     }
 
     /**
-     * @param name include name without extension
      * @return its text, or null when it does not exist
      * @throws IOException when the entry cannot be read
      */

@@ -367,9 +367,6 @@ public class ElytraTweaks extends Module {
         return this.deploy.get();
     }
 
-    /**
-     * @param active requested auto deploy state
-     */
     public void deploy(boolean active) {
         if (this.deploy.get() != active) {
             this.deploy.set(active);
@@ -914,9 +911,6 @@ public class ElytraTweaks extends Module {
 
 
 
-    /**
-     * @param rocket player-owned firework rocket
-     */
     public void track(FireworkRocketEntity rocket) {
         if (!this.isActive()) return;
 
@@ -1040,9 +1034,6 @@ public class ElytraTweaks extends Module {
             || (axis & axes) != 0 && damage > 0.0;
     }
 
-    /**
-     * @param motion movement vector to project
-     */
     private int collision(Vec3d motion) {
         Vec3d flat = new Vec3d(motion.x, 0.0, motion.z);
         if (flat.lengthSquared() < epsilon) return 0;
