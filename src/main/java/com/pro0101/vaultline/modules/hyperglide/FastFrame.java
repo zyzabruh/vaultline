@@ -216,9 +216,6 @@ public class FastFrame extends Module {
 
     /**
      * Places the first configured hotbar item into a frame.
-     *
-     *
-     * @return true when the interaction was accepted
      */
     private boolean fill(ItemFrameEntity frame) {
         int slot = this.slot();
@@ -292,9 +289,6 @@ public class FastFrame extends Module {
 
     /**
      * Checks whether a hand currently holds an item frame.
-     *
-     *
-     * @return true when the hand contains an item frame
      */
     private boolean held(Hand hand) {
         ItemStack stack = this.mc.player.getStackInHand(hand);

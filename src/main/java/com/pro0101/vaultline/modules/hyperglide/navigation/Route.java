@@ -16,9 +16,6 @@ public record Route(List<Leg> legs, float distance, float time) {
         Highway
     }
 
-    /**
-     * @return true when the route is empty
-     */
     public boolean empty() {
         return this.legs.isEmpty();
     }

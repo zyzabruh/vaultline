@@ -166,9 +166,6 @@ public final class ZioTetris extends ZioGridGame {
     /**
      * The keys the copied component reads: space drops, D steps, R starts over, the left and right
      * arrows move and the up and down arrows turn.
-     *
-     *
-     * @return whether the game used the key
      */
     public boolean keyPressed(int keyCode) {
         switch (keyCode) {

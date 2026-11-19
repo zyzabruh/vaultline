@@ -112,8 +112,6 @@ public final class ItemSorter {
 
     /**
      * Runs one delivery tick.
-     *
-     * @return true once the buffer is empty
      */
     public boolean deliverTick() {
         if (!delivering) return true;

@@ -460,9 +460,6 @@ public class FlowESP extends Module {
 
     /**
      * Finds every connected flow in one chunk and replaces that chunk's old records.
-     *
-     *
-     * @param nether whether this is the Nether
      */
     private void scanChunk(WorldChunk chunk, int chunkX, int chunkZ, String dimension, boolean nether) {
         Kind kind = nether ? Kind.Lava : Kind.Water;
@@ -680,8 +677,6 @@ public class FlowESP extends Module {
     /**
      * Returns the alpha multiplier for a flow at a given distance.
      *
-     *
-     * @param distanceSquared squared distance from the player
      * @return multiplier between zero and one
      */
     private double visibility(Flow flow, double distanceSquared, double limit, long now) {

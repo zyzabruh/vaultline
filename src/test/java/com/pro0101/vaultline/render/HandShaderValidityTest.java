@@ -206,9 +206,6 @@ class HandShaderValidityTest {
         }
     }
 
-    /**
-     * @return the captures, in source order
-     */
     private static Set<String> find(Pattern pattern, String text) {
         Set<String> found = new LinkedHashSet<>();
         Matcher matcher = pattern.matcher(text);
@@ -220,9 +217,6 @@ class HandShaderValidityTest {
 
     /**
      * Reads a shader stage that ships with the mod.
-     *
-     *
-     * @throws IOException when the resource is missing
      */
     private static String source(Identifier id, String extension) throws IOException {
         String path = "/assets/" + id.getNamespace() + "/shaders/" + id.getPath() + "." + extension;
@@ -264,9 +258,6 @@ class HandShaderValidityTest {
         }
     }
 
-    /**
-     * @return attribute name to GLSL type
-     */
     private static Map<String, String> attributeTypes() {
         Map<String, String> types = new LinkedHashMap<>();
 

@@ -41,17 +41,11 @@ public final class Flight {
         if (!enabled) this.clear();
     }
 
-    /**
-     * @return true when spoofing may be used
-     */
     public boolean spoof() {
         return this.enabled && !Baritone.elytra()
             && !this.liquid && !Player.liquid();
     }
 
-    /**
-     * @return true while spoofing is waiting to become active
-     */
     public boolean standby() {
         return this.spoof() && !this.active;
     }
@@ -63,16 +57,10 @@ public final class Flight {
         return this.spoof() && !this.prepare();
     }
 
-    /**
-     * @return true when normal or spoofed flight is available
-     */
     public boolean available() {
         return this.spoof() ? this.ready() : Elytra.equipped();
     }
 
-    /**
-     * @return true when spoofing can start or continue
-     */
     public boolean ready() {
         if (!this.spoof()) return false;
 
@@ -88,25 +76,16 @@ public final class Flight {
         return Hotbar.find(Elytra::chestplate) >= 0;
     }
 
-    /**
-     * @return true while spoofed flight is active
-     */
     public boolean active() {
         return this.spoof() && this.active;
     }
 
-    /**
-     * @return true while spoof equipment is being managed
-     */
     public boolean mute() {
         return this.spoof() && (this.active || this.prepared());
     }
 
 
 
-    /**
-     * @return true when the chestplate transaction starts
-     */
     public boolean activate() {
         if (!this.spoof()) return false;
         if (this.active) return true;
@@ -126,9 +105,6 @@ public final class Flight {
         return true;
     }
 
-    /**
-     * @return true when the flight start was accepted
-     */
     public boolean start() {
         if (!this.spoof()) return false;
         if (this.active) return true;
@@ -192,9 +168,6 @@ public final class Flight {
         this.restore = false;
     }
 
-    /**
-     * @return true when an elytra is equipped
-     */
     public boolean normal() {
         if (!Client.interaction() || !Inventory.ready()) {
             return Elytra.equipped();
@@ -258,9 +231,6 @@ public final class Flight {
 
     /**
      * Runs an action now or remembers it for later.
-     *
-     *
-     * @return true when the action ran or was remembered
      */
     public boolean request(BooleanSupplier action) {
         if (action == null) return false;
@@ -270,9 +240,6 @@ public final class Flight {
         return true;
     }
 
-    /**
-     * @return true when the request was accepted
-     */
     public boolean request() {
         return this.request(Elytra::firework);
     }
@@ -296,9 +263,6 @@ public final class Flight {
 
 
 
-    /**
-     * @return true when the chestplate and elytra are ready
-     */
     public boolean prepare() {
         if (!this.spoof()) return false;
 
@@ -320,8 +284,6 @@ public final class Flight {
 
     /**
      * Checks whether the chestplate and elytra are in place.
-     *
-     * @return true when spoofing can perform a restart
      */
     private boolean prepared() {
         if (Elytra.equipped()) return false;
@@ -333,9 +295,6 @@ public final class Flight {
         return Elytra.chestplate() && Elytra.hotbar() >= 0;
     }
 
-    /**
-     * @return true when the restart packet was sent
-     */
     private boolean begin() {
         if (!this.prepared() || !this.continuing()) {
             return false;
@@ -403,9 +362,6 @@ public final class Flight {
 
 
 
-    /**
-     * @return true while flight may continue
-     */
     private boolean continuing() {
         return Client.ready() && !Player.liquid()
             && !this.client.player.isOnGround()

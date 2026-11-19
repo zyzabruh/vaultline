@@ -18,9 +18,6 @@ public final class Takeoff {
         this.start(false);
     }
 
-    /**
-     * @param ground whether the sequence covers ground
-     */
     public void start(boolean ground) {
         this.active = true;
         this.pressed = false;
@@ -48,9 +45,6 @@ public final class Takeoff {
         this.pressed = !this.pressed;
     }
 
-    /**
-     * @return true while takeoff can continue
-     */
     private boolean ready() {
         return Client.loaded()
             && this.flight.available()
@@ -86,17 +80,12 @@ public final class Takeoff {
         this.ground = false;
     }
 
-    /**
-     * @return true while jump input is being controlled
-     */
     public boolean active() {
         return this.active;
     }
 
     /**
      * Checks whether the sequence may begin on the ground.
-     *
-     * @return true when ground jumping is enabled
      */
     public boolean ground() {
         return this.ground;

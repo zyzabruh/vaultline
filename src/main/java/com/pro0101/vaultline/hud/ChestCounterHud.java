@@ -123,9 +123,6 @@ public class ChestCounterHud extends HudElement {
         HudBloom.text(renderer, singleLine, textX, textY, SINGLE_COLOR, true);
     }
 
-    /**
-     * @return true when the world should be scanned again
-     */
     private boolean shouldScan(BlockPos pos) {
         if (this.lastPos == null) return true;
         if (System.currentTimeMillis() - this.lastScan >= RESCAN_MS) return true;
@@ -138,9 +135,6 @@ public class ChestCounterHud extends HudElement {
 
     /**
      * Counts the chests of every loaded chunk around the player.
-     *
-     * @param client client, for the world and the view distance
-     * @param center player position, which picks the chunk radius
      */
     private void scan(MinecraftClient client, BlockPos center) {
         this.doubles = 0;

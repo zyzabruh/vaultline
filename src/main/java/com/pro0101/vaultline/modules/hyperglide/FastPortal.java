@@ -212,7 +212,6 @@ public class FastPortal extends Module {
 
     /**
      * @param pos block position to check
-     * @return true when the position contains obsidian
      */
     private boolean obsidian(BlockPos pos) {
         return this.mc.world.getBlockState(pos).isOf(Blocks.OBSIDIAN);
@@ -245,8 +244,6 @@ public class FastPortal extends Module {
 
     /**
      * Attempts to ignite the completed portal using flint and steel.
-     *
-     * @return true when the ignition interaction was sent
      */
     private boolean ignite() {
         int slot = Hotbar.find(Items.FLINT_AND_STEEL);

@@ -138,9 +138,6 @@ public class Ambience extends Module {
         return (int) ((ticks + 18000L) % 24000L);
     }
 
-    /**
-     * @return true when the fog option is on
-     */
     public boolean fogEnabled() {
         return this.fog.get();
     }
@@ -176,16 +173,11 @@ public class Ambience extends Module {
 
     /**
      * Reports whether the sky should fade into the fog as well.
-     *
-     * @return true when the horizon band is covered
      */
     public boolean coverHorizon() {
         return this.horizonBand.get();
     }
 
-    /**
-     * @return true when the sky option is on
-     */
     public boolean skyEnabled() {
         return this.sky.get();
     }

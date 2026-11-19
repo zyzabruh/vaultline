@@ -163,9 +163,7 @@ class SkyboxShaderCompileTest {
     }
 
     /**
-     * @return the exit code and output
      * @throws IOException when the process cannot be started
-     * @throws InterruptedException when the wait is interrupted
      */
     private static Run run(Path tool, List<String> arguments) throws IOException, InterruptedException {
         List<String> command = new ArrayList<>();
@@ -204,8 +202,6 @@ class SkyboxShaderCompileTest {
     /**
      * Replaces every import with the include's text, recursively.
      *
-     *
-     * @return the expanded text without version directives
      * @throws IOException when an import cannot be read
      */
     private static String expand(String source, int depth) throws IOException {
@@ -248,9 +244,6 @@ class SkyboxShaderCompileTest {
         return read("/assets/" + namespace + "/shaders/" + resolved);
     }
 
-    /**
-     * @throws IOException when the resource is missing
-     */
     private static String read(String path) throws IOException {
         try (InputStream stream = SkyboxShaderCompileTest.class.getResourceAsStream(path)) {
             assertNotNull(stream, "missing resource " + path);

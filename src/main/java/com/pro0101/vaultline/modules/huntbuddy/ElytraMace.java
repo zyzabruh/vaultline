@@ -215,8 +215,6 @@ public class ElytraMace extends Module {
 
     /**
      * Reports whether the module is steering the player down towards a target.
-     *
-     * @return true while a dive is in progress
      */
     public static boolean isDiving() {
         return diving;

@@ -44,9 +44,6 @@ public class HandCommands implements RenderCommandQueue {
      * delegate received the sentinel. Production uses {@link HandFx#layer(RenderLayer, HandFx.Look)}.
      */
     public interface LayerResolver {
-        /**
-         * @param look look the pass runs with
-         */
         RenderLayer resolve(RenderLayer layer, HandFx.Look look);
     }
 
@@ -56,19 +53,11 @@ public class HandCommands implements RenderCommandQueue {
 
     /**
      * Wraps a queue for one look with the production layer builder.
-     *
-     * @param delegate queue every call is forwarded to
-     * @param look look the submissions are retargeted to
      */
     public HandCommands(RenderCommandQueue delegate, HandFx.Look look) {
         this(delegate, look, HandFx::layer);
     }
 
-    /**
-     * @param delegate queue every call is forwarded to
-     * @param look look the submissions are retargeted to
-     * @param resolver layer builder to use for every submission
-     */
     public HandCommands(RenderCommandQueue delegate, HandFx.Look look, LayerResolver resolver) {
         this.delegate = delegate;
         this.look = look;

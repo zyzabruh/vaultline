@@ -12,8 +12,6 @@ public final class Gui {
 
     /**
      * Checks whether chat or a Meteor GUI screen can receive mouse input.
-     *
-     * @return true when supported mouse interaction is available
      */
     public static boolean interactive() {
         if (client.currentScreen == null) return false;
@@ -26,8 +24,6 @@ public final class Gui {
 
     /**
      * Checks whether a vanilla screen other than chat is open.
-     *
-     * @return true when another vanilla screen is open
      */
     public static boolean vanilla() {
         if (client.currentScreen == null ||
@@ -38,9 +34,6 @@ public final class Gui {
         );
     }
 
-    /**
-     * @return true when the button is held
-     */
     public static boolean pressed(int button) {
         return GLFW.glfwGetMouseButton(
             client.getWindow().getHandle(), button

@@ -18,7 +18,6 @@ public final class HeightBand {
 
     /**
      * @param band half-height of the band, in blocks
-     * @param minimum altitude below which the cycle always climbs
      */
     public static Phase automatic(double altitude, double target, double band, double minimum) {
         if (altitude <= minimum) return Phase.CLIMB;
@@ -28,10 +27,6 @@ public final class HeightBand {
         return Phase.CRUISE;
     }
 
-    /**
-     * @param climb whether the climb key is held
-     * @param dive whether the dive key is held
-     */
     public static Phase manual(boolean climb, boolean dive) {
         if (climb && !dive) return Phase.CLIMB;
         if (dive && !climb) return Phase.DIVE;

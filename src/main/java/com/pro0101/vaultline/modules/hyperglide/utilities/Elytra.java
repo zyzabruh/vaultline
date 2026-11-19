@@ -25,9 +25,6 @@ public final class Elytra {
         ).isOf(Items.ELYTRA);
     }
 
-    /**
-     * @return true when a chestplate is equipped
-     */
     public static boolean chestplate() {
         return chestplate(client.player.getEquippedStack(
             EquipmentSlot.CHEST
@@ -36,9 +33,6 @@ public final class Elytra {
 
     /**
      * Checks whether a stack can be worn as a chestplate.
-     *
-     *
-     * @return true when the stack uses the chest slot
      */
     public static boolean chestplate(ItemStack stack) {
         if (stack.isEmpty() || stack.isOf(Items.ELYTRA)) {
@@ -72,9 +66,6 @@ public final class Elytra {
         Packets.command(ClientCommandC2SPacket.Mode.START_FALL_FLYING);
     }
 
-    /**
-     * @return true when the firework packet was sent
-     */
     public static boolean firework() {
         if (client.player == null) return false;
 
@@ -84,9 +75,6 @@ public final class Elytra {
         return firework(yaw, pitch);
     }
 
-    /**
-     * @return true when the firework packet was sent
-     */
     public static boolean firework(float yaw, float pitch) {
         if (!Client.interaction() || !Inventory.ready()) {
             return false;

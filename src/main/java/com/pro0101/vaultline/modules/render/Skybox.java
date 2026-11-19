@@ -216,8 +216,6 @@ public class Skybox extends Module {
 
     /**
      * Reports whether the dark fog colour should be replaced.
-     *
-     * @return true when the fog colour follows the sky
      */
     public boolean hideDarkFog() {
         return this.darkFog.get();
@@ -233,8 +231,6 @@ public class Skybox extends Module {
 
     /**
      * Reports whether the dark sky of the Nether and the End should be replaced.
-     *
-     * @return true when the shader replaces the dark sky
      */
     public boolean hideDarkSky() {
         return this.darkSky.get();
@@ -263,16 +259,11 @@ public class Skybox extends Module {
 
     /**
      * Reports whether the vanilla sun and moon should be cancelled.
-     *
-     * @return true when the celestial bodies are hidden
      */
     public boolean hideCelestial() {
         return this.celestial.get();
     }
 
-    /**
-     * @return true when the clouds are hidden
-     */
     public boolean hideClouds() {
         return this.hideClouds.get();
     }

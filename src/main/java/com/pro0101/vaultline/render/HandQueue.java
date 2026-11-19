@@ -19,9 +19,6 @@ import net.minecraft.client.render.command.RenderCommandQueue;
 public final class HandQueue extends HandCommands implements OrderedRenderCommandQueue {
     /**
      * Wraps an ordered queue with the production layer builder.
-     *
-     * @param delegate vanilla queue every call is forwarded to
-     * @param look look the hand submissions are retargeted to
      */
     public HandQueue(OrderedRenderCommandQueue delegate, HandFx.Look look) {
         super(delegate, look);
@@ -29,10 +26,6 @@ public final class HandQueue extends HandCommands implements OrderedRenderComman
 
     /**
      * Wraps an ordered queue with an explicit layer builder.
-     *
-     * @param delegate vanilla queue every call is forwarded to
-     * @param look look the hand submissions are retargeted to
-     * @param resolver layer builder to use for every submission
      */
     public HandQueue(OrderedRenderCommandQueue delegate, HandFx.Look look, LayerResolver resolver) {
         super(delegate, look, resolver);

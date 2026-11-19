@@ -140,7 +140,6 @@ public class PresetPreviewHud extends HudElement {
 
     /**
      * @param selected whether this preset is the active one
-     * @param moduleOn whether the owning module is on
      * @param swatch colour of the preset, may be null
      */
     private static Line row(String name, boolean selected, boolean moduleOn, SettingColor swatch) {
@@ -159,7 +158,6 @@ public class PresetPreviewHud extends HudElement {
     }
 
     /**
-     * @param indent whether the row is indented under a header
      * @param swatch colour square, may be null
      */
     private record Line(String text, Color color, boolean indent, SettingColor swatch) {

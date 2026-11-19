@@ -137,7 +137,6 @@ public class Overview extends Module {
     /**
      * Finds the item occupying the most slots, then the largest count.
      *
-     * @param data container or bundle content data
      * @return dominant item stack, or an empty stack when no item exists
      */
     private ItemStack common(Object data) {

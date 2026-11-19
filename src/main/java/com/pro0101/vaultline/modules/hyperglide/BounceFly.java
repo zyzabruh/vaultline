@@ -552,9 +552,6 @@ public class BounceFly extends Module {
         }
     }
 
-    /**
-     * @return true while fake lag applies
-     */
     private boolean holding() {
         return this.fakeLag.get() && this.isActive() && this.enabled()
             && this.mc.player != null && this.mc.player.isGliding()
@@ -680,8 +677,6 @@ public class BounceFly extends Module {
 
     /**
      * Swaps a hand item into the chest slot and remembers which side the swap asked for.
-     *
-     * @param hand hand holding the elytra or the chestplate
      */
     private void swapFakeFly(Hand hand) {
         this.fakeWant = GliderSwap.isGlider(this.mc.player.getStackInHand(hand));
@@ -696,8 +691,6 @@ public class BounceFly extends Module {
 
     /**
      * Checks whether the chest slot holds what the last swap asked for.
-     *
-     * @return true when the swap took effect
      */
     private boolean swapped() {
         ItemStack worn = this.mc.player.getEquippedStack(EquipmentSlot.CHEST);
@@ -771,8 +764,6 @@ public class BounceFly extends Module {
 
     /**
      * Checks whether a re-deploy can be made on this tick.
-     *
-     * @return true when nothing is holding the jump
      */
     private boolean free() {
         return !this.mc.player.isOnGround()
@@ -822,9 +813,6 @@ public class BounceFly extends Module {
 
 
 
-    /**
-     * @return true while normal bounce movement is active
-     */
     public boolean enabled() {
         return this.isActive() && this.mc.player != null
             && !this.pass && (Elytra.equipped() || this.glider());
@@ -836,9 +824,6 @@ public class BounceFly extends Module {
         return this.launch && this.enabled() && this.ready();
     }
 
-    /**
-     * @return true when acceleration mode is enabled
-     */
     public boolean accelerated() {
         return this.acceleration.get();
     }
@@ -873,16 +858,10 @@ public class BounceFly extends Module {
 
 
 
-    /**
-     * @return true when Bounce Fly can control movement
-     */
     private boolean available() {
         return !this.pathing() && this.equipped();
     }
 
-    /**
-     * @return true when an elytra is equipped
-     */
     private boolean equipped() {
         if (Elytra.equipped() || this.glider()) {
             return true;
@@ -977,9 +956,6 @@ public class BounceFly extends Module {
 
 
 
-    /**
-     * @return true while obstacle handling is active
-     */
     private boolean pathing() {
         if (!this.passer.get()) {
             if (this.pass) {
@@ -1029,9 +1005,6 @@ public class BounceFly extends Module {
         return false;
     }
 
-    /**
-     * @return true when obstacle handling was started
-     */
     private boolean blocked() {
         if (!this.passer.get() || !this.avoid.get()) {
             return false;
@@ -1256,7 +1229,6 @@ public class BounceFly extends Module {
      * Checks whether the client has the chunk a block belongs to.
      *
      * @param pos block position to check
-     * @return true when the chunk is loaded
      */
     private boolean loaded(BlockPos pos) {
         return this.mc.world.getChunkManager().isChunkLoaded(
@@ -1339,7 +1311,6 @@ public class BounceFly extends Module {
      * Checks the player-sized space for one trail step.
      *
      * @param pos center block of the trail step
-     * @return true when the step is obstructed
      */
     private boolean step(BlockPos pos) {
         boolean blocked = this.column(pos);
@@ -1517,8 +1488,6 @@ public class BounceFly extends Module {
 
     /**
      * Checks whether the custom camera rotation should be applied.
-     *
-     * @return true when the camera owns its rotation
      */
     public boolean camera() {
         return this.isActive() && this.mc.player != null && this.viewActive;
@@ -1585,9 +1554,6 @@ public class BounceFly extends Module {
         return this.trail(high) >= this.trail(low) ? high : low;
     }
 
-    /**
-     * @return number of valid center positions
-     */
     private int trail(int level) {
         int score = 0;
 
@@ -1622,9 +1588,6 @@ public class BounceFly extends Module {
 
     /**
      * Checks whether a trail position is clear and supported.
-     *
-     *
-     * @return true when the position is valid
      */
     private boolean clear(BlockPos pos) {
         return !this.column(pos) && this.solid(pos.down());
@@ -1654,9 +1617,6 @@ public class BounceFly extends Module {
 
     /**
      * Rounds a coordinate to the nearest highway grid position.
-     *
-     *
-     * @return coordinate aligned to the highway grid
      */
     private int snap(double value) {
         return (int) Math.round(value / grid) * grid;

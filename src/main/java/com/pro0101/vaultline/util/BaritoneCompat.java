@@ -16,9 +16,6 @@ public final class BaritoneCompat {
 
     private BaritoneCompat() {}
 
-    /**
-     * @return true when the Baritone API can be loaded
-     */
     public static boolean isAvailable() {
         return present(API);
     }

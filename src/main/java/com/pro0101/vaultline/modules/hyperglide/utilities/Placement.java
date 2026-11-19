@@ -28,7 +28,6 @@ public final class Placement {
     /**
      * @param pos destination block position
      * @param slot hotbar slot containing the block
-     * @return true when the placement interaction was sent
      */
     public static boolean place(BlockPos pos, int slot) {
         return place(air(pos), slot);
@@ -39,7 +38,6 @@ public final class Placement {
      *
      * @param hit block face used for placement
      * @param slot hotbar slot containing the block
-     * @return true when the placement interaction was sent
      */
     public static boolean place(BlockHitResult hit, int slot) {
         if (!(Hotbar.stack(slot).getItem() instanceof BlockItem)) {

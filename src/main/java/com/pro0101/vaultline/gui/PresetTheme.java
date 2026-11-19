@@ -68,14 +68,10 @@ public abstract class PresetTheme extends GuiTheme {
     /**
      * What the themes differ in beyond colour: the shape of a window, and the effects around it.
      *
-     * @param cornerRadius   corner radius of windows and buttons
-     * @param panelGlow      alpha of the halo drawn around windows
      * @param bodyShade      alpha of the dark glass under a window body
      * @param headerHeight   title bar height, zero to leave Meteor's own
      * @param minWidth       minimum window width, zero for the width of the content
      * @param gradientHeader whether the title bar fades between the two accents
-     * @param sounds         whether the GUI plays hover and click sounds
-     * @param blur           whether the background behind the screens is blurred
      * @param portedSounds   whether the GUI plays the copied client's own sound files instead of
      *                       the chosen vanilla sounds
      */

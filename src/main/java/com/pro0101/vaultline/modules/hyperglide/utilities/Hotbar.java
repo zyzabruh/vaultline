@@ -100,7 +100,6 @@ public final class Hotbar {
      * Finds an allowed full cube block in the hotbar.
      *
      * @param filter block list used to select blocks
-     * @param pos destination used to check the collision shape
      * @return matching hotbar slot, or -1 when unavailable
      */
     public static int block(BlockFilter filter, BlockPos pos) {
@@ -135,9 +134,6 @@ public final class Hotbar {
         return API.slot(client.player.getInventory());
     }
 
-    /**
-     * @return item stack stored in the slot
-     */
     public static ItemStack stack(int slot) {
         return client.player.getInventory().getStack(slot);
     }
@@ -161,9 +157,6 @@ public final class Hotbar {
 
     /**
      * Temporarily swaps an inventory item into the selected hotbar slot.
-     *
-     * @param slot hotbar or inventory slot to use
-     * @return true when the swap was prepared
      */
     public static boolean swap(int slot) {
         return InvUtils.swap(slot, true);

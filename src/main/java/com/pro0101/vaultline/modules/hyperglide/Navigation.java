@@ -717,9 +717,6 @@ public class Navigation extends Module {
         return (float) Math.sqrt(point.distanceSquared(closest));
     }
 
-    /**
-     * @param upper true to draw above the map
-     */
     private void box(HudRenderer renderer, String[] lines,
         double left, double top, boolean upper, double gui) {
 
@@ -875,9 +872,6 @@ public class Navigation extends Module {
         return margin + this.yoffset.get();
     }
 
-    /**
-     * @return true when the mouse is inside the map
-     */
     private boolean hovered(double mx, double my) {
         double size = this.size.get();
 
@@ -987,9 +981,6 @@ public class Navigation extends Module {
         return new Vec2f(this.point.getX(), this.point.getZ());
     }
 
-    /**
-     * @return configured Bounce Fly highway speed
-     */
     private float speed() {
         BounceFly bounce = Modules.get().get(BounceFly.class);
         boolean faster = bounce != null && bounce.accelerated();

@@ -42,9 +42,6 @@ public final class Highways {
         return roads;
     }
 
-    /**
-     * @param radius radius to remove from the network
-     */
     public static List<Road> roads(float radius) {
         if (radius <= 0.0F) return roads;
         return cut(roads, radius);
@@ -195,9 +192,7 @@ public final class Highways {
     /**
      * Builds grid roads excluding sections covered by any ring road.
      *
-     *
      * @param cx true for a constant X road, false for constant Z
-     * @return non-overlapping grid road segments
      */
     private static List<Segment> segments(float offset, boolean cx) {
         float radius = Math.abs(offset);
@@ -267,9 +262,6 @@ public final class Highways {
 
     /**
      * Checks whether a configured square exists at a radius.
-     *
-     *
-     * @return true when the square exists
      */
     private static boolean exists(float radius) {
         for (float square : squares) {

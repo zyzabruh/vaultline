@@ -260,9 +260,6 @@ public class ControlFly extends Module {
 
 
 
-    /**
-     * @return true while takeoff input is active
-     */
     public boolean deploying() {
         return this.isActive() && this.input.active();
     }
@@ -406,7 +403,6 @@ public class ControlFly extends Module {
     }
 
     /**
-     * @param ceiling whether the player is colliding with a ceiling
      * @return adjusted horizontal movement, or null when unchanged
      */
     private Vec3d adjust(Vec3d motion, Vec3d dir, double length, boolean ceiling) {
@@ -486,9 +482,6 @@ public class ControlFly extends Module {
         this.boost.endtime = this.mc.player.age + ticks;
     }
 
-    /**
-     * @return true when the tracked rocket is alive
-     */
     private boolean active() {
         return this.boost.rocket != null && this.boost.rocket.isAlive();
     }
@@ -553,8 +546,6 @@ public class ControlFly extends Module {
 
     /**
      * Retrieves the current movement input state as a bitmask.
-     *
-     * @return a bitmask containing the active movement inputs
      */
     private int state() {
         int state = 0;
@@ -647,10 +638,6 @@ public class ControlFly extends Module {
 
 
 
-    /**
-     * @param boosted whether an active rocket is boosting the player
-     * @param manual whether vertical movement input is controlling pitch
-     */
     private void aim(Vec3d dir, boolean boosted, boolean manual) {
         if (manual) {
             this.motion.porpoise = false;
@@ -679,9 +666,6 @@ public class ControlFly extends Module {
 
     /**
      * Finds the pitch that most closely maintains the target altitude.
-     *
-     *
-     * @param boosted whether rocket acceleration should be predicted
      */
     private float level(Vec3d velocity, boolean boosted) {
         double error = this.motion.altitude - this.mc.player.getY();
@@ -748,9 +732,7 @@ public class ControlFly extends Module {
     /**
      * Checks the column between two heights for blocks the swing would hit.
      *
-     *
      * @param from first height
-     * @return true when the column is clear
      */
     private boolean clear(double from, double to) {
         if (this.mc.world == null || this.mc.player == null) return false;
@@ -779,9 +761,6 @@ public class ControlFly extends Module {
     /**
      * Blends the steering yaw toward the player's current yaw. Zero leaves the
      * yaw untouched so Baritone can keep its own heading.
-     *
-     *
-     * @return yaw to send to the server
      */
     private float aligned(float yaw) {
         double factor = this.alignment.get();
@@ -794,7 +773,6 @@ public class ControlFly extends Module {
     }
 
     /**
-     * @param boosted whether rocket acceleration should be predicted
      * @param start first pitch value
      */
     private Choice search(Vec3d velocity, boolean boosted,
@@ -810,9 +788,6 @@ public class ControlFly extends Module {
         return choice;
     }
 
-    /**
-     * @param boosted whether rocket acceleration should be predicted
-     */
     private double score(Vec3d velocity, float pitch, double desired, boolean boosted) {
         Vec3d next = this.predict(velocity, this.motion.aligned, pitch, boosted);
         double score = Math.abs(next.y - desired);
@@ -829,8 +804,6 @@ public class ControlFly extends Module {
 
     /**
      * Synchronizes the rotation and launches a rocket when requested.
-     *
-     * @param launch whether a rocket should be launched
      */
     private void rotate(boolean launch) {
         boolean changed = this.changed();
@@ -848,8 +821,6 @@ public class ControlFly extends Module {
 
     /**
      * Checks whether the rotation changed since the previous update.
-     *
-     * @return true when yaw or pitch requires synchronization
      */
     private boolean changed() {
         return !this.turn.active ||
@@ -886,9 +857,6 @@ public class ControlFly extends Module {
 
     /**
      * Predicts the next velocity from elytra and rocket physics.
-     *
-     *
-     * @param boosted whether rocket acceleration should be applied
      */
     private Vec3d predict(Vec3d velocity, float yaw, float pitch, boolean boosted) {
         Vec3d rotation = Vec3d.fromPolar(pitch, yaw);
@@ -904,21 +872,12 @@ public class ControlFly extends Module {
         );
     }
 
-    /**
-     * @param rotation rotation direction on the same axis
-     * @return acceleration applied to the axis
-     */
     private double thrust(double velocity, double rotation) {
         return rotation * 0.1 + (rotation * 1.5 - velocity) * 0.5;
     }
 
 
 
-    /**
-     * @param boosted whether an active rocket is boosting the player
-     * @param redirect whether controlled movement changed direction
-     * @return true when direction or speed requires another rocket
-     */
     private boolean launch(Vec3d dir, boolean boosted, boolean redirect) {
         if (!this.stocked()) return false;
 
@@ -939,8 +898,6 @@ public class ControlFly extends Module {
 
     /**
      * Marks a rocket launch as pending and adjusts leveling.
-     *
-     * @param manual whether vertical input is controlling pitch
      */
     private void prepare(boolean manual) {
         this.await();
@@ -963,9 +920,6 @@ public class ControlFly extends Module {
 
     /**
      * Sends a firework and updates the current boost timer.
-     *
-     *
-     * @return true when the firework packet was sent
      */
     private boolean firework(float yaw, float pitch) {
         ItemStack stack = this.stack();
@@ -995,16 +949,10 @@ public class ControlFly extends Module {
 
 
 
-    /**
-     * @return true when camera control is available
-     */
     public boolean view() {
         return this.view(this.direction());
     }
 
-    /**
-     * @return true when camera control is available
-     */
     private boolean view(Vec3d input) {
         if (!this.isActive() ||
             this.mc.player == null ||
@@ -1071,9 +1019,6 @@ public class ControlFly extends Module {
 
 
 
-    /**
-     * @return true while collision avoidance is stopping movement
-     */
     private boolean halted() {
         ElytraTweaks tweaks = Modules.get().get(ElytraTweaks.class);
         return tweaks != null && tweaks.halted();
@@ -1081,8 +1026,6 @@ public class ControlFly extends Module {
 
     /**
      * Checks whether a firework rocket is available in the hotbar.
-     *
-     * @return true when a rocket is available
      */
     private boolean stocked() {
         return this.stack().isOf(Items.FIREWORK_ROCKET);
@@ -1090,8 +1033,6 @@ public class ControlFly extends Module {
 
     /**
      * Finds the firework stack that controlled flight can use.
-     *
-     * @return available firework stack, or empty when unavailable
      */
     private ItemStack stack() {
         ItemStack main = this.mc.player.getMainHandStack();
@@ -1160,8 +1101,6 @@ public class ControlFly extends Module {
 
     /**
      * Applies the chest swap setting only while this module is running.
-     *
-     * @param enabled whether chest swap was turned on
      */
     private void chestSwapChanged(boolean enabled) {
         if (!this.isActive()) return;

@@ -135,9 +135,6 @@ public final class Packets {
 
     /**
      * Copies the current input while replacing jump and sprint states.
-     *
-     *
-     * @param movement whether to preserve directional movement
      */
     public static PlayerInput state(
         boolean movement, boolean jump, boolean sprint) {

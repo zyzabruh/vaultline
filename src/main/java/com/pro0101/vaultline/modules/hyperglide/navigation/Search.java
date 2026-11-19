@@ -77,9 +77,6 @@ public final class Search {
         return new Network(source, target, links);
     }
 
-    /**
-     * @return optimal candidates for both travel directions
-     */
     private List<Graph.Node> candidates(List<Graph.Node> nodes,
         Segment segment, Vec2f point, float highway, float normal) {
 
@@ -110,9 +107,6 @@ public final class Search {
         }
     }
 
-    /**
-     * @param points points belonging to the segment
-     */
     private void highway(Map<Graph.Node, List<Link>> links,
         List<Graph.Node> points, Segment segment, Highways.Road road) {
 
@@ -183,9 +177,6 @@ public final class Search {
         if (!this.duplicate(list, link)) list.add(link);
     }
 
-    /**
-     * @return true if an equivalent connection exists
-     */
     private boolean duplicate(List<Link> links, Link link) {
         if (link.type == Route.Type.Normal) return false;
 
@@ -212,9 +203,6 @@ public final class Search {
 
     //region Route pathfinding
 
-    /**
-     * @return predecessor links for the fastest route
-     */
     private Map<Graph.Node, Link> search(
         Network network, float highway, float normal) {
 

@@ -63,9 +63,6 @@ public abstract class FullBrightMixin {
         if (vaultline$enabled()) info.setReturnValue(1.0F);
     }
 
-    /**
-     * @return true when the lightmap should be flat white
-     */
     private static boolean vaultline$enabled() {
         RenderOptimizer module = Modules.get().get(RenderOptimizer.class);
 

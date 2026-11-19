@@ -41,7 +41,6 @@ public final class SkyboxImage {
     /**
      * Returns the texture of a panorama, loading it when the name changed.
      *
-     * @param fileName file name inside the skybox folder
      * @return texture identifier, or null when the file is missing or unreadable
      */
     public static Identifier get(String fileName) {
@@ -69,8 +68,6 @@ public final class SkyboxImage {
 
     /**
      * Reads one file and registers it, reporting a single warning when it cannot be used.
-     *
-     * @param name file name inside the skybox folder
      */
     private static void load(String name) {
         Path file = DIRECTORY.resolve(name);
@@ -118,9 +115,6 @@ public final class SkyboxImage {
 
     /**
      * Turns a file name into the path part of a texture identifier.
-     *
-     *
-     * @return identifier path, lowercase and free of separators
      */
     private static String sanitize(String name) {
         return name.toLowerCase(Locale.ROOT).replaceAll("[^a-z0-9_.-]", "_");

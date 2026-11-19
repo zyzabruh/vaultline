@@ -319,9 +319,6 @@ public class AutoPilot extends Module {
         this.target = navigation.point().toImmutable();
     }
 
-    /**
-     * @return true when route progress is available
-     */
     private boolean refresh() {
         Navigation navigation = this.navigation();
         if (navigation == null) return false;
@@ -373,9 +370,6 @@ public class AutoPilot extends Module {
 
     /**
      * Checks whether the player is aligned with a highway leg.
-     *
-     *
-     * @return true when at highway level and within proximity
      */
     private boolean aligned(Route.Leg leg) {
         if (this.mc.player.getY() < level - 1.0) {
@@ -391,18 +385,12 @@ public class AutoPilot extends Module {
 
     /**
      * Projects a point onto the nearest position of a route leg.
-     *
-     *
-     * @return closest point on the leg
      */
     private Vec2f project(Route.Leg leg, Vec2f point) {
         Segment segment = new Segment(leg.start(), leg.end());
         return segment.point(segment.projection(point));
     }
 
-    /**
-     * @return closest point shifted forward along the leg
-     */
     private Vec2f entry(Route.Leg leg) {
         Vec2f position = Player.position();
         Segment segment = new Segment(leg.start(), leg.end());
@@ -505,9 +493,6 @@ public class AutoPilot extends Module {
         }
     }
 
-    /**
-     * @return true when the support column is ready
-     */
     private boolean settled() {
         if (!this.close(this.point, 1.5)) {
             this.goal = null;
@@ -543,8 +528,6 @@ public class AutoPilot extends Module {
 
     /**
      * Waits for the flight to finish before choosing another leg.
-     *
-     * @return true when travel can continue
      */
     private boolean resume() {
         if (this.join && this.landing()) {
@@ -626,8 +609,6 @@ public class AutoPilot extends Module {
 
     /**
      * Completes travel when the player is close to the target.
-     *
-     * @return true when the route is complete
      */
     private boolean done() {
         if (!this.close(this.target, 2.0)) {
@@ -643,8 +624,6 @@ public class AutoPilot extends Module {
 
     /**
      * Uses the highway directly when it is already within reach.
-     *
-     * @return true when highway entry has taken over
      */
     private boolean access() {
         List<Leg> legs = this.route.legs();
@@ -837,7 +816,6 @@ public class AutoPilot extends Module {
     }
 
     /**
-     * @param exiting whether the route leaves the highway next
      * @return true when the player can stop for the transition
      */
     private boolean arrive(Route.Leg road, boolean exiting) {
@@ -869,10 +847,6 @@ public class AutoPilot extends Module {
         return true;
     }
 
-    /**
-     * @param exiting whether the route leaves the highway next
-     * @return true while the retry delay is still active
-     */
     private boolean delay(boolean exiting) {
         return exiting && this.point == null
             && this.timer > 0 && --this.timer > 0;
@@ -1040,10 +1014,6 @@ public class AutoPilot extends Module {
         return best;
     }
 
-    /**
-     * @param center center of the tested box
-     * @return box point closest to the reference position
-     */
     private BlockPos closest(BlockPos center, BlockPos origin) {
         int minx = center.getX() - width / 2;
         int miny = center.getY() - height / 2;
@@ -1062,10 +1032,6 @@ public class AutoPilot extends Module {
 
     /**
      * Adjusts a clear space point for launch or exit use.
-     *
-     *
-     * @param start whether selecting a launch point
-     * @return adjusted point to traverse to
      */
     private BlockPos adjust(BlockPos point, boolean start) {
         if (!start) return point.up();
@@ -1149,7 +1115,6 @@ public class AutoPilot extends Module {
 
 
     /**
-     * @param point upper position of the column
      * @param bottom lowest included block level
      * @return column blocks ordered from highest to lowest
      */
@@ -1280,7 +1245,6 @@ public class AutoPilot extends Module {
 
     /**
      * @param pos target block position
-     * @return true when the placement packet was sent
      */
     private boolean place(BlockPos pos) {
         int slot = this.netherrack();
@@ -1293,7 +1257,6 @@ public class AutoPilot extends Module {
 
     /**
      * @param exact whether Y must be part of the goal
-     * @return true when elytra pathing was started
      */
     private boolean fly(BlockPos pos, boolean exact) {
         if (!Baritone.loaded() || !this.flight.normal()) {
@@ -1347,8 +1310,6 @@ public class AutoPilot extends Module {
 
     /**
      * Checks whether Baritone is processing or following a path.
-     *
-     * @return true while any owned path is active
      */
     private boolean pathing() {
         return Baritone.elytra() || Baritone.pathing();
@@ -1356,8 +1317,6 @@ public class AutoPilot extends Module {
 
     /**
      * Checks whether elytra pathing switched to a landing target.
-     *
-     * @return true when the elytra destination changed internally
      */
     private boolean landing() {
         BlockPos current = Baritone.destination();
@@ -1407,9 +1366,6 @@ public class AutoPilot extends Module {
         Player.rotate((float) Math.toDegrees(yaw));
     }
 
-    /**
-     * @return true when the request was accepted
-     */
     private boolean rocket() {
         return this.mc.interactionManager != null
             && this.flight.request(Elytra::firework);
@@ -1503,9 +1459,6 @@ public class AutoPilot extends Module {
         return !state.getCollisionShape(this.mc.world, pos).isEmpty();
     }
 
-    /**
-     * @return true when ready to run the module
-     */
     private boolean valid() {
         return Client.ready() && Client.nether();
     }

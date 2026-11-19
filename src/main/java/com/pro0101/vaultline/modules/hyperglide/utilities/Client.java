@@ -8,9 +8,6 @@ public final class Client {
 
     private Client() {}
 
-    /**
-     * @return true when the player and world are available
-     */
     public static boolean loaded() {
         return client.player != null && client.world != null;
     }
@@ -31,18 +28,12 @@ public final class Client {
         return loaded() && client.interactionManager != null;
     }
 
-    /**
-     * @return true when the overworld is loaded
-     */
     public static boolean overworld() {
         return client.world != null && World.OVERWORLD.equals(
             client.world.getRegistryKey()
         );
     }
 
-    /**
-     * @return true when the nether is loaded
-     */
     public static boolean nether() {
         return client.world != null && World.NETHER.equals(
             client.world.getRegistryKey()

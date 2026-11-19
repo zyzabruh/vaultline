@@ -59,9 +59,6 @@ public final class Render {
         );
     }
 
-    /**
-     * @return true when rendering should run
-     */
     public boolean enabled() {
         return this.render.get();
     }

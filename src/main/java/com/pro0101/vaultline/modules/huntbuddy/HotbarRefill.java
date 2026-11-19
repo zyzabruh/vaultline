@@ -318,9 +318,6 @@ public class HotbarRefill extends Module {
 
     /**
      * Checks whether a hotbar stack is due for a top-up.
-     *
-     *
-     * @return true when the stack should be topped up
      */
     private boolean wantsRefill(int slot, ItemStack stack) {
         int count = stack.getCount();
@@ -338,9 +335,6 @@ public class HotbarRefill extends Module {
 
     /**
      * Checks whether a stack is one of the kinds the option asks for.
-     *
-     *
-     * @return true when the stack may be refilled
      */
     private boolean isConcerned(ItemStack stack) {
         Item item = stack.getItem();
@@ -369,29 +363,17 @@ public class HotbarRefill extends Module {
         return this.wantPotions.get() && item instanceof PotionItem;
     }
 
-    /**
-     * @param path registry path of the item
-     * @return true when the item is a tool
-     */
     private boolean isTool(Item item, String path) {
         return item instanceof ShovelItem || item instanceof AxeItem
             || item instanceof HoeItem || path.contains("pickaxe");
     }
 
-    /**
-     * @param path registry path of the item
-     * @return true when the item is a weapon
-     */
     private boolean isWeapon(Item item, String path) {
         return path.contains("sword") || item instanceof BowItem || item instanceof CrossbowItem;
     }
 
     /**
      * Finds a source stack and moves it into the hotbar.
-     *
-     *
-     * @param stack stack currently in that slot
-     * @return true when a move was started
      */
     private boolean tryRefill(int slot, ItemStack stack) {
         int source = this.findSource(stack);
@@ -419,10 +401,6 @@ public class HotbarRefill extends Module {
         return this.moveToHotbar(source, slot);
     }
 
-    /**
-     * @param source inventory slot to take from
-     * @return true when the move was started
-     */
     private boolean moveToHotbar(int source, int slot) {
         if (!this.shiftMove.get()) {
             if (!QuietClicks.readyOrSettle()) return false;
@@ -496,10 +474,6 @@ public class HotbarRefill extends Module {
         return best;
     }
 
-    /**
-     * @param bestCount size of the current best stack
-     * @return true when the candidate is preferred
-     */
     private boolean isBetter(int count, int bestCount) {
         return switch (this.sourcePick.get()) {
             case FullStacks -> count > bestCount;
@@ -510,9 +484,6 @@ public class HotbarRefill extends Module {
 
     /**
      * Checks whether an inventory stack may feed a hotbar stack.
-     *
-     *
-     * @return true when the candidate matches
      */
     private boolean isCandidate(ItemStack target, ItemStack candidate) {
         if (candidate.isEmpty() || candidate.getItem() != target.getItem()) return false;

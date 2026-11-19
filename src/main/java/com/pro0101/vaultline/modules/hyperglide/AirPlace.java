@@ -117,9 +117,6 @@ public class AirPlace extends Module {
 
     /**
      * Updates the current air-place target.
-     *
-     *
-     * @return true when a valid target is available
      */
     private boolean target(ItemStack stack) {
         this.hit = null;
@@ -145,8 +142,6 @@ public class AirPlace extends Module {
 
     /**
      * Checks whether Air Place can update its target.
-     *
-     * @return true when the client is ready
      */
     private boolean ready() {
         Entity entity = this.mc.getCameraEntity();
@@ -161,8 +156,6 @@ public class AirPlace extends Module {
 
     /**
      * Checks whether the current target should be rendered.
-     *
-     * @return true when the target is still valid
      */
     private boolean visible() {
         return this.box.enabled() &&
@@ -189,7 +182,6 @@ public class AirPlace extends Module {
      *
      * @param pos target block position
      * @param slot hotbar slot containing the block
-     * @return true when the placement packet was sent
      */
     public boolean place(BlockPos pos, int slot) {
         if (!Client.ready() || this.waiting(pos) ||

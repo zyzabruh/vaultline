@@ -18,9 +18,6 @@ public final class Inventory {
 
     private Inventory() {}
 
-    /**
-     * @return true when player inventory slots can be used
-     */
     public static boolean ready() {
         return client.player.currentScreenHandler
             == client.player.playerScreenHandler;
@@ -28,9 +25,6 @@ public final class Inventory {
 
     /**
      * Returns an item stack from a player screen slot.
-     *
-     *
-     * @return item stack stored in the slot
      */
     public static ItemStack stack(int slot) {
         return handler().getSlot(slot).getStack();
@@ -212,9 +206,6 @@ public final class Inventory {
         return null;
     }
 
-    /**
-     * @param button mouse button or action data
-     */
     public static void click(int slot, int button, SlotActionType action) {
         client.interactionManager.clickSlot(
             handler().syncId, slot, button, action, client.player
@@ -243,8 +234,6 @@ public final class Inventory {
 
     /**
      * Distributes the cursor stack evenly across selected screen slots.
-     *
-     * @param slots screen slots receiving the stack
      */
     public static void drag(int... slots) {
         click(ScreenHandler.EMPTY_SPACE_SLOT_INDEX,
@@ -264,9 +253,6 @@ public final class Inventory {
         );
     }
 
-    /**
-     * @return item stack stored in the slot
-     */
     private static ItemStack item(int slot) {
         return client.player.getInventory().getStack(slot);
     }

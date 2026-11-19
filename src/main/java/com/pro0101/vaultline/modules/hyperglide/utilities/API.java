@@ -61,9 +61,6 @@ public final class API {
         );
     }
 
-    /**
-     * @param player player whose state is sent
-     */
     public static void sneak(ClientPlayerEntity player, boolean value) {
         Packets.input(Packets.sneak(value));
     }

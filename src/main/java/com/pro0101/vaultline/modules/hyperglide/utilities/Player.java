@@ -56,9 +56,6 @@ public final class Player {
             || client.player.isInLava();
     }
 
-    /**
-     * @return true while consuming an item
-     */
     public static boolean consuming() {
         if (!client.player.isUsingItem()) return false;
 

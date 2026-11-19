@@ -187,9 +187,6 @@ class SkyboxTest {
         return depth == 0;
     }
 
-    /**
-     * @throws IOException when the resource is missing
-     */
     private static String resource(String path) throws IOException {
         try (InputStream stream = SkyboxTest.class.getResourceAsStream(path)) {
             assertNotNull(stream, "missing resource " + path);

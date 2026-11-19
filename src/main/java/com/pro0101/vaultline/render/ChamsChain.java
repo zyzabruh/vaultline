@@ -122,13 +122,8 @@ public final class ChamsChain {
      * Returns the chain for the requested shader and scalars, rebuilding it when they or the frame
      * size changed.
      *
-     *
-     * @param externalTargets targets the game provides to the effect
-     * @param style shader the chain is built around
      * @param radius glow radius in pixels
-     * @param fillAlpha opacity of the solid fill
      * @param outlineWidth rim thickness in pixels
-     * @param fillBrightness multiplier applied to the body colour
      * @param innerGlow how much the body is brightened by the spread silhouette
      * @return the chain, or null when it could not be built
      */
@@ -168,12 +163,8 @@ public final class ChamsChain {
     }
 
     /**
-     * @param externalTargets targets the game provides to the effect
-     * @param style shader the chain is built around
      * @param radius glow radius in pixels
-     * @param fillAlpha opacity of the solid fill
      * @param outlineWidth rim thickness in pixels
-     * @param fillBrightness multiplier applied to the body colour
      * @param innerGlow how much the body is brightened by the spread silhouette
      * @return the chain, or null when loading failed
      */

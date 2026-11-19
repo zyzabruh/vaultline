@@ -256,16 +256,10 @@ public class MiningTweaks extends Module {
 
 
 
-    /**
-     * @return true when instant remine is enabled
-     */
     public boolean instant() {
         return this.remine.get();
     }
 
-    /**
-     * @param enabled whether instant remine should be enabled
-     */
     public void instant(boolean enabled) {
         this.remine.set(enabled);
     }
@@ -305,7 +299,6 @@ public class MiningTweaks extends Module {
      * @param pos block position to rebreak
      * @param state expected block state
      * @param side block face used by the packet
-     * @return true when the rebreak packet was sent
      */
     public boolean rebreak(BlockPos pos, BlockState state, Direction side) {
         if (!this.remine.get() || !Client.ready() ||
@@ -476,8 +469,6 @@ public class MiningTweaks extends Module {
 
     /**
      * Checks whether the primary target can be parked as secondary.
-     *
-     * @return true when double-break parking is currently allowed
      */
     private boolean parkable() {
         return this.secondary == null
@@ -502,9 +493,6 @@ public class MiningTweaks extends Module {
 
 
 
-    /**
-     * @return true when an instant rebreak packet was sent
-     */
     private boolean remine() {
         if (!this.remine.get() || this.last == null ||
             this.primary != null || this.secondary != null) {
@@ -741,9 +729,6 @@ public class MiningTweaks extends Module {
 
     /**
      * Removes an active target and updates secondary readiness.
-     *
-     *
-     * @param confirmed whether the target was successfully broken
      */
     private void remove(Target target, boolean confirmed) {
         if (target == this.primary) {
@@ -791,9 +776,6 @@ public class MiningTweaks extends Module {
 
     /**
      * Returns the work limit required to finish a target.
-     *
-     *
-     * @return primary threshold or full secondary limit
      */
     private double limit(Target target) {
         return target == this.primary ? threshold : 1.0;
@@ -851,8 +833,6 @@ public class MiningTweaks extends Module {
     /**
      * Refreshes target data and sends a mining action packet.
      *
-     *
-     * @param target target associated with the action
      * @param pos packet block position
      */
     private void action(Target target, Action action, BlockPos pos) {
@@ -936,7 +916,6 @@ public class MiningTweaks extends Module {
 
     /**
      * @param pos source block position
-     * @return fake position with the configured height
      */
     private BlockPos fake(BlockPos pos) {
         return new BlockPos(pos.getX(), height, pos.getZ());
@@ -1018,7 +997,6 @@ public class MiningTweaks extends Module {
      *
      * @param pos block position
      * @param side block face
-     * @return face point used for raycasting
      */
     private Vec3d point(BlockPos pos, Direction side) {
         return new Vec3d(
@@ -1126,9 +1104,6 @@ public class MiningTweaks extends Module {
         }
     }
 
-    /**
-     * @param ready time when another attempt may begin
-     */
     private record Retry(Request request, long ready) {}
 
     /**

@@ -172,8 +172,6 @@ public class InventoryCleaner extends Module {
 
     /**
      * Checks whether the open screen is one the option allows cleaning in.
-     *
-     * @return true when the current screen may be cleaned
      */
     private boolean screen() {
         if (this.mc.currentScreen == null) return this.inventoryScreen.get();
@@ -204,9 +202,6 @@ public class InventoryCleaner extends Module {
         return -1;
     }
 
-    /**
-     * @return true when the stack matches the mode
-     */
     private boolean throwable(ItemStack stack) {
         boolean listed = this.whitelist.get().contains(stack.getItem());
         return this.mode.get() == Mode.Whitelist ? !listed : listed;

@@ -11,9 +11,6 @@ public final class Graph {
     private final List<Node> nodes;
     private final List<Edge> edges;
 
-    /**
-     * @param roads roads used to build the graph
-     */
     public Graph(List<Highways.Road> roads) {
         List<Part> parts = this.parts(roads);
 

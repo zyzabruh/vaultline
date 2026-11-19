@@ -307,8 +307,6 @@ public class Shaders extends Module {
 
     /**
      * Reports whether the chams chain should replace the vanilla outline effect.
-     *
-     * @return true when the chain is wanted
      */
     public boolean usesChain() {
         return this.customChain.get();
@@ -399,17 +397,11 @@ public class Shaders extends Module {
 
     /**
      * Returns the body brightness to hand to the chain.
-     *
-     * @return multiplier applied to the fill colour
      */
     public float chainFillBrightness() {
         return this.fillBrightness.get().floatValue();
     }
 
-    /**
-     * @param entity entity about to be rendered
-     * @return true when the module targets it
-     */
     public boolean shouldGlow(Entity entity) {
         return this.kindOf(entity) != null;
     }

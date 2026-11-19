@@ -143,9 +143,6 @@ public final class SkyboxRenderer {
         return Math.min(1.0F, Math.max(0.0F, value));
     }
 
-    /**
-     * @return true when the skybox can be drawn
-     */
     public static boolean available() {
         return available;
     }
@@ -154,7 +151,6 @@ public final class SkyboxRenderer {
      * @param red tint red, from 0 to 1
      * @param green tint green, from 0 to 1
      * @param blue tint blue, from 0 to 1
-     * @param imageName panorama file used by the image mode
      * @param speed animation multiplier, carried to the shader in the tint alpha
      */
     public static void render(Skybox.Mode mode, Accent accent, String imageName, float speed) {

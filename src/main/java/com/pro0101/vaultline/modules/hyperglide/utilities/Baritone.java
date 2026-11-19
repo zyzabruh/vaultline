@@ -25,9 +25,6 @@ public final class Baritone {
 
     private Baritone() {}
 
-    /**
-     * @param predict whether terrain prediction is enabled
-     */
     public static void settings(double speed, double avoid, boolean predict) {
         Settings config = BaritoneAPI.getSettings();
 
@@ -41,16 +38,10 @@ public final class Baritone {
     }
 
 
-    /**
-     * @return true when elytra pathing can be started
-     */
     public static boolean loaded() {
         return instance().getElytraProcess().isLoaded();
     }
 
-    /**
-     * @return true while Baritone controls elytra flight
-     */
     public static boolean elytra() {
         return destination() != null;
     }
@@ -71,9 +62,6 @@ public final class Baritone {
             || baritone.getPathingBehavior().isPathing();
     }
 
-    /**
-     * @param exact whether Y is part of the goal
-     */
     public static void fly(BlockPos pos, boolean exact) {
         instance().getElytraProcess().pathTo(goal(pos, exact));
     }
@@ -86,9 +74,6 @@ public final class Baritone {
         walk(pos, true);
     }
 
-    /**
-     * @param exact whether Y is part of the goal
-     */
     public static void walk(BlockPos pos, boolean exact) {
         instance().getCustomGoalProcess().setGoalAndPath(goal(pos, exact));
     }
@@ -137,30 +122,18 @@ public final class Baritone {
         instance().getInputOverrideHandler().clearAllKeys();
     }
 
-    /**
-     * @param state whether forward movement is pressed
-     */
     public static void forward(boolean state) {
         input(Input.MOVE_FORWARD, state);
     }
 
-    /**
-     * @param state whether backward movement is pressed
-     */
     public static void back(boolean state) {
         input(Input.MOVE_BACK, state);
     }
 
-    /**
-     * @param state whether left movement is pressed
-     */
     public static void left(boolean state) {
         input(Input.MOVE_LEFT, state);
     }
 
-    /**
-     * @param state whether right movement is pressed
-     */
     public static void right(boolean state) {
         input(Input.MOVE_RIGHT, state);
     }
@@ -169,17 +142,11 @@ public final class Baritone {
         input(Input.SPRINT, state);
     }
 
-    /**
-     * @param exact whether Y is part of the goal
-     */
     private static Goal goal(BlockPos pos, boolean exact) {
         if (exact) return new GoalBlock(pos);
         return new GoalXZ(pos.getX(), pos.getZ());
     }
 
-    /**
-     * @param state whether the input is pressed
-     */
     private static void input(Input input, boolean state) {
         instance().getInputOverrideHandler().setInputForceState(input, state);
     }
@@ -197,9 +164,6 @@ public final class Baritone {
         if (!supporting()) resume();
     }
 
-    /**
-     * @return true when corrective movement was requested
-     */
     public static boolean supporting() {
         IBaritone baritone = instance();
 
@@ -245,7 +209,6 @@ public final class Baritone {
 
     /**
      * @param pos target block position
-     * @return true when corrective movement was requested
      */
     private static boolean move(IPlayerContext context, BlockPos pos) {
         pause();
@@ -276,9 +239,6 @@ public final class Baritone {
             && box.minZ > pos.getZ() && box.maxZ < pos.getZ() + 1.0;
     }
 
-    /**
-     * @return true when the destination is higher
-     */
     private static boolean rising(IMovement movement) {
         int target = movement.getDest().getY();
         int source = movement.getSrc().getY();

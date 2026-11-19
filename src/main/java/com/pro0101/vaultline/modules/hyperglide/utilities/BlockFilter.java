@@ -17,7 +17,6 @@ public final class BlockFilter {
     }
 
     /**
-     * @param group setting group receiving the settings
      * @param description block list description
      */
     public BlockFilter(SettingGroup group, String description) {

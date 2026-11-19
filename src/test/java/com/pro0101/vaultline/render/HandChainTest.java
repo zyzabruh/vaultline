@@ -213,9 +213,6 @@ class HandChainTest {
         return RenderLayer.of("vaultline_test_" + name, RenderSetup.builder(pipeline).build());
     }
 
-    /**
-     * @throws IOException when the resource is missing
-     */
     private static String resource(String path) throws IOException {
         try (InputStream stream = HandChainTest.class.getResourceAsStream(path)) {
             assertNotNull(stream, "missing resource " + path);

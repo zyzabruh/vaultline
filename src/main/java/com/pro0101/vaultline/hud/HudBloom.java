@@ -17,9 +17,6 @@ public final class HudBloom {
 
     private HudBloom() {}
 
-    /**
-     * @param color accent colour of the panel
-     */
     public static void panel(HudRenderer renderer, double x, double y, double width, double height, Color color) {
         for (int i = 0; i < GROW.length; i++) {
             double grow = GROW[i];

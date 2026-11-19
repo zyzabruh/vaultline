@@ -156,8 +156,6 @@ public final class HandFx {
 
         /**
          * Whether these settings ask for a hand effect, which the default look now always does.
-         *
-         * @return true when an effect is drawn
          */
         public boolean enabled() {
             return look() != Look.OFF;
@@ -180,7 +178,6 @@ public final class HandFx {
      * One sampler a hand stage reads, and what has to bind it.
      *
      * @param name sampler name as written in the GLSL and in the pipeline
-     * @param feed what binds it at draw time
      */
     public record Sampler(String name, Feed feed) {
     }
@@ -300,9 +297,6 @@ public final class HandFx {
 
     /**
      * Whether a look changes the render type at all.
-     *
-     *
-     * @return true when the look has its own pipeline
      */
     public static boolean retargets(Look look) {
         return look != null && look != Look.OFF;
@@ -324,8 +318,6 @@ public final class HandFx {
 
     /**
      * Whether effects that must not touch the hands have to stand down.
-     *
-     * @return true while the hand pass is running
      */
     public static boolean ignoresHands() {
         return renderingHands();
@@ -365,9 +357,6 @@ public final class HandFx {
 
     /**
      * Runs a body with the hand pass flag raised, and clears it whatever the body does.
-     *
-     * @param look look the pass draws with
-     * @param body work to run inside the pass
      */
     public static void handPass(Look look, Runnable body) {
         Look previous = enter(look);
@@ -381,10 +370,6 @@ public final class HandFx {
 
     /**
      * Runs a body with the hand pass flag raised and hands it back its result.
-     *
-     *
-     * @param look look the pass draws with
-     * @param body work to run inside the pass
      */
     public static <T> T handPass(Look look, Supplier<T> body) {
         Look previous = enter(look);
@@ -577,9 +562,6 @@ public final class HandFx {
         reset();
     }
 
-    /**
-     * @param depthWrite whether the look writes depth
-     */
     private static Spec spec(Look look, boolean depthWrite) {
         return new Spec(
             Identifier.of("vaultline", "pipeline/hand_" + look.id()),

@@ -100,7 +100,6 @@ public class Utils
     /**
      * Returns the distance from a point to a direction vector, not including the Y axis.
      *
-     * @param point The point to measure from.
      * @param start The starting point of the direction vector, or null if the direction vector starts at (0, 0).
      * @return The distance from the point to the direction vector.
      */
@@ -121,8 +120,8 @@ public class Utils
 
     /**
      * Returns the angle rounded to the closest main 8 axis'.
+     *
      * @param yaw The yaw in degrees.
-     * @return The angle on the axis.
      */
     public static double angleOnAxis(double yaw)
     {
