@@ -1106,9 +1106,6 @@ public class MiningTweaks extends Module {
 
     private record Retry(Request request, long ready) {}
 
-    /**
-     * Tracks the state of an active mining target.
-     */
     private static class Target {
         private final BlockPos pos;
         private final BlockState state;

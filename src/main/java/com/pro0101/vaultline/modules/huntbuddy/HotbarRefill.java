@@ -287,9 +287,6 @@ public class HotbarRefill extends Module {
         if (done > 0) this.waitTicks = this.pauseTicks.get();
     }
 
-    /**
-     * Looks for hotbar stacks that qualify for a top-up.
-     */
     private void scanHotbar() {
         int refills = 0;
         int limit = this.perTickLimit.get();

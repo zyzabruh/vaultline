@@ -221,10 +221,6 @@ public final class Inventory {
         click(slot, 0, SlotActionType.QUICK_MOVE);
     }
 
-    /**
-     * Swaps a player screen slot with a hotbar slot.
-     *
-     */
     public static void swap(int slot, int hotbar) {
         click(slot, hotbar, SlotActionType.SWAP);
     }

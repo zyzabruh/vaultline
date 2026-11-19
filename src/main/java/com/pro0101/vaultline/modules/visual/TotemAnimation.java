@@ -28,11 +28,6 @@ public class TotemAnimation extends Module {
         super(VaultlineAddon.VISUALS, "totem-animation", "Speeds up the totem pop animation.");
     }
 
-    /**
-     * Returns the extra ticks to add each frame.
-     *
-     * @return extra ticks
-     */
     public int extraTicks() {
         return this.speed.get();
     }

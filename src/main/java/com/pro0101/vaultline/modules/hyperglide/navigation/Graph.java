@@ -148,10 +148,6 @@ public final class Graph {
 
 
 
-    /**
-     * Represents a graph node at a fixed X/Z position.
-     *
-     */
     public record Node(Vec2f pos) {
         @Override
         public boolean equals(Object object) {
