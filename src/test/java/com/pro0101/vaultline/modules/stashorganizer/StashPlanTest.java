@@ -23,14 +23,14 @@ class StashPlanTest {
         data.mode = "Family";
         data.phase = "Unpack";
         data.resumeAfterCollect = "Pack";
-        data.dumpPos = new StashPlan.Pos(1, 64, -2);
+        data.dumpPos = new Pos(1, 64, -2);
         data.totalMoves = 41;
         data.placedChests = 3;
         data.placedShulkers = 2;
         data.packedShulkers = 5;
 
         StashPlan.ContainerData container = new StashPlan.ContainerData();
-        container.pos = new StashPlan.Pos(10, 70, 4);
+        container.pos = new Pos(10, 70, 4);
         container.block = "minecraft:chest";
         container.size = 54;
         container.reserved = 6;
@@ -52,7 +52,7 @@ class StashPlanTest {
         data.carried.add(carried);
 
         StashPlan.ShulkerData shulker = new StashPlan.ShulkerData();
-        shulker.pos = new StashPlan.Pos(11, 70, 4);
+        shulker.pos = new Pos(11, 70, 4);
         shulker.slot = 3;
         shulker.done = true;
         data.shulkers.add(shulker);
@@ -68,7 +68,7 @@ class StashPlanTest {
         assertEquals(5, back.packedShulkers);
 
         assertEquals(1, back.containers.size());
-        assertEquals(new StashPlan.Pos(10, 70, 4), back.containers.get(0).pos);
+        assertEquals(new Pos(10, 70, 4), back.containers.get(0).pos);
         assertEquals(54, back.containers.get(0).size);
         assertEquals("minecraft:chest", back.containers.get(0).block);
         assertTrue(back.containers.get(0).scanned);
