@@ -621,11 +621,6 @@ public class BetterStashFinder extends Module
         return true;
     }
 
-    /**
-     * Draws the recorded chunks around the player.
-     *
-     * @param event render event
-     */
     @meteordevelopment.orbit.EventHandler
     private void onRender(Render3DEvent event) {
         if (!render.get() || this.mc.player == null || chunks.isEmpty()) return;
@@ -681,11 +676,6 @@ public class BetterStashFinder extends Module
         }
     }
 
-    /**
-     * Applies the cache policies that need a tick.
-     *
-     * @param event pre-tick event
-     */
     @meteordevelopment.orbit.EventHandler
     private void onTick(TickEvent.Pre event) {
         if (this.mc.world == null || this.mc.player == null) return;
@@ -710,11 +700,6 @@ public class BetterStashFinder extends Module
         });
     }
 
-    /**
-     * Drops the recorded chunks when the connection ends.
-     *
-     * @param event game left event
-     */
     @meteordevelopment.orbit.EventHandler
     private void onGameLeft(GameLeftEvent event) {
         if (clearWorld.get()) chunks.clear();
