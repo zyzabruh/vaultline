@@ -92,18 +92,7 @@ public final class ZioInputRouter {
             };
         }
 
-        if (focus.presetName()) {
-            return switch (key) {
-                case KEY_ESCAPE -> KeyAction.EDIT_CANCEL;
-                case KEY_ENTER, KEY_KP_ENTER -> KeyAction.EDIT_COMMIT;
-                case KEY_BACKSPACE -> KeyAction.EDIT_BACKSPACE;
-                case KEY_A -> control ? KeyAction.EDIT_CLEAR : KeyAction.PASS;
-                case KEY_V -> control ? KeyAction.EDIT_PASTE : KeyAction.PASS;
-                default -> KeyAction.PASS;
-            };
-        }
-
-        if (focus.editingSetting()) {
+        if (focus.presetName() || focus.editingSetting()) {
             return switch (key) {
                 case KEY_ESCAPE -> KeyAction.EDIT_CANCEL;
                 case KEY_ENTER, KEY_KP_ENTER -> KeyAction.EDIT_COMMIT;
@@ -139,8 +128,7 @@ public final class ZioInputRouter {
         if (codepoint < 32) return CharAction.PASS;
 
         if (focus.listSearch()) return CharAction.LIST_SEARCH;
-        if (focus.presetName()) return CharAction.EDIT_FIELD;
-        if (focus.editingSetting()) return CharAction.EDIT_FIELD;
+        if (focus.presetName() || focus.editingSetting()) return CharAction.EDIT_FIELD;
         if (focus.bindingKey()) return CharAction.PASS;
         if (focus.screenSearch()) return CharAction.SCREEN_SEARCH;
 
