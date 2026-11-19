@@ -50,7 +50,6 @@ public final class API {
 
     /**
      * Returns the position of an entity from the previous tick.
-     *
      */
     public static Vec3d prev(Entity entity) {
         EntityAccessor access = (EntityAccessor) entity;
@@ -85,7 +84,6 @@ public final class API {
 
     /**
      * Draws a rotated 2D line at the specified position and angle.
-     *
      */
     public static void line(DrawContext context, double px, double py,
         double length, double angle, int width, int color) {
@@ -103,7 +101,6 @@ public final class API {
 
     /**
      * Draws a 2D circle using the specified position and radius.
-     *
      */
     public static void circle(DrawContext context, double px,
         double py, double radius, int width, int color) {
@@ -120,7 +117,6 @@ public final class API {
 
     /**
      * Draws an item icon at the specified position and scale.
-     *
      */
     public static void item(DrawContext context,
         ItemStack stack, int px, int py, float scale) {

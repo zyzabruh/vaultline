@@ -145,7 +145,6 @@ public final class Highways {
 
     /**
      * Adds one horizontal and vertical grid road at an offset.
-     *
      */
     private static void grid(List<Road> roads, float offset) {
         List<Segment> sx = segments(offset, true);
@@ -162,7 +161,6 @@ public final class Highways {
 
     /**
      * Adds the 50k highway extensions out to the 125k ring road.
-     *
      */
     private static void special(List<Road> roads) {
         float inner = 50000.0F;
@@ -218,7 +216,6 @@ public final class Highways {
 
     /**
      * Removes segment parts that fall inside the given radius.
-     *
      */
     private static List<Road> cut(List<Road> roads, float radius) {
         List<Road> result = new ArrayList<>();
@@ -271,7 +268,6 @@ public final class Highways {
 
     /**
      * Represents a highway composed of one or more segments.
-     *
      */
     public record Road(String name, Kind kind, List<Segment> segments) {
         public Road {

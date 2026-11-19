@@ -47,7 +47,6 @@ public abstract class MiningTweaksMixin {
     /**
      * Forwards breaking to the module and skips vanilla handling.
      *
-     *
      * @param pos block position
      * @param side block side
      */

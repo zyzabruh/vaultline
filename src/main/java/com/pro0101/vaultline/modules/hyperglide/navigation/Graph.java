@@ -47,7 +47,6 @@ public final class Graph {
 
     /**
      * Splits graph parts at every intersection or overlap boundary.
-     *
      */
     private void split(List<Part> parts) {
         for (int idx = 0; idx < parts.size(); idx++) {
@@ -61,7 +60,6 @@ public final class Graph {
 
     /**
      * Builds graph nodes and edges from split road parts.
-     *
      */
     private void build(List<Part> parts, List<Node> nodes, List<Edge> edges) {
         for (Part part : parts) {
@@ -71,7 +69,6 @@ public final class Graph {
 
     /**
      * Builds graph nodes and edges from one road part.
-     *
      */
     private void build(Part part, List<Node> nodes, List<Edge> edges) {
         Node previous = null;
@@ -94,7 +91,6 @@ public final class Graph {
 
     /**
      * Splits two graph parts at intersections or overlap boundaries.
-     *
      *
      * @param first first graph part
      */
@@ -164,7 +160,6 @@ public final class Graph {
 
     /**
      * Represents an undirected highway connection between two graph nodes.
-     *
      *
      * @param start first node
      */

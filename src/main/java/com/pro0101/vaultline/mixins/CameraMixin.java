@@ -19,7 +19,6 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 public abstract class CameraMixin {
     /**
      * Replaces the camera rotation while the module owns the view.
-     *
      */
     @ModifyArgs(method = "update", at = @At(value = "INVOKE",
         target = "Lnet/minecraft/client/render/Camera;setRotation(FF)V"

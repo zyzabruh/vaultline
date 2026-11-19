@@ -192,7 +192,6 @@ public class AutoPilot extends Module {
 
     /**
      * Stops Auto Pilot when Baritone starts an emergency landing.
-     *
      */
     @EventHandler
     private void message(ReceiveMessageEvent event) {
@@ -398,7 +397,6 @@ public class AutoPilot extends Module {
 
     /**
      * Converts a route point to a block position at highway level.
-     *
      *
      * @return block position at highway level
      */
@@ -732,7 +730,6 @@ public class AutoPilot extends Module {
 
     /**
      * Starts Bounce Fly toward the end of a highway leg.
-     *
      */
     private void start(int leg) {
         List<Leg> legs = this.route.legs();
@@ -957,7 +954,6 @@ public class AutoPilot extends Module {
     /**
      * Searches one horizontal ring for the nearest clear space.
      *
-     *
      * @param range horizontal search range
      * @return a closer usable point, or null when none is found
      */
@@ -1048,7 +1044,6 @@ public class AutoPilot extends Module {
     /**
      * Checks whether a space contains only air or flowing lava.
      *
-     *
      * @return true when the entire space is loaded and clear
      */
     private boolean clear(BlockPos center) {
@@ -1072,7 +1067,6 @@ public class AutoPilot extends Module {
     /**
      * Checks whether a space contains only air or flowing lava.
      *
-     *
      * @return true when no solid block occupies the space
      */
     private boolean empty(int minx, int miny,
@@ -1094,7 +1088,6 @@ public class AutoPilot extends Module {
 
     /**
      * Checks whether all chunks in an area are loaded.
-     *
      *
      * @return true when every required chunk is loaded
      */

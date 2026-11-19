@@ -219,7 +219,6 @@ public class Skybox extends Module {
 
     /**
      * Returns the fog colour used in the dark dimensions.
-     *
      */
     public SettingColor fog() {
         return this.fog.get();

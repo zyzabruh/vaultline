@@ -162,7 +162,6 @@ public class AirPlace extends Module {
 
     /**
      * Places the selected item at the current target.
-     *
      */
     private void click(ItemStack stack) {
         this.place(this.hit, stack);
@@ -210,7 +209,6 @@ public class AirPlace extends Module {
     /**
      * Places the selected item at the target.
      *
-     *
      * @param hit target block hit result
      */
     private void place(BlockHitResult hit, ItemStack stack) {
@@ -243,7 +241,6 @@ public class AirPlace extends Module {
 
     /**
      * Checks whether an item can be placed using Air Place.
-     *
      *
      * @return true when the stack contains a block or spawn egg
      */

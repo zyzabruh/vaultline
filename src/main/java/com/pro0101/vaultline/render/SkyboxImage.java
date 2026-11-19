@@ -104,7 +104,6 @@ public final class SkyboxImage {
 
     /**
      * Keeps a repeated failure to one line in the log.
-     *
      */
     private static void warnOnce(String message) {
         if (warned) return;

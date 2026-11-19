@@ -83,7 +83,6 @@ public class EasyAccess extends Module {
 
     /**
      * Cancels the normal interaction after a hidden target was used.
-     *
      */
     @EventHandler
     private void onPacket(PacketEvent.Send event) {

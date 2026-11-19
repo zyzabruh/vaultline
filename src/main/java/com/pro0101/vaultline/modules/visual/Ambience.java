@@ -180,7 +180,6 @@ public class Ambience extends Module {
 
     /**
      * Returns the sky colour as a packed ARGB value.
-     *
      */
     public int skyColor() {
         SettingColor color = this.skyColor.get();

@@ -266,7 +266,6 @@ public class ChestTracker extends Module {
      * Remembers the container the player right-clicked. The packet is enough to
      * identify the position; Fabric API's use-block callback is not available
      * in this addon.
-     *
      */
     @EventHandler
     private void onSend(PacketEvent.Send event) {

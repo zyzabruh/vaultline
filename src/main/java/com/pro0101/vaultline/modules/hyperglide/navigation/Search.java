@@ -43,7 +43,6 @@ public final class Search {
 
     /**
      * Adds optimal entry and exit points to the highway graph.
-     *
      */
     private Network build(Vec2f start, Vec2f end, float highway, float normal) {
         List<Graph.Node> nodes = new ArrayList<>(graph.nodes());
@@ -127,7 +126,6 @@ public final class Search {
 
     /**
      * Returns a nearby node or creates a temporary one.
-     *
      */
     private Graph.Node node(List<Graph.Node> nodes, Vec2f point) {
         for (Graph.Node node : nodes) {
@@ -142,7 +140,6 @@ public final class Search {
 
     /**
      * Adds a candidate node once to a temporary point list.
-     *
      */
     private void add(List<Graph.Node> nodes, Graph.Node candidate) {
         if (nodes.stream().noneMatch(node -> node ==
@@ -168,7 +165,6 @@ public final class Search {
 
     /**
      * Adds a route link unless an equivalent link already exists.
-     *
      */
     private void add(Map<Graph.Node, List<Link>> links, Link link) {
         Function<Graph.Node, List<Link>> create = key -> new ArrayList<>();
@@ -246,7 +242,6 @@ public final class Search {
 
     /**
      * Estimates the minimum remaining travel time to a goal.
-     *
      */
     private float estimate(Graph.Node node, Graph.Node end, float speed) {
         return this.distance(node.pos(), end.pos()) / speed;

@@ -44,7 +44,6 @@ public abstract class SkyColourMixin {
     /**
      * Returns the colour the sky should be drawn in.
      *
-     *
      * @return the configured colour, or the vanilla one when the option is off
      */
     private int vaultline$ambienceColour(int color) {

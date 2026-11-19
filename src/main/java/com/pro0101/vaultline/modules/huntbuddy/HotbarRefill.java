@@ -426,7 +426,6 @@ public class HotbarRefill extends Module {
 
     /**
      * Returns the display name of a stack, custom name first.
-     *
      */
     private String displayName(ItemStack stack) {
         Text custom = stack.get(DataComponentTypes.CUSTOM_NAME);
@@ -435,7 +434,6 @@ public class HotbarRefill extends Module {
 
     /**
      * Finds the inventory stack that should feed a hotbar stack.
-     *
      *
      * @return matching inventory slot, or -1 when there is none
      */

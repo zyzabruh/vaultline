@@ -1271,7 +1271,6 @@ public class BounceFly extends Module {
     /**
      * Finds a safe pathing goal beyond the detected obstacle.
      *
-     *
      * @param hit detected collision block
      */
     private BlockPos trace(BlockPos hit) {

@@ -90,7 +90,6 @@ public class FastFrame extends Module {
 
     /**
      * Tracks item frame placement attempts.
-     *
      */
     @EventHandler
     private void onPacket(PacketEvent.Send event) {
@@ -171,7 +170,6 @@ public class FastFrame extends Module {
 
     /**
      * Collects item frames already present near a placement position.
-     *
      */
     private Set<Integer> frames(BlockPos pos) {
         Set<Integer> frames = new HashSet<>();
@@ -187,7 +185,6 @@ public class FastFrame extends Module {
 
     /**
      * Finds the newly spawned empty item frame for a placement.
-     *
      *
      * @return matching new item frame, or null when unavailable
      */
@@ -252,7 +249,6 @@ public class FastFrame extends Module {
     /**
      * Finds an interaction point on an item frame.
      *
-     *
      * @return frame hit result, or null when the frame is out of range
      */
     private EntityHitResult hit(ItemFrameEntity frame) {
@@ -297,7 +293,6 @@ public class FastFrame extends Module {
 
     /**
      * Checks whether a hand held an item frame before the interaction.
-     *
      *
      * @return true when the hand previously contained an item frame
      */

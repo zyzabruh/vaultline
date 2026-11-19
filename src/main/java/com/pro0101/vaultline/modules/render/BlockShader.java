@@ -152,7 +152,6 @@ public class BlockShader extends Module {
 
     /**
      * Drops the scan when the world changes, so positions from the old world are not drawn.
-     *
      */
     @EventHandler
     private void onGameLeft(GameLeftEvent event) {

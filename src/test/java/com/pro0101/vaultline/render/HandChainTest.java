@@ -200,7 +200,6 @@ class HandChainTest {
 
     /**
      * Builds a real layer around a minimal pipeline, so the tests move actual layer objects.
-     *
      */
     private static RenderLayer layer(String name) {
         RenderPipeline pipeline = RenderPipeline.builder()
@@ -223,7 +222,6 @@ class HandChainTest {
 
     /**
      * Builds the JVM descriptor of a method, the way a mixin writes it.
-     *
      */
     private static String descriptor(Method method) {
         StringBuilder builder = new StringBuilder("(");

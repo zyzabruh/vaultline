@@ -115,7 +115,6 @@ public final class Placement {
     /**
      * Plays the local placement sound for a block item.
      *
-     *
      * @param item placed block item
      */
     public static void sound(BlockItem item, BlockPos pos) {

@@ -92,7 +92,6 @@ public final class SkyboxRenderer {
     /**
      * Scales a tint into the accent the shaders draw with.
      *
-     *
      * @param red tint red, 0 to 1
      * @param green tint green, 0 to 1
      * @param blue tint blue, 0 to 1
@@ -169,7 +168,6 @@ public final class SkyboxRenderer {
     /**
      * Draws the user's panorama, or the Sunset sky when there is no usable image.
      *
-     *
      * @param red tint red, from 0 to 1
      * @param green tint green, from 0 to 1
      * @param blue tint blue, from 0 to 1
@@ -223,7 +221,6 @@ public final class SkyboxRenderer {
 
     /**
      * Builds the pipeline and layer of one procedural mode.
-     *
      *
      * @return layer, or null when the pipeline could not be created
      */

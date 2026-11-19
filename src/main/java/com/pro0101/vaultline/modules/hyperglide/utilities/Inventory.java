@@ -33,7 +33,6 @@ public final class Inventory {
 
     /**
      * Converts an inventory slot to the matching screen slot.
-     *
      */
     public static int slot(int slot) {
         return slot < 9 ? slot + 36 : slot;
@@ -49,7 +48,6 @@ public final class Inventory {
     /**
      * Finds the first matching stack in the player inventory.
      *
-     *
      * @return matching player inventory slot, or -1 when unavailable
      */
     public static int find(Predicate<ItemStack> predicate) {
@@ -58,7 +56,6 @@ public final class Inventory {
 
     /**
      * Finds the first matching stack inside an inventory range.
-     *
      *
      * @param first first player inventory slot
      * @param last last player inventory slot
@@ -77,7 +74,6 @@ public final class Inventory {
 
     /**
      * Finds the highest scoring stack in the player inventory.
-     *
      *
      * @return matching player inventory slot, or -1 when unavailable
      */
@@ -174,7 +170,6 @@ public final class Inventory {
     /**
      * Finds the first empty slot from the supplied screen slots.
      *
-     *
      * @return empty screen slot, or -1 when unavailable
      */
     public static int empty(int... slots) {
@@ -211,7 +206,6 @@ public final class Inventory {
 
     /**
      * Picks up or places the stack in a player screen slot.
-     *
      */
     public static void pick(int slot) {
         click(slot, 0, SlotActionType.PICKUP);

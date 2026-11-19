@@ -75,7 +75,6 @@ public class Overview extends Module {
 
     /**
      * Renders the most common item over a shulker box or bundle.
-     *
      */
     public void render(DrawContext context, ItemStack stack, int px, int py) {
         if (!this.isActive() || this.drawing || stack.isEmpty()) {
@@ -104,7 +103,6 @@ public class Overview extends Module {
     /**
      * Returns the dominant content icon for a container stack.
      *
-     *
      * @return dominant content item, or an empty stack when unavailable
      */
     private ItemStack icon(ItemStack stack) {
@@ -122,7 +120,6 @@ public class Overview extends Module {
 
     /**
      * Retrieves container or bundle content data from an item stack.
-     *
      *
      * @return container data, bundle data or null when unavailable
      */

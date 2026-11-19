@@ -351,7 +351,6 @@ public class ControlFly extends Module {
 
     /**
      * Tracks steering changes and marks sharp turns for braking.
-     *
      */
     private void turn(Vec3d direction) {
         if (this.motion.dir.lengthSquared() >= epsilon &&
@@ -581,7 +580,6 @@ public class ControlFly extends Module {
 
     /**
      * Updates flight yaw from input while preserving vertical input.
-     *
      */
     private Vec3d steer(Vec3d input) {
         double length = input.horizontalLength();
@@ -622,7 +620,6 @@ public class ControlFly extends Module {
 
     /**
      * Converts a direction vector into a clamped flight pitch.
-     *
      *
      * @return pitch angle in degrees
      */
@@ -833,7 +830,6 @@ public class ControlFly extends Module {
 
     /**
      * Calculates the maximum allowed speed for a flight direction.
-     *
      *
      * @return maximum speed in blocks per tick
      */
@@ -1096,7 +1092,6 @@ public class ControlFly extends Module {
 
     /**
      * Stores a candidate leveling pitch and its prediction score.
-     *
      */
     private record Choice(float pitch, double score) {}
 

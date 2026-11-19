@@ -81,7 +81,6 @@ public class HandCommands implements RenderCommandQueue {
     /**
      * Wraps a queue with an explicit layer builder, or leaves it alone when the effect is off.
      *
-     *
      * @return the decorator, or the original queue when the look is off
      */
     public static RenderCommandQueue wrap(RenderCommandQueue delegate, HandFx.Look look, LayerResolver resolver) {

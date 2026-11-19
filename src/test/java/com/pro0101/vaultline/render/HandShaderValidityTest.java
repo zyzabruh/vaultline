@@ -231,7 +231,6 @@ class HandShaderValidityTest {
     /**
      * Opens the Minecraft jar the game classes come from, so its shader includes can be read.
      *
-     *
      * @throws IOException when the jar cannot be opened
      */
     private static ZipFile minecraftJar() throws IOException {
@@ -292,7 +291,6 @@ class HandShaderValidityTest {
 
     /**
      * Whether a pair of delimiters is balanced, ignoring comments.
-     *
      */
     private static boolean balanced(String text, char open, char close) {
         String stripped = stripComments(text);
@@ -370,7 +368,6 @@ class HandShaderValidityTest {
 
     /**
      * Removes line and block comments, so neither braces nor identifiers inside them are counted.
-     *
      */
     private static String stripComments(String text) {
         return text.replaceAll("(?s)/\\*.*?\\*/", " ").replaceAll("(?m)//.*$", " ");

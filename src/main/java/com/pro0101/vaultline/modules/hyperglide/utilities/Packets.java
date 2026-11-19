@@ -27,7 +27,6 @@ public final class Packets {
     /**
      * Sends a player action through the sequenced interaction path.
      *
-     *
      * @param pos block position
      * @param side block face
      */
@@ -50,7 +49,6 @@ public final class Packets {
 
     /**
      * Sends a block interaction through the sequenced interaction path.
-     *
      */
     public static void block(Hand hand, BlockHitResult hit) {
         ((InteractionAccessor) client.interactionManager)
@@ -61,7 +59,6 @@ public final class Packets {
 
     /**
      * Sends a block interaction with an explicit sequence number.
-     *
      */
     public static void block(Hand hand, BlockHitResult hit, int sequence) {
         client.getNetworkHandler().sendPacket(
@@ -71,7 +68,6 @@ public final class Packets {
 
     /**
      * Sends an item-use interaction through the sequenced interaction path.
-     *
      */
     public static void item(Hand hand, float yaw, float pitch) {
         ((InteractionAccessor) client.interactionManager)
@@ -88,7 +84,6 @@ public final class Packets {
 
     /**
      * Sends the supplied player input without modifying local input.
-     *
      */
     public static void input(PlayerInput input) {
         client.getNetworkHandler().sendPacket(
@@ -98,7 +93,6 @@ public final class Packets {
 
     /**
      * Builds and sends player input from the supplied movement states.
-     *
      */
     public static void input(boolean forward,
         boolean backward, boolean left, boolean right,
@@ -121,7 +115,6 @@ public final class Packets {
 
     /**
      * Copies the current input while replacing jump and sprint states.
-     *
      */
     public static PlayerInput state(boolean jump, boolean sprint) {
         PlayerInput input = state();
@@ -161,7 +154,6 @@ public final class Packets {
 
     /**
      * Copies the current input while replacing the sneak state.
-     *
      */
     public static PlayerInput sneak(boolean sneak) {
         PlayerInput input = state();
@@ -175,7 +167,6 @@ public final class Packets {
 
     /**
      * Sends a pong packet as a separator between packet groups.
-     *
      */
     public static void pong(int parameter) {
         client.getNetworkHandler().sendPacket(

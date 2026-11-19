@@ -109,7 +109,6 @@ public final class Elytra {
 
     /**
      * Calculates elytra movement for the next tick.
-     *
      */
     public static Vec3d glide(Vec3d velocity, Vec3d rotation) {
         return glide(velocity, rotation, 0.08);
@@ -127,7 +126,6 @@ public final class Elytra {
 
     /**
      * Applies the remaining elytra movement for the current tick.
-     *
      */
     private static Vec3d glide(Vec3d velocity, Vec3d rotation,
         double length, double speed, double cosine) {

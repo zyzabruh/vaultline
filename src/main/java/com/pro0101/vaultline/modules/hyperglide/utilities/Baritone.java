@@ -68,7 +68,6 @@ public final class Baritone {
 
     /**
      * Starts walking to an exact block using normal pathing.
-     *
      */
     public static void walk(BlockPos pos) {
         walk(pos, true);
@@ -80,7 +79,6 @@ public final class Baritone {
 
     /**
      * Starts walking to a destination within a given radius.
-     *
      */
     public static void near(BlockPos pos, int radius) {
         GoalNear goal = new GoalNear(pos, radius);
@@ -226,7 +224,6 @@ public final class Baritone {
 
     /**
      * Checks whether the player is fully positioned on a block.
-     *
      *
      * @param pos source block position
      * @return true when the player is above the block

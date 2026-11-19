@@ -55,7 +55,6 @@ class SkyboxShaderCompileTest {
 
     /**
      * Creates the scratch directory and opens the Minecraft jar the includes live in.
-     *
      */
     @BeforeAll
     static void prepare() throws IOException {
@@ -225,7 +224,6 @@ class SkyboxShaderCompileTest {
     /**
      * Reads one include, from the Minecraft jar or from the addon's own resources.
      *
-     *
      * @throws IOException when the include does not exist
      */
     private static String readInclude(String namespace, String path) throws IOException {
@@ -265,7 +263,6 @@ class SkyboxShaderCompileTest {
 
     /**
      * Opens the Minecraft jar the game classes come from, so the shader includes can be read from it.
-     *
      *
      * @throws IOException when the jar cannot be opened
      */

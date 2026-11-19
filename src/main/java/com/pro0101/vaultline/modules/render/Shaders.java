@@ -434,7 +434,6 @@ public class Shaders extends Module {
 
     /**
      * Returns the colour to use when the game picks the outline tint itself.
-     *
      */
     public int fallback() {
         SettingColor color = this.fallbackColor.get();
@@ -484,7 +483,6 @@ public class Shaders extends Module {
 
     /**
      * Classifies an entity against the enabled categories and the distance limit.
-     *
      *
      * @return its category, or null when it is not targeted
      */

@@ -294,7 +294,6 @@ public class Navigation extends Module {
 
     /**
      * Zooms the map when the mouse wheel is used over it.
-     *
      */
     @EventHandler
     private void onScroll(MouseScrollEvent event) {
@@ -473,7 +472,6 @@ public class Navigation extends Module {
 
     /**
      * Draws every highway segment within the current map view.
-     *
      */
     private void network(DrawContext context, View view, int left, int top) {
         Color color = this.highways.get();
@@ -490,7 +488,6 @@ public class Navigation extends Module {
 
     /**
      * Draws the circular boundary for the configured clip radius.
-     *
      */
     private void circle(DrawContext context, View view, int left, int top) {
         float radius = this.clip();
@@ -504,7 +501,6 @@ public class Navigation extends Module {
 
     /**
      * Draws each leg of the currently calculated navigation route.
-     *
      */
     private void trace(DrawContext context, View view, int left, int top) {
         if (this.route == null) return;
@@ -521,7 +517,6 @@ public class Navigation extends Module {
 
     /**
      * Draws a square marker for a world position on the map.
-     *
      */
     private void mark(DrawContext context, Vec2f point,
         View view, double left, double top, Color color) {
@@ -698,7 +693,6 @@ public class Navigation extends Module {
 
     /**
      * Calculates screen distance from a point to a segment.
-     *
      */
     private float distance(Vec2f point, Vec2f first, Vec2f second) {
         Vec2f vector = second.add(first.negate());
@@ -751,7 +745,6 @@ public class Navigation extends Module {
 
     /**
      * Formats seconds using compact hour, minute and second units.
-     *
      *
      * @param seconds seconds to format
      */
@@ -886,7 +879,6 @@ public class Navigation extends Module {
 
     /**
      * Applies a destination change and delays Auto Pilot restart.
-     *
      */
     private void change(String value) {
         BlockPos previous = this.point;
@@ -912,7 +904,6 @@ public class Navigation extends Module {
 
     /**
      * Parses a destination in either 2D or 3D format.
-     *
      */
     private void parse(String value) {
         String clean = value.trim();

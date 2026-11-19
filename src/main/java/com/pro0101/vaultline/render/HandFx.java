@@ -94,7 +94,6 @@ public final class HandFx {
         /**
          * Picks the look the two toggles name, without the module-level default.
          *
-         *
          * @return FILL, OUTLINE, GLOW, or OFF when both toggles are off
          */
         public static Look of(boolean fill, boolean outline) {
@@ -107,7 +106,6 @@ public final class HandFx {
 
         /**
          * Lower-case name used in identifiers and layer names.
-         *
          */
         public String id() {
             return name().toLowerCase(Locale.ROOT);
@@ -130,7 +128,6 @@ public final class HandFx {
 
         /**
          * The look the toggles name, with OFF for both off.
-         *
          */
         public Look explicitLook() {
             return Look.of(this.handFill, this.handOutline);
@@ -225,7 +222,6 @@ public final class HandFx {
 
         /**
          * The sampler names, in declaration order.
-         *
          */
         public List<String> samplerNames() {
             return this.samplers.stream().map(Sampler::name).toList();
@@ -542,7 +538,6 @@ public final class HandFx {
     /**
      * The line logged when a look cannot be built.
      *
-     *
      * @return the message, logged with the exception so the stack is in the log too
      */
     static String failure(Look look) {
@@ -580,7 +575,6 @@ public final class HandFx {
 
     /**
      * Builds the pipeline of one look from its spec.
-     *
      */
     private static RenderPipeline buildPipeline(Look look, VertexFormat format, VertexFormat.DrawMode mode) {
         Spec spec = spec(look);

@@ -717,7 +717,6 @@ public class TrailFollower extends Module {
 
     /**
      * Hands the goal to normal pathing, dropping any elytra destination first.
-     *
      */
     private void walkTo(int x, int z) {
         IBaritone baritone = BaritoneAPI.getProvider().getPrimaryBaritone();

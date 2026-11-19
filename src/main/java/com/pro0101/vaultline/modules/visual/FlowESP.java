@@ -695,7 +695,6 @@ public class FlowESP extends Module {
 
     /**
      * Picks the side colour for a flow, applying the maturity gradient when enabled.
-     *
      */
     private Color colour(Flow flow, long now, double visibility) {
         SettingColor base = flow.kind == Kind.Water ? this.waterColor.get() : this.lavaColor.get();
@@ -723,7 +722,6 @@ public class FlowESP extends Module {
 
     /**
      * Returns how mature a flow is, between zero and one.
-     *
      */
     private double maturity(Flow flow, long now) {
         double age = clamp01((now - flow.firstSeen) / (this.gradientAge.get() * 1000.0));
@@ -877,7 +875,6 @@ public class FlowESP extends Module {
 
     /**
      * Saves the cache when the connection ends.
-     *
      */
     @EventHandler
     private void onGameLeft(GameLeftEvent event) {

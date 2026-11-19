@@ -246,7 +246,6 @@ public final class Flight {
 
     /**
      * Keeps the local gliding flag when the server clears it.
-     *
      */
     public byte sync(byte flags) {
         boolean flying = (flags & (1 << gliding)) != 0;
@@ -351,7 +350,6 @@ public final class Flight {
 
     /**
      * Sends the jump state used around the takeoff packet.
-     *
      */
     private void jump(boolean pressed) {
         Packets.sync(Packets.state(pressed, false));
