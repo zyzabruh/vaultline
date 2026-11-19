@@ -184,18 +184,9 @@ public class ChestTrackerData {
             JsonObject root = new JsonObject();
             root.addProperty("version", CURRENT_VERSION);
             root.addProperty("saveTime", System.currentTimeMillis());
-            JsonObject dimensions = new JsonObject();
-            for (Map.Entry<String, Map<BlockPos, TrackedContainer>> dimEntry : containers.entrySet()) {
-                JsonArray dimArray = new JsonArray();
-                for (TrackedContainer container : dimEntry.getValue().values()) {
-                    dimArray.add(container.toJson());
-                }
-                dimensions.add(dimEntry.getKey(), dimArray);
-            }
+            JsonObject dimensions = serializeDimensions();
             root.add("dimensions", dimensions);
-            try (Writer writer = new OutputStreamWriter(new FileOutputStream(tempFile), StandardCharsets.UTF_8)) {
-                GSON.toJson(root, writer);
-            }
+            writeJson(tempFile, root);
             if (dataFile.exists() && dataFile.length() > 0) {
                 Files.copy(dataFile.toPath(), backupFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
             }
@@ -218,18 +209,9 @@ public class ChestTrackerData {
             JsonObject root = new JsonObject();
             root.addProperty("version", CURRENT_VERSION);
             root.addProperty("backupTime", System.currentTimeMillis());
-            JsonObject dimensions = new JsonObject();
-            for (Map.Entry<String, Map<BlockPos, TrackedContainer>> dimEntry : containers.entrySet()) {
-                JsonArray dimArray = new JsonArray();
-                for (TrackedContainer container : dimEntry.getValue().values()) {
-                    dimArray.add(container.toJson());
-                }
-                dimensions.add(dimEntry.getKey(), dimArray);
-            }
+            JsonObject dimensions = serializeDimensions();
             root.add("dimensions", dimensions);
-            try (Writer writer = new OutputStreamWriter(new FileOutputStream(backupFile), StandardCharsets.UTF_8)) {
-                GSON.toJson(root, writer);
-            }
+            writeJson(backupFile, root);
         } finally {
             lock.readLock().unlock();
         }
@@ -299,23 +281,31 @@ public class ChestTrackerData {
             export.addProperty("version", CURRENT_VERSION);
             export.addProperty("exportTime", System.currentTimeMillis());
             export.addProperty("totalContainers", getTotalContainerCount());
-            JsonObject dimensions = new JsonObject();
-            for (Map.Entry<String, Map<BlockPos, TrackedContainer>> dimEntry : containers.entrySet()) {
-                JsonArray dimArray = new JsonArray();
-                for (TrackedContainer container : dimEntry.getValue().values()) {
-                    dimArray.add(container.toJson());
-                }
-                dimensions.add(dimEntry.getKey(), dimArray);
-            }
+            JsonObject dimensions = serializeDimensions();
             export.add("dimensions", dimensions);
-            try (Writer writer = new OutputStreamWriter(new FileOutputStream(exportFile), StandardCharsets.UTF_8)) {
-                GSON.toJson(export, writer);
-            }
+            writeJson(exportFile, export);
         } finally {
             lock.readLock().unlock();
         }
     }
-    private String getCurrentDimension() {
+
+    private JsonObject serializeDimensions() {
+        JsonObject dimensions = new JsonObject();
+        for (Map.Entry<String, Map<BlockPos, TrackedContainer>> dimEntry : containers.entrySet()) {
+            JsonArray dimArray = new JsonArray();
+            for (TrackedContainer container : dimEntry.getValue().values()) {
+                dimArray.add(container.toJson());
+            }
+            dimensions.add(dimEntry.getKey(), dimArray);
+        }
+        return dimensions;
+    }
+
+    private static void writeJson(File file, JsonObject json) throws IOException {
+        try (Writer writer = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)) {
+            GSON.toJson(json, writer);
+        }
+    }    private String getCurrentDimension() {
         if (mc.world == null) return "unknown";
         RegistryKey<World> key = mc.world.getRegistryKey();
         return key.getValue().toString();
