@@ -1,5 +1,6 @@
 package com.pro0101.vaultline.modules.huntbuddy.util;
 
+import com.pro0101.vaultline.VaultlineAddon;
 import baritone.api.BaritoneAPI;
 import baritone.api.IBaritone;
 import baritone.api.utils.input.Input;
@@ -44,6 +45,8 @@ public class BaritoneHelper {
             baritone.getInputOverrideHandler().clearAllKeys();
             if (hasElytraProcess()) baritone.getCommandManager().execute(FORCE_CANCEL_COMMAND);
         } catch (Throwable failure) {
+            // Baritone can be mid-tick or half unloaded; the cancel is best effort, never fatal.
+            VaultlineAddon.LOG.debug("Could not cancel Baritone pathing", failure);
         }
     }
 
@@ -52,6 +55,8 @@ public class BaritoneHelper {
         try {
             primary().getInputOverrideHandler().setInputForceState(Input.JUMP, pressed);
         } catch (Throwable failure) {
+            // Same best-effort contract: a refused input costs this tick, not the flight.
+            VaultlineAddon.LOG.debug("Could not set the Baritone jump input", failure);
         }
     }
 
@@ -60,6 +65,8 @@ public class BaritoneHelper {
         try {
             primary().getInputOverrideHandler().clearAllKeys();
         } catch (Throwable failure) {
+            // Keys left pressed by a failed clear are released on the next clear attempt.
+            VaultlineAddon.LOG.debug("Could not clear the Baritone inputs", failure);
         }
     }
 

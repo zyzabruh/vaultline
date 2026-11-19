@@ -674,7 +674,8 @@ public class ChestTracker extends Module {
                     }
                 }
             }
-        } catch (Exception e) {
+        } catch (Exception failure) {
+            VaultlineAddon.LOG.warn("Could not resolve the other half of the chest at {}", pos, failure);
         }
         return null;
     }
