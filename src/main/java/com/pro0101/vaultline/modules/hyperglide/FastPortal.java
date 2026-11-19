@@ -87,6 +87,11 @@ public class FastPortal extends Module {
     }
 
 
+    /**
+     * Advances portal construction and places required blocks.
+     *
+     * @param event pre-tick event
+     */
     @EventHandler
     private void onTick(TickEvent.Pre event) {
         if (!Client.loaded()) return;
@@ -196,6 +201,12 @@ public class FastPortal extends Module {
         }
     }
 
+    /**
+     * Checks whether a position already contains obsidian.
+     *
+     * @param pos block position to check
+     * @return true when the position contains obsidian
+     */
     private boolean obsidian(BlockPos pos) {
         return this.mc.world.getBlockState(pos).isOf(Blocks.OBSIDIAN);
     }

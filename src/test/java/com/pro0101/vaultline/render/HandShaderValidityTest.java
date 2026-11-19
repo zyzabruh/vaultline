@@ -206,6 +206,11 @@ class HandShaderValidityTest {
         }
     }
 
+    /**
+     * Collects the captures of every match.
+     *
+     * @return the captures, in source order
+     */
     private static Set<String> find(Pattern pattern, String text) {
         Set<String> found = new LinkedHashSet<>();
         Matcher matcher = pattern.matcher(text);
@@ -245,6 +250,13 @@ class HandShaderValidityTest {
         }
     }
 
+    /**
+     * Reads one Minecraft shader include.
+     *
+     * @param name include name without extension
+     * @return its text, or null when it does not exist
+     * @throws IOException when the entry cannot be read
+     */
     private static String minecraftInclude(ZipFile jar, String name) throws IOException {
         ZipEntry entry = jar.getEntry("assets/minecraft/shaders/include/" + name + ".glsl");
 
@@ -255,6 +267,11 @@ class HandShaderValidityTest {
         }
     }
 
+    /**
+     * The attribute types the entity layout implies.
+     *
+     * @return attribute name to GLSL type
+     */
     private static Map<String, String> attributeTypes() {
         Map<String, String> types = new LinkedHashMap<>();
 

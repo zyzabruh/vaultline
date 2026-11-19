@@ -72,6 +72,11 @@ public class FastFrame extends Module {
     }
 
 
+    /**
+     * Tracks whether either hand holds an item frame.
+     *
+     * @param event pre-tick event
+     */
     @EventHandler
     private void onPreTick(TickEvent.Pre event) {
         if (!Client.ready()) {
@@ -90,6 +95,11 @@ public class FastFrame extends Module {
         }
     }
 
+    /**
+     * Finds and fills newly placed item frames.
+     *
+     * @param event post-tick event
+     */
     @EventHandler
     private void onPostTick(TickEvent.Post event) {
         if (Client.ready() && Client.interaction()) {
@@ -101,6 +111,11 @@ public class FastFrame extends Module {
 
 
 
+    /**
+     * Tracks a valid item frame placement.
+     *
+     * @param packet block interaction packet
+     */
     private void track(PlayerInteractBlockC2SPacket packet) {
         if (!Client.ready() || !this.held(packet.getHand()) &&
             !this.cached(packet.getHand()) || this.slot() < 0) {
@@ -231,6 +246,12 @@ public class FastFrame extends Module {
         }
     }
 
+    /**
+     * Finds an interaction point on an item frame.
+     *
+     * @param frame item frame to target
+     * @return frame hit result, or null when the frame is out of range
+     */
     private EntityHitResult hit(ItemFrameEntity frame) {
         Vec3d eye = this.mc.player.getEyePos();
         Vec3d center = frame.getBoundingBox().getCenter();
@@ -284,9 +305,6 @@ public class FastFrame extends Module {
 
 
 
-    /**
-     * Stores a pending item frame placement.
-     */
     private static class Pending {
         private final BlockPos pos;
 
@@ -295,6 +313,12 @@ public class FastFrame extends Module {
 
         private int life;
 
+        /**
+         * Creates a pending entry for tracking an update.
+         *
+         * @param pos target block position
+         * @param frames known frame entity ids
+         */
         private Pending(BlockPos pos, Set<Integer> frames, int life) {
             this.pos = pos;
             this.frames = frames;

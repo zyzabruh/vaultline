@@ -41,6 +41,11 @@ public class Animations extends Module {
         super(VaultlineAddon.VISUALS, "animations", "Replaces the hand swing motion and scales how long a swing lasts.");
     }
 
+    /**
+     * Returns the multiplier applied to the swing duration.
+     *
+     * @return multiplier, clamped away from zero
+     */
     public double multiplier() {
         return Math.max(0.05, this.multiplier.get());
     }

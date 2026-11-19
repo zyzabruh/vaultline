@@ -270,6 +270,11 @@ public class Skybox extends Module {
         return this.celestial.get();
     }
 
+    /**
+     * Reports whether the vanilla clouds should be cancelled.
+     *
+     * @return true when the clouds are hidden
+     */
     public boolean hideClouds() {
         return this.hideClouds.get();
     }

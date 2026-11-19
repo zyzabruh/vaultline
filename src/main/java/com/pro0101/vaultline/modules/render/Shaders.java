@@ -402,6 +402,12 @@ public class Shaders extends Module {
         return this.fillBrightness.get().floatValue();
     }
 
+    /**
+     * Reports whether this entity should own an outline.
+     *
+     * @param entity entity about to be rendered
+     * @return true when the module targets it
+     */
     public boolean shouldGlow(Entity entity) {
         return this.kindOf(entity) != null;
     }
@@ -520,6 +526,12 @@ public class Shaders extends Module {
         return null;
     }
 
+    /**
+     * Maps a category to its configured colour.
+     *
+     * @param kind category, may be null
+     * @return colour, or null when there is nothing to draw
+     */
     private SettingColor colorOf(Kind kind) {
         if (kind == null) return null;
 

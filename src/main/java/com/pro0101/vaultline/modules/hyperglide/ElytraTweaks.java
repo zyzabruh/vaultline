@@ -245,6 +245,11 @@ public class ElytraTweaks extends Module {
     }
 
 
+    /**
+     * Handles flight, equipment and takeoff each tick.
+     *
+     * @param event pre-tick event
+     */
     @EventHandler
     private void tick(TickEvent.Pre event) {
         if (!Client.ready()) return;
@@ -271,6 +276,11 @@ public class ElytraTweaks extends Module {
         this.cycle();
     }
 
+    /**
+     * Finishes any temporary spoof swap.
+     *
+     * @param event post-tick event
+     */
     @EventHandler
     private void tick(TickEvent.Post event) {
         this.flight.finish();
@@ -359,16 +369,31 @@ public class ElytraTweaks extends Module {
         return this.deploy.get();
     }
 
+    /**
+     * Changes automatic elytra deployment for Baritone.
+     *
+     * @param active requested auto deploy state
+     */
     public void deploy(boolean active) {
         if (this.deploy.get() != active) {
             this.deploy.set(active);
         }
     }
 
+    /**
+     * Checks whether collision avoidance has stopped movement.
+     *
+     * @return true while movement is halted for collision avoidance
+     */
     public boolean halted() {
         return this.isActive() && this.halt && !this.pilot();
     }
 
+    /**
+     * Checks whether automatic takeoff is active.
+     *
+     * @return true while takeoff input is active
+     */
     public boolean deploying() {
         return this.isActive() && this.input.active();
     }
@@ -377,23 +402,48 @@ public class ElytraTweaks extends Module {
         return this.input.pressed();
     }
 
+    /**
+     * Checks whether elytra flight is available.
+     *
+     * @return true when any flight mode can be started
+     */
     private boolean ready() {
         return this.flight.available();
     }
 
+    /**
+     * Checks whether normal elytra equipment is required.
+     *
+     * @return true when spoofing must stay disabled
+     */
     private boolean normal() {
         return this.pilot() || this.bounce() || Baritone.elytra();
     }
 
+    /**
+     * Checks whether spoof mode may currently run.
+     *
+     * @return true when spoofing is enabled
+     */
     private boolean spoofing() {
         return this.spoof.get() && !this.normal();
     }
 
+    /**
+     * Checks whether Auto Pilot is currently active.
+     *
+     * @return true while Auto Pilot controls movement
+     */
     private boolean pilot() {
         AutoPilot module = Modules.get().get(AutoPilot.class);
         return module != null && module.isActive();
     }
 
+    /**
+     * Checks whether Bounce Fly is currently active.
+     *
+     * @return true while Bounce Fly is active
+     */
     private boolean bounce() {
         BounceFly module = Modules.get().get(BounceFly.class);
         return module != null && module.isActive();
@@ -563,6 +613,12 @@ public class ElytraTweaks extends Module {
         if (slot >= 0) this.wear(slot);
     }
 
+    /**
+     * Equips an armor item from the hotbar.
+     *
+     * @param slot hotbar slot containing the armor item
+     * @return true when the equip interaction was sent
+     */
     private boolean wear(int slot) {
         if (!Inventory.ready() ||
             this.mc.interactionManager == null) {
@@ -580,12 +636,23 @@ public class ElytraTweaks extends Module {
         return true;
     }
 
+    /**
+     * Finds an elytra or chestplate in the hotbar.
+     *
+     * @param elytra whether an elytra or chestplate is requested
+     * @return matching hotbar slot, or -1 when unavailable
+     */
     private int hotbar(boolean elytra) {
         return elytra ? Elytra.hotbar() : Hotbar.find(Elytra::chestplate);
     }
 
 
 
+    /**
+     * Equips the most damaged elytra for repair.
+     *
+     * @return true when a repair swap starts
+     */
     private boolean mend() {
         if (!this.repair.get() || this.flight.active()) return false;
 
@@ -661,6 +728,11 @@ public class ElytraTweaks extends Module {
         );
     }
 
+    /**
+     * Finds the healthiest replacement elytra in the inventory.
+     *
+     * @return player inventory slot, or -1 when no safe spare exists
+     */
     private int spare() {
         int minimum = this.minimum.get();
 
@@ -671,6 +743,12 @@ public class ElytraTweaks extends Module {
         );
     }
 
+    /**
+     * Performs a normal click in the player inventory.
+     *
+     * @param slot player screen slot to click
+     * @return true when the click was sent
+     */
     private boolean click(int slot) {
         if (this.mc.interactionManager == null) {
             return false;
@@ -864,6 +942,11 @@ public class ElytraTweaks extends Module {
 
 
 
+    /**
+     * Tracks the firework currently boosting the player.
+     *
+     * @param rocket player-owned firework rocket
+     */
     public void track(FireworkRocketEntity rocket) {
         if (!this.isActive()) return;
 
@@ -874,14 +957,29 @@ public class ElytraTweaks extends Module {
         this.rocket = rocket;
     }
 
+    /**
+     * Checks whether the tracked rocket is still active.
+     * 
+     * @return true while the rocket is alive
+     */
     private boolean active() {
         return this.rocket != null && this.rocket.isAlive();
     }
 
+    /**
+     * Uses an available firework rocket.
+     *
+     * @return true when the rocket was used
+     */
     private boolean rocket() {
         return this.flight.request(this::firework);
     }
 
+    /**
+     * Uses an available firework rocket immediately.
+     *
+     * @return true when the rocket interaction was accepted
+     */
     private boolean firework() {
         return Elytra.firework();
     }
@@ -933,6 +1031,11 @@ public class ElytraTweaks extends Module {
         this.swim(this.escape.get());
     }
 
+    /**
+     * Retries elytra deployment after the requested delay.
+     *
+     * @param timeout ticks to wait before retrying
+     */
     private void redeploy(int timeout) {
         if (++this.retry < timeout) return;
 
@@ -940,6 +1043,11 @@ public class ElytraTweaks extends Module {
         this.input.start(true);
     }
 
+    /**
+     * Controls jump input while escaping liquid.
+     *
+     * @param pressed whether jump should remain held
+     */
     private void swim(boolean pressed) {
         if (!pressed && !this.escaping) return;
 
@@ -947,6 +1055,11 @@ public class ElytraTweaks extends Module {
         this.mc.options.jumpKey.setPressed(pressed);
     }
 
+    /**
+     * Checks whether Baritone flight recovery can run.
+     *
+     * @return true when recovery is available
+     */
     private boolean recoverable() {
         return this.deploy.get() && Elytra.equipped()
             && Baritone.elytra() && !this.bounce();
@@ -954,6 +1067,11 @@ public class ElytraTweaks extends Module {
 
 
 
+    /**
+     * Predicts whether a collision would cause damage.
+     *
+     * @return true when predicted speed loss causes damage
+     */
     private boolean danger(Vec3d motion) {
         if (motion.lengthSquared() < epsilon) {
             return false;
@@ -966,6 +1084,11 @@ public class ElytraTweaks extends Module {
             || (axis & axes) != 0 && damage > 0.0;
     }
 
+    /**
+     * Checks projected hitbox rays for collisions.
+     *
+     * @param motion movement vector to project
+     */
     private int collision(Vec3d motion) {
         Vec3d flat = new Vec3d(motion.x, 0.0, motion.z);
         if (flat.lengthSquared() < epsilon) return 0;
@@ -1079,6 +1202,11 @@ public class ElytraTweaks extends Module {
         this.freeze(event);
     }
 
+    /**
+     * Resumes elytra flight in a safe direction.
+     *
+     * @param safe safe direction to continue flying
+     */
     private void resume(PlayerMoveEvent event, Vec3d safe) {
         this.stable = 0;
         this.halt = false;
@@ -1098,6 +1226,11 @@ public class ElytraTweaks extends Module {
         if (this.sneak) this.sneak(false);
     }
 
+    /**
+     * Finds a safe direction to continue flying.
+     *
+     * @return safe movement for continuing flight
+     */
     private Vec3d safe() {
         if (this.speed <= epsilon) return Vec3d.ZERO;
 
@@ -1124,11 +1257,21 @@ public class ElytraTweaks extends Module {
         Player.velocity(event, Vec3d.ZERO);
     }
 
+    /**
+     * Keeps sneak pressed during collision recovery.
+     *
+     * @param pressed whether sneak should stay pressed
+     */
     private void sneak(boolean pressed) {
         this.sneak = pressed;
         this.mc.options.sneakKey.setPressed(pressed);
     }
 
+    /**
+     * Checks whether collision avoidance should run.
+     *
+     * @return true when collision avoidance is active
+     */
     private boolean avoiding(PlayerMoveEvent event) {
         return Client.ready()
             && this.mc.player.isGliding()

@@ -7,21 +7,21 @@ import meteordevelopment.meteorclient.settings.SettingGroup;
 import net.minecraft.block.Block;
 import java.util.List;
 
-/**
- * Handles block whitelist and blacklist settings.
- */
 public final class BlockFilter {
     private final Setting<List<Block>> blocks;
     private final Setting<Mode> mode;
 
-    /**
-     * Controls how the selected block list is used.
-     */
     public enum Mode {
         Whitelist,
         Blacklist
     }
 
+    /**
+     * Creates block list and list mode settings.
+     *
+     * @param group setting group receiving the settings
+     * @param description block list description
+     */
     public BlockFilter(SettingGroup group, String description) {
         this.blocks = group.add(new BlockListSetting.Builder()
             .name("blocks")

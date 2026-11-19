@@ -11,18 +11,25 @@ import net.minecraft.util.math.BlockPos;
 import java.util.function.Predicate;
 import java.util.function.ToIntFunction;
 
-/**
- * Handles common hotbar searches and slot changes.
- */
 public final class Hotbar {
     private static final MinecraftClient client = MinecraftClient.getInstance();
 
     private Hotbar() {}
 
+    /**
+     * Finds an item in the hotbar.
+     *
+     * @return matching hotbar slot, or -1 when unavailable
+     */
     public static int find(Item item) {
         return find(stack -> stack.isOf(item));
     }
 
+    /**
+     * Finds the first matching stack in the hotbar.
+     *
+     * @return matching hotbar slot, or -1 when unavailable
+     */
     public static int find(Predicate<ItemStack> predicate) {
         return find(0, 8, predicate);
     }
@@ -67,6 +74,11 @@ public final class Hotbar {
         return -1;
     }
 
+    /**
+     * Finds the highest scoring stack in the hotbar.
+     *
+     * @return matching hotbar slot, or -1 when unavailable
+     */
     public static int best(
         Predicate<ItemStack> predicate,
         ToIntFunction<ItemStack> score) {
@@ -127,6 +139,11 @@ public final class Hotbar {
         return API.slot(client.player.getInventory());
     }
 
+    /**
+     * Returns a hotbar stack.
+     *
+     * @return item stack stored in the slot
+     */
     public static ItemStack stack(int slot) {
         return client.player.getInventory().getStack(slot);
     }

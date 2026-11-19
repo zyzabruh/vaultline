@@ -13,9 +13,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 
-/**
- * Handles common 3D boxes, lines and render settings.
- */
 public final class Render {
     private final Setting<Boolean> render;
     private final Setting<ShapeMode> shape;
@@ -62,32 +59,69 @@ public final class Render {
         );
     }
 
+    /**
+     * Checks whether rendering is enabled.
+     *
+     * @return true when rendering should run
+     */
     public boolean enabled() {
         return this.render.get();
     }
 
+    /**
+     * Renders a box around a block position.
+     *
+     * @param event active 3D render event
+     * @param pos block position
+     */
     public void box(Render3DEvent event, BlockPos pos) {
         box(event, pos, this.side.get(), this.line.get(), this.shape.get());
     }
 
+    /**
+     * Renders a box using world coordinates.
+     *
+     * @param event active 3D render event
+     */
     public void box(Render3DEvent event, Box box) {
         box(event, box, this.side.get(), this.line.get(), this.shape.get());
     }
 
+    /**
+     * Renders a line using the configured line color.
+     *
+     * @param event active 3D render event
+     */
     public void line(Render3DEvent event, Vec3d start, Vec3d end) {
         line(event, start, end, this.line.get());
     }
 
+    /**
+     * Renders a box around a block position.
+     *
+     * @param event active 3D render event
+     * @param pos block position
+     */
     public static void box(Render3DEvent event, BlockPos pos,
         SettingColor side, SettingColor line, ShapeMode shape) {
         event.renderer.box(pos, side, line, shape, 0);
     }
 
+    /**
+     * Renders a box using world coordinates.
+     *
+     * @param event active 3D render event
+     */
     public static void box(Render3DEvent event, Box box,
         SettingColor side, SettingColor line, ShapeMode shape) {
         event.renderer.box(box, side, line, shape, 0);
     }
 
+    /**
+     * Renders a line between two world positions.
+     *
+     * @param event active 3D render event
+     */
     public static void line(Render3DEvent event, Vec3d start, Vec3d end, Color color) {
         event.renderer.line(start.x, start.y, start.z, end.x, end.y, end.z, color);
     }

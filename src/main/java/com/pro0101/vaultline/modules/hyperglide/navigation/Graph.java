@@ -11,6 +11,11 @@ public final class Graph {
     private final List<Node> nodes;
     private final List<Edge> edges;
 
+    /**
+     * Builds a connected graph from road geometry.
+     *
+     * @param roads roads used to build the graph
+     */
     public Graph(List<Highways.Road> roads) {
         List<Part> parts = this.parts(roads);
 

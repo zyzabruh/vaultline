@@ -37,6 +37,12 @@ public final class Packets {
             );
     }
 
+    /**
+     * Sends a player action directly without sequence handling.
+     *
+     * @param pos block position
+     * @param side block face
+     */
     public static void direct(Action action, BlockPos pos, Direction side) {
         client.getNetworkHandler().sendPacket(
             new PlayerActionC2SPacket(action, pos, side)
@@ -180,6 +186,11 @@ public final class Packets {
         );
     }
 
+    /**
+     * Synchronizes a selected hotbar slot with the server.
+     *
+     * @param slot hotbar slot to select
+     */
     public static void slot(int slot) {
         client.getNetworkHandler().sendPacket(
             new UpdateSelectedSlotC2SPacket(slot)

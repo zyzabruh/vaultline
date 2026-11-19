@@ -104,6 +104,11 @@ public class AirPlace extends Module {
 
 
 
+    /**
+     * Updates the current air-place target.
+     *
+     * @return true when a valid target is available
+     */
     private boolean target(ItemStack stack) {
         this.hit = null;
         if (!this.valid(stack)) return false;
@@ -126,6 +131,11 @@ public class AirPlace extends Module {
         return true;
     }
 
+    /**
+     * Checks whether Air Place can update its target.
+     *
+     * @return true when the client is ready
+     */
     private boolean ready() {
         Entity entity = this.mc.getCameraEntity();
         if (Client.ready() && entity != null) {
@@ -137,6 +147,11 @@ public class AirPlace extends Module {
         return false;
     }
 
+    /**
+     * Checks whether the current target should be rendered.
+     *
+     * @return true when the target is still valid
+     */
     private boolean visible() {
         return this.box.enabled() &&
             this.hit != null && Client.ready() &&
@@ -190,6 +205,11 @@ public class AirPlace extends Module {
         return true;
     }
 
+    /**
+     * Places the selected item at the target.
+     *
+     * @param hit target block hit result
+     */
     private void place(BlockHitResult hit, ItemStack stack) {
         Placement.place(hit);
         this.mc.player.swingHand(Hand.MAIN_HAND);

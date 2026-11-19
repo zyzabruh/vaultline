@@ -82,6 +82,11 @@ public final class MinecraftContainerAccess implements ContainerAccess {
         return mc().player.currentScreenHandler.slots.get(slot).id;
     }
 
+    /**
+     * Opens a container and waits for its screen.
+     *
+     * @return 1 when the screen is open, 0 while waiting, -1 on failure
+     */
     @Override
     public int open(BlockPos pos) {
         if (isOpen()) {

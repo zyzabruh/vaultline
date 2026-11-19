@@ -68,6 +68,11 @@ public class EasyAccess extends Module {
     }
 
 
+    /**
+     * Finds and opens a hidden container.
+     *
+     * @param event pre-tick event
+     */
     @EventHandler
     private void tick(TickEvent.Pre event) {
         if (!this.mc.options.useKey.isPressed()) {
@@ -252,6 +257,11 @@ public class EasyAccess extends Module {
             && donkey.isTame() && donkey.hasChest();
     }
 
+    /**
+     * Interacts with a supported block container.
+     *
+     * @param hit block interaction target
+     */
     private void block(BlockHitResult hit) {
         this.mc.interactionManager.interactBlock(
             this.mc.player, Hand.MAIN_HAND, hit

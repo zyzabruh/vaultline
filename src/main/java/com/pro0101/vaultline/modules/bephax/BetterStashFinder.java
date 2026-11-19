@@ -676,6 +676,11 @@ public class BetterStashFinder extends Module
         }
     }
 
+    /**
+     * Applies the cache policies that need a tick.
+     *
+     * @param event pre-tick event
+     */
     @meteordevelopment.orbit.EventHandler
     private void onTick(TickEvent.Pre event) {
         if (this.mc.world == null || this.mc.player == null) return;

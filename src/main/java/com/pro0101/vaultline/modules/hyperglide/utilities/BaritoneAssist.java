@@ -24,6 +24,11 @@ public final class BaritoneAssist implements AbstractGameEventListener {
             .getGameEventHandler().registerEventListener(new BaritoneAssist());
     }
 
+    /**
+     * Aligns the player before Baritone follows its movement.
+     *
+     * @param event Baritone player update event
+     */
     @Override
     public void onPlayerUpdate(PlayerUpdateEvent event) {
         if (event.getState() == EventState.PRE) Baritone.assist();

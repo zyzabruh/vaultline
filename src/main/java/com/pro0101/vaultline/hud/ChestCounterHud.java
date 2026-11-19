@@ -123,6 +123,11 @@ public class ChestCounterHud extends HudElement {
         HudBloom.text(renderer, singleLine, textX, textY, SINGLE_COLOR, true);
     }
 
+    /**
+     * Reports whether the cached count is stale.
+     *
+     * @return true when the world should be scanned again
+     */
     private boolean shouldScan(BlockPos pos) {
         if (this.lastPos == null) return true;
         if (System.currentTimeMillis() - this.lastScan >= RESCAN_MS) return true;

@@ -178,9 +178,6 @@ public class Overview extends Module {
 
 
 
-    /**
-     * Tracks occurrences and total count of an item.
-     */
     private static class Count {
         private final ItemStack stack;
 
@@ -192,9 +189,6 @@ public class Overview extends Module {
         }
     }
 
-    /**
-     * Stores a cached container content result.
-     */
     private static class Cached {
         private final Object data;
         private final ItemStack stack;

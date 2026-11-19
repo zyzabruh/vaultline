@@ -590,6 +590,13 @@ public class FlowESP extends Module {
         });
     }
 
+    /**
+     * Tests one block for the fluid being scanned.
+     *
+     * @param chunk chunk holding the block
+     * @param tag fluid tag to match
+     * @return true when the block holds that fluid
+     */
     private FluidState fluidAt(WorldChunk chunk, int x, int y, int z, TagKey<Fluid> tag) {
         BlockState state = chunk.getBlockState(this.mutable.set(x, y, z));
         FluidState fluid = state.getFluidState();

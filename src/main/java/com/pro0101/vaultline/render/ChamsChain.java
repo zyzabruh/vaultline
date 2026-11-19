@@ -166,6 +166,18 @@ public final class ChamsChain {
         return cached;
     }
 
+    /**
+     * Builds the chain from scratch.
+     *
+     * @param externalTargets targets the game provides to the effect
+     * @param style shader the chain is built around
+     * @param radius glow radius in pixels
+     * @param fillAlpha opacity of the solid fill
+     * @param outlineWidth rim thickness in pixels
+     * @param fillBrightness multiplier applied to the body colour
+     * @param innerGlow how much the body is brightened by the spread silhouette
+     * @return the chain, or null when loading failed
+     */
     private static PostEffectProcessor build(Set<Identifier> externalTargets, Style style, int radius, float intensity, float fillAlpha, int outlineWidth, float fillBrightness, float innerGlow) {
         try {
             if (projection == null) {

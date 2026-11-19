@@ -300,6 +300,11 @@ class HandPipelineTest {
         assertFalse(outline.contains("mix(texel.rgb, TINT"), "outline mixes a fill tint");
     }
 
+    /**
+     * Reads one shader stage of a spec.
+     *
+     * @throws IOException when the resource is missing or unreadable
+     */
     private static String read(Identifier id, String extension) throws IOException {
         String path = "/assets/" + id.getNamespace() + "/shaders/" + id.getPath() + "." + extension;
 
@@ -310,6 +315,11 @@ class HandPipelineTest {
         }
     }
 
+    /**
+     * Collects the first capture group of every match.
+     *
+     * @return the captures, in source order
+     */
     private static Set<String> find(Pattern pattern, String source) {
         Set<String> found = new LinkedHashSet<>();
         Matcher matcher = pattern.matcher(source);

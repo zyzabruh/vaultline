@@ -8,9 +8,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec2f;
 import net.minecraft.util.math.Vec3d;
 
-/**
- * Provides common utilities for player state.
- */
 public final class Player {
     private static final MinecraftClient client = MinecraftClient.getInstance();
 
@@ -23,6 +20,11 @@ public final class Player {
         );
     }
 
+    /**
+     * Returns the block directly below the player.
+     *
+     * @return block below the player's feet
+     */
     public static BlockPos floor() {
         boolean ground = client.player.isOnGround();
         double offset = ground ? 0.01 : 1.0;
@@ -56,6 +58,11 @@ public final class Player {
             || client.player.isInLava();
     }
 
+    /**
+     * Checks whether the player is eating or drinking.
+     *
+     * @return true while consuming an item
+     */
     public static boolean consuming() {
         if (!client.player.isUsingItem()) return false;
 

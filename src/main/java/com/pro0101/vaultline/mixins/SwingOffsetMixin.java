@@ -81,6 +81,11 @@ public abstract class SwingOffsetMixin {
         info.cancel();
     }
 
+    /**
+     * Reports whether the main hand holds a sword.
+     *
+     * @return true when a sword is held in the main hand
+     */
     private boolean vaultline$sword() {
         MinecraftClient client = MinecraftClient.getInstance();
 

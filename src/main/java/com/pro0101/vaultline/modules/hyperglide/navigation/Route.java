@@ -11,14 +11,16 @@ public record Route(List<Leg> legs, float distance, float time) {
         legs = simplify(legs);
     }
 
-    /**
-     * Defines the type of route travel.
-     */
     public enum Type {
         Normal,
         Highway
     }
 
+    /**
+     * Checks whether the route contains no travel legs.
+     *
+     * @return true when the route is empty
+     */
     public boolean empty() {
         return this.legs.isEmpty();
     }
@@ -65,7 +67,17 @@ public record Route(List<Leg> legs, float distance, float time) {
         return sa.forward(sb);
     }
 
+    /**
+     * Represents one continuous part of a calculated route.
+     *
+     * @param road first highway used by the leg, or null for free flight
+     */
     public record Leg(Vec2f start, Vec2f end, Highways.Road road, Type type) {
+        /**
+         * Calculates the leg length.
+         *
+         * @return distance between leg endpoints
+         */
         public float length() {
             return this.end.add(this.start.negate()).length();
         }

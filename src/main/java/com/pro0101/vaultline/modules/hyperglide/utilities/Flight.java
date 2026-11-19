@@ -6,9 +6,6 @@ import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
 import net.minecraft.util.PlayerInput;
 import java.util.function.BooleanSupplier;
 
-/**
- * Manages normal and spoofed elytra flight state.
- */
 public final class Flight {
     private final MinecraftClient client = MinecraftClient.getInstance();
 
@@ -44,23 +41,48 @@ public final class Flight {
         if (!enabled) this.clear();
     }
 
+    /**
+     * Checks whether spoofing may be used.
+     *
+     * @return true when spoofing may be used
+     */
     public boolean spoof() {
         return this.enabled && !Baritone.elytra()
             && !this.liquid && !Player.liquid();
     }
 
+    /**
+     * Checks whether spoofing is waiting to take control.
+     *
+     * @return true while spoofing is waiting to become active
+     */
     public boolean standby() {
         return this.spoof() && !this.active;
     }
 
+    /**
+     * Reports when required equipment cannot be prepared.
+     *
+     * @return true when spoofing preparation cannot complete
+     */
     public boolean blocked() {
         return this.spoof() && !this.prepare();
     }
 
+    /**
+     * Checks whether the flight mode has usable equipment.
+     *
+     * @return true when normal or spoofed flight is available
+     */
     public boolean available() {
         return this.spoof() ? this.ready() : Elytra.equipped();
     }
 
+    /**
+     * Checks whether spoofing has the equipment it needs.
+     *
+     * @return true when spoofing can start or continue
+     */
     public boolean ready() {
         if (!this.spoof()) return false;
 
@@ -76,16 +98,31 @@ public final class Flight {
         return Hotbar.find(Elytra::chestplate) >= 0;
     }
 
+    /**
+     * Checks whether spoofing currently owns the glide.
+     *
+     * @return true while spoofed flight is active
+     */
     public boolean active() {
         return this.spoof() && this.active;
     }
 
+    /**
+     * Checks whether spoof equipment sounds should be muted.
+     *
+     * @return true while spoof equipment is being managed
+     */
     public boolean mute() {
         return this.spoof() && (this.active || this.prepared());
     }
 
 
 
+    /**
+     * Converts an existing elytra glide into spoofing.
+     *
+     * @return true when the chestplate transaction starts
+     */
     public boolean activate() {
         if (!this.spoof()) return false;
         if (this.active) return true;
@@ -105,6 +142,11 @@ public final class Flight {
         return true;
     }
 
+    /**
+     * Starts spoofing while the player is airborne.
+     *
+     * @return true when the flight start was accepted
+     */
     public boolean start() {
         if (!this.spoof()) return false;
         if (this.active) return true;
@@ -168,6 +210,11 @@ public final class Flight {
         this.restore = false;
     }
 
+    /**
+     * Restores elytra equipment for normal flight.
+     *
+     * @return true when an elytra is equipped
+     */
     public boolean normal() {
         if (!Client.interaction() || !Inventory.ready()) {
             return Elytra.equipped();
@@ -242,6 +289,11 @@ public final class Flight {
         return true;
     }
 
+    /**
+     * Remembers a firework request for the next boost.
+     *
+     * @return true when the request was accepted
+     */
     public boolean request() {
         return this.request(Elytra::firework);
     }
@@ -265,6 +317,11 @@ public final class Flight {
 
 
 
+    /**
+     * Equips a chestplate before spoofing begins.
+     *
+     * @return true when the chestplate and elytra are ready
+     */
     public boolean prepare() {
         if (!this.spoof()) return false;
 
@@ -299,6 +356,11 @@ public final class Flight {
         return Elytra.chestplate() && Elytra.hotbar() >= 0;
     }
 
+    /**
+     * Performs one temporary elytra restart.
+     *
+     * @return true when the restart packet was sent
+     */
     private boolean begin() {
         if (!this.prepared() || !this.continuing()) {
             return false;
@@ -366,6 +428,11 @@ public final class Flight {
 
 
 
+    /**
+     * Checks whether flight conditions still allow gliding.
+     *
+     * @return true while flight may continue
+     */
     private boolean continuing() {
         return Client.ready() && !Player.liquid()
             && !this.client.player.isOnGround()

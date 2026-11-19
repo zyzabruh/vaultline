@@ -195,6 +195,11 @@ public class ControlFly extends Module {
     }
 
 
+    /**
+     * Updates boost, takeoff and active flight control.
+     *
+     * @param event pre-tick event
+     */
     @EventHandler
     private void tick(TickEvent.Pre event) {
         if (!Client.ready() || ElytraMace.isDiving()) return;
@@ -257,6 +262,11 @@ public class ControlFly extends Module {
 
 
 
+    /**
+     * Checks whether automatic takeoff is active.
+     *
+     * @return true while takeoff input is active
+     */
     public boolean deploying() {
         return this.isActive() && this.input.active();
     }
@@ -399,6 +409,12 @@ public class ControlFly extends Module {
         }
     }
 
+    /**
+     * Controls horizontal movement and ceiling collision acceleration.
+     *
+     * @param ceiling whether the player is colliding with a ceiling
+     * @return adjusted horizontal movement, or null when unchanged
+     */
     private Vec3d adjust(Vec3d motion, Vec3d dir, double length, boolean ceiling) {
         double maximum = this.maximum(dir);
 
@@ -427,6 +443,11 @@ public class ControlFly extends Module {
 
 
 
+    /**
+     * Tracks the firework currently boosting the player.
+     *
+     * @param rocket player-owned firework rocket
+     */
     public void track(FireworkRocketEntity rocket) {
         if (!Client.ready() || this.boost.rocket == rocket) {
             return;
@@ -476,6 +497,11 @@ public class ControlFly extends Module {
         this.boost.endtime = this.mc.player.age + ticks;
     }
 
+    /**
+     * Checks whether the tracked rocket is currently active.
+     *
+     * @return true when the tracked rocket is alive
+     */
     private boolean active() {
         return this.boost.rocket != null && this.boost.rocket.isAlive();
     }
@@ -604,6 +630,12 @@ public class ControlFly extends Module {
         return flat.add(0.0, input.y, 0.0).normalize();
     }
 
+    /**
+     * Checks whether the movement direction changes sharply.
+     *
+     * @param first previous movement direction
+     * @return true when the turn requires a brake tick
+     */
     private boolean sharp(Vec3d first, Vec3d second) {
         if (first.horizontalLength() < epsilon &&
             second.horizontalLength() < epsilon) {
@@ -629,6 +661,12 @@ public class ControlFly extends Module {
 
 
 
+    /**
+     * Selects manual pitch control or automatic altitude leveling.
+     *
+     * @param boosted whether an active rocket is boosting the player
+     * @param manual whether vertical movement input is controlling pitch
+     */
     private void aim(Vec3d dir, boolean boosted, boolean manual) {
         if (manual) {
             this.motion.porpoise = false;
@@ -768,6 +806,13 @@ public class ControlFly extends Module {
         return base + MathHelper.wrapDegrees(yaw - base) * (float) factor;
     }
 
+    /**
+     * Searches pitch values for the best leveling result.
+     *
+     * @param boosted whether rocket acceleration should be predicted
+     * @param start first pitch value
+     * @param count number of pitch increments
+     */
     private Choice search(Vec3d velocity, boolean boosted,
         double desired, float start, float step, int count, Choice choice) {
 
@@ -781,6 +826,11 @@ public class ControlFly extends Module {
         return choice;
     }
 
+    /**
+     * Scores a leveling pitch from predicted flight behavior.
+     *
+     * @param boosted whether rocket acceleration should be predicted
+     */
     private double score(Vec3d velocity, float pitch, double desired, boolean boosted) {
         Vec3d next = this.predict(velocity, this.motion.aligned, pitch, boosted);
         double score = Math.abs(next.y - desired);
@@ -870,12 +920,25 @@ public class ControlFly extends Module {
         );
     }
 
+    /**
+     * Calculates firework acceleration for one velocity axis.
+     *
+     * @param rotation rotation direction on the same axis
+     * @return acceleration applied to the axis
+     */
     private double thrust(double velocity, double rotation) {
         return rotation * 0.1 + (rotation * 1.5 - velocity) * 0.5;
     }
 
 
 
+    /**
+     * Checks whether another rocket should be launched.
+     *
+     * @param boosted whether an active rocket is boosting the player
+     * @param redirect whether controlled movement changed direction
+     * @return true when direction or speed requires another rocket
+     */
     private boolean launch(Vec3d dir, boolean boosted, boolean redirect) {
         if (!this.stocked()) return false;
 
@@ -951,10 +1014,20 @@ public class ControlFly extends Module {
 
 
 
+    /**
+     * Activates and initializes the independent camera rotation.
+     *
+     * @return true when camera control is available
+     */
     public boolean view() {
         return this.view(this.direction());
     }
 
+    /**
+     * Activates camera control for the current movement input.
+     *
+     * @return true when camera control is available
+     */
     private boolean view(Vec3d input) {
         if (!this.isActive() ||
             this.mc.player == null ||
@@ -984,6 +1057,11 @@ public class ControlFly extends Module {
         );
     }
 
+    /**
+     * Checks whether independent camera control is currently active.
+     *
+     * @return true when the custom camera rotation should be used
+     */
     public boolean camera() {
         return this.isActive() && this.mc.player != null
             && this.view.active && this.mc.player.isGliding();
@@ -1018,6 +1096,11 @@ public class ControlFly extends Module {
 
 
 
+    /**
+     * Checks whether Elytra Tweaks currently stops movement.
+     *
+     * @return true while collision avoidance is stopping movement
+     */
     private boolean halted() {
         ElytraTweaks tweaks = Modules.get().get(ElytraTweaks.class);
         return tweaks != null && tweaks.halted();
@@ -1123,9 +1206,6 @@ public class ControlFly extends Module {
      */
     private record Choice(float pitch, double score) {}
 
-    /**
-     * Stores the movement state used by controlled flight.
-     */
     private static class Motion {
         private int input;
         private Vec3d dir;
@@ -1145,27 +1225,18 @@ public class ControlFly extends Module {
         private float pitch;
     }
 
-    /**
-     * Stores the most recently synchronized flight rotation.
-     */
     private static class Turn {
         private boolean active;
         private float yaw;
         private float pitch;
     }
 
-    /**
-     * Stores independent camera rotation state.
-     */
     private static class View {
         private boolean active;
         private float yaw;
         private float pitch;
     }
 
-    /**
-     * Stores pending and active rocket boost state.
-     */
     private static class Boost {
         private int expiry;
         private int endtime;

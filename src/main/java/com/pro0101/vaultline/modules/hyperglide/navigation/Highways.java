@@ -29,9 +29,6 @@ public final class Highways {
 
     private Highways() {}
 
-    /**
-     * Defines the type of highway.
-     */
     public enum Kind {
         Axis,
         Diagonal,
@@ -45,6 +42,11 @@ public final class Highways {
         return roads;
     }
 
+    /**
+     * Returns the highway network with segments removed.
+     *
+     * @param radius radius to remove from the network
+     */
     public static List<Road> roads(float radius) {
         if (radius <= 0.0F) return roads;
         return cut(roads, radius);

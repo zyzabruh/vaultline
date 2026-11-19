@@ -16,6 +16,11 @@ public final class BaritoneCompat {
 
     private BaritoneCompat() {}
 
+    /**
+     * Checks whether Baritone is on the classpath.
+     *
+     * @return true when the Baritone API can be loaded
+     */
     public static boolean isAvailable() {
         return present(API);
     }

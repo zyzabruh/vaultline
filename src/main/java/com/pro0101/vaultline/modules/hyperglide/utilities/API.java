@@ -18,9 +18,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.joml.Matrix3x2fStack;
 
-/**
- * Provides compatibility helpers for shared code.
- */
 public final class API {
     private static final int points = 32;
 
@@ -64,6 +61,11 @@ public final class API {
         );
     }
 
+    /**
+     * Sends the specified sneaking state to the server.
+     *
+     * @param player player whose state is sent
+     */
     public static void sneak(ClientPlayerEntity player, boolean value) {
         Packets.input(Packets.sneak(value));
     }
@@ -72,6 +74,11 @@ public final class API {
         return inventory.getSelectedSlot();
     }
 
+    /**
+     * Plays the local placement sound for a block.
+     *
+     * @param block placed block
+     */
     public static void sound(World world, Block block, BlockPos pos) {
         BlockSoundGroup sound = block.getDefaultState().getSoundGroup();
 

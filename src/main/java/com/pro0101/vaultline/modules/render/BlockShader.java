@@ -159,6 +159,11 @@ public class BlockShader extends Module {
         this.clear();
     }
 
+    /**
+     * Rescans a few chunks per tick, nearest first.
+     *
+     * @param event post-tick event
+     */
     @EventHandler
     private void onTick(TickEvent.Post event) {
         if (this.mc.world == null || this.mc.player == null) return;
@@ -270,6 +275,14 @@ public class BlockShader extends Module {
         else this.chunks.put(pos, found);
     }
 
+    /**
+     * Fills the reusable colours for one box.
+     *
+     * @param pos block being drawn
+     * @param distance distance from the camera
+     * @param limit configured range, zero when unlimited
+     * @param time seconds, for the animated styles
+     */
     private void colour(BlockPos pos, double distance, double limit, double time) {
         SettingColor near = this.sideColor.get();
         SettingColor stroke = this.lineColor.get();

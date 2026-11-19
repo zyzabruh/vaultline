@@ -22,10 +22,21 @@ public final class Search {
         this(Highways.roads());
     }
 
+    /**
+     * Builds a search over the supplied highway network.
+     *
+     * @param roads roads available for routing
+     */
     public Search(List<Highways.Road> roads) {
         this.graph = new Graph(roads);
     }
 
+    /**
+     * Calculates the fastest route between two positions.
+     *
+     * @param start starting X/Z position
+     * @param end destination X/Z position
+     */
     public Route find(Vec2f start, Vec2f end, float highway, float normal) {
         Route undefined = new Route(List.of(), 0.0F, 0.0F);
 
@@ -77,6 +88,11 @@ public final class Search {
         return new Network(source, target, links);
     }
 
+    /**
+     * Calculates both approach points on a highway edge.
+     *
+     * @return optimal candidates for both travel directions
+     */
     private List<Graph.Node> candidates(List<Graph.Node> nodes,
         Segment segment, Vec2f point, float highway, float normal) {
 
@@ -107,6 +123,12 @@ public final class Search {
         }
     }
 
+    /**
+     * Connects ordered points along a highway segment.
+     *
+     * @param points points belonging to the segment
+     * @param road highway containing the segment
+     */
     private void highway(Map<Graph.Node, List<Link>> links,
         List<Graph.Node> points, Segment segment, Highways.Road road) {
 
@@ -151,6 +173,12 @@ public final class Search {
         }
     }
 
+    /**
+     * Adds bidirectional travel between two route nodes.
+     *
+     * @param start first node
+     * @param road owning road, or null for free flight
+     */
     private void connect(
         Map<Graph.Node, List<Link>> links, Graph.Node start,
         Graph.Node end, Highways.Road road, Route.Type type) {
@@ -174,6 +202,11 @@ public final class Search {
         if (!this.duplicate(list, link)) list.add(link);
     }
 
+    /**
+     * Checks whether an equivalent connection already exists.
+     *
+     * @return true if an equivalent connection exists
+     */
     private boolean duplicate(List<Link> links, Link link) {
         if (link.type == Route.Type.Normal) return false;
 
@@ -188,6 +221,12 @@ public final class Search {
         return false;
     }
 
+    /**
+     * Calculates distance between two positions.
+     *
+     * @param first first position
+     * @return distance between both positions
+     */
     private float distance(Vec2f first, Vec2f second) {
         return second.add(first.negate()).length();
     }
@@ -196,6 +235,11 @@ public final class Search {
 
     //region Route pathfinding
 
+    /**
+     * Finds the fastest connections through the network.
+     *
+     * @return predecessor links for the fastest route
+     */
     private Map<Graph.Node, Link> search(
         Network network, float highway, float normal) {
 
@@ -274,6 +318,11 @@ public final class Search {
         return new Route(legs, distance, time);
     }
 
+    /**
+     * Traces the fastest route through predecessor links.
+     *
+     * @return ordered links, or null if unreachable
+     */
     private List<Link> path(Graph.Node start,
         Graph.Node end, Map<Graph.Node, Link> previous) {
 
@@ -306,6 +355,11 @@ public final class Search {
 
     //region Data structures
 
+    /**
+     * Represents a connection used during route calculation.
+     *
+     * @param road highway, or null for free flight
+     */
     private record Link(Graph.Node start, Graph.Node end,
         Highways.Road road, Route.Type type, float distance
     ) {}
@@ -315,6 +369,11 @@ public final class Search {
         Map<Graph.Node, List<Link>> links
     ) {}
 
+    /**
+     * Represents a node queued during pathfinding.
+     *
+     * @param priority estimated total travel time
+     */
     private record State(
         Graph.Node node, float cost, float priority
     ) {}

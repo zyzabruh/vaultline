@@ -88,6 +88,11 @@ public class WorldParticles extends Module {
         this.pending = 0.0;
     }
 
+    /**
+     * Spawns the particles earned by the current rate.
+     *
+     * @param event post-tick event
+     */
     @EventHandler
     private void onTick(TickEvent.Post event) {
         if (this.mc.world == null || this.mc.player == null) return;

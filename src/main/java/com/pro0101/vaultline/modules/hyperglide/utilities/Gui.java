@@ -5,9 +5,6 @@ import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.util.math.Vec2f;
 import org.lwjgl.glfw.GLFW;
 
-/**
- * Handles common GUI and mouse checks.
- */
 public final class Gui {
     private static final MinecraftClient client = MinecraftClient.getInstance();
 
@@ -41,6 +38,11 @@ public final class Gui {
         );
     }
 
+    /**
+     * Checks whether a mouse button is held.
+     *
+     * @return true when the button is held
+     */
     public static boolean pressed(int button) {
         return GLFW.glfwGetMouseButton(
             client.getWindow().getHandle(), button

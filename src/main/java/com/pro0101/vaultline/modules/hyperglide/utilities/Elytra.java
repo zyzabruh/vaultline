@@ -11,20 +11,27 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
-/**
- * Provides common elytra checks, takeoff and flight calculations.
- */
 public final class Elytra {
     private static final MinecraftClient client = MinecraftClient.getInstance();
 
     private Elytra() {}
 
+    /**
+     * Checks whether the player has an elytra equipped.
+     *
+     * @return true when an elytra is equipped in the chest slot
+     */
     public static boolean equipped() {
         return client.player.getEquippedStack(
             EquipmentSlot.CHEST
         ).isOf(Items.ELYTRA);
     }
 
+    /**
+     * Checks whether the player is wearing a chestplate.
+     *
+     * @return true when a chestplate is equipped
+     */
     public static boolean chestplate() {
         return chestplate(client.player.getEquippedStack(
             EquipmentSlot.CHEST
@@ -50,6 +57,11 @@ public final class Elytra {
         return equipment.slot() == EquipmentSlot.CHEST;
     }
 
+    /**
+     * Finds the healthiest elytra in the hotbar.
+     *
+     * @return matching hotbar slot, or -1 when unavailable
+     */
     public static int hotbar() {
         return Hotbar.best(
             stack -> stack.isOf(Items.ELYTRA),
@@ -57,6 +69,11 @@ public final class Elytra {
         );
     }
 
+    /**
+     * Returns the remaining durability of an item stack.
+     *
+     * @param stack item stack to check
+     */
     public static int remaining(ItemStack stack) {
         if (!stack.isDamageable()) return Integer.MAX_VALUE;
         return stack.getMaxDamage() - stack.getDamage();
@@ -66,6 +83,11 @@ public final class Elytra {
         Packets.command(ClientCommandC2SPacket.Mode.START_FALL_FLYING);
     }
 
+    /**
+     * Uses a firework with the current player rotation.
+     *
+     * @return true when the firework packet was sent
+     */
     public static boolean firework() {
         if (client.player == null) return false;
 
@@ -75,6 +97,11 @@ public final class Elytra {
         return firework(yaw, pitch);
     }
 
+    /**
+     * Uses a firework from the hotbar or offhand.
+     *
+     * @return true when the firework packet was sent
+     */
     public static boolean firework(float yaw, float pitch) {
         if (!Client.interaction() || !Inventory.ready()) {
             return false;
@@ -139,6 +166,11 @@ public final class Elytra {
         return velocity.multiply(0.99, 0.98, 0.99);
     }
 
+    /**
+     * Applies movement while descending.
+     *
+     * @param cosine pitch-derived lift factor
+     */
     private static Vec3d fall(Vec3d velocity,
         Vec3d rotation, double length, double cosine) {
 

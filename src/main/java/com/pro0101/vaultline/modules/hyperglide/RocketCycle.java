@@ -230,6 +230,11 @@ public class RocketCycle extends Module {
         this.lastLaunchMs = now;
     }
 
+    /**
+     * Moves a yaw onto the nearest diagonal.
+     *
+     * @return yaw at 45 degrees to both axes
+     */
     private static float diagonal(float yaw) {
         return Math.round((yaw - 45.0F) / 90.0F) * 90.0F + 45.0F;
     }

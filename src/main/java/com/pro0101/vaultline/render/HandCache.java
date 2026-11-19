@@ -50,6 +50,11 @@ public final class HandCache<T> {
         return made;
     }
 
+    /**
+     * Whether a look already built something.
+     *
+     * @return true when the look is cached
+     */
     public boolean has(HandFx.Look look) {
         return this.built.containsKey(look);
     }

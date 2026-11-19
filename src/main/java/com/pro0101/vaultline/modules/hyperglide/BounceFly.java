@@ -371,6 +371,11 @@ public class BounceFly extends Module {
     }
 
 
+    /**
+     * Controls normal bounce movement and obstacle handling.
+     *
+     * @param event pre-tick event
+     */
     @EventHandler
     private void onTick(TickEvent.Pre event) {
         if (!Client.ready()) return;
@@ -545,6 +550,11 @@ public class BounceFly extends Module {
         }
     }
 
+    /**
+     * Checks whether outgoing movement is being held back.
+     *
+     * @return true while fake lag applies
+     */
     private boolean holding() {
         return this.fakeLag.get() && this.isActive() && this.enabled()
             && this.mc.player != null && this.mc.player.isGliding()
@@ -769,6 +779,11 @@ public class BounceFly extends Module {
             && !this.held;
     }
 
+    /**
+     * Finds a chestplate in the hotbar.
+     *
+     * @return matching hotbar slot, or -1 when unavailable
+     */
     private int chestSlot() {
         for (int slot = 0; slot < 9; slot++) {
             if (GliderSwap.isChestPiece(this.mc.player.getInventory().getStack(slot))) {
@@ -779,6 +794,11 @@ public class BounceFly extends Module {
         return -1;
     }
 
+    /**
+     * Reports a fakefly problem once per change.
+     *
+     * @param reason reason the pair cannot be used
+     */
     private void blocked(String reason) {
         if (reason.equals(this.fakeBlocked)) return;
 
@@ -805,6 +825,11 @@ public class BounceFly extends Module {
 
 
 
+    /**
+     * Checks whether bounce input should be forced.
+     *
+     * @return true while normal bounce movement is active
+     */
     public boolean enabled() {
         return this.isActive() && this.mc.player != null
             && !this.pass && (Elytra.equipped() || this.glider());
@@ -816,6 +841,11 @@ public class BounceFly extends Module {
         return this.launch && this.enabled() && this.ready();
     }
 
+    /**
+     * Checks whether acceleration mode is enabled.
+     *
+     * @return true when acceleration mode is enabled
+     */
     public boolean accelerated() {
         return this.acceleration.get();
     }
@@ -850,10 +880,20 @@ public class BounceFly extends Module {
 
 
 
+    /**
+     * Checks whether bounce movement is available.
+     *
+     * @return true when Bounce Fly can control movement
+     */
     private boolean available() {
         return !this.pathing() && this.equipped();
     }
 
+    /**
+     * Validates equipped elytra and clears bounce state.
+     *
+     * @return true when an elytra is equipped
+     */
     private boolean equipped() {
         if (Elytra.equipped() || this.glider()) {
             return true;
@@ -948,6 +988,11 @@ public class BounceFly extends Module {
 
 
 
+    /**
+     * Manages active obstacle passing and mining.
+     *
+     * @return true while obstacle handling is active
+     */
     private boolean pathing() {
         if (!this.passer.get()) {
             if (this.pass) {
@@ -997,6 +1042,11 @@ public class BounceFly extends Module {
         return false;
     }
 
+    /**
+     * Starts obstacle handling when a collision is detected.
+     *
+     * @return true when obstacle handling was started
+     */
     private boolean blocked() {
         if (!this.passer.get() || !this.avoid.get()) {
             return false;
@@ -1134,6 +1184,11 @@ public class BounceFly extends Module {
         Baritone.walk(pos);
     }
 
+    /**
+     * Starts obstacle mining before pathing onward.
+     *
+     * @param goal safe pathing goal after the obstacle
+     */
     private void mine(BlockPos goal) {
         this.release();
         this.reset();
@@ -1225,6 +1280,12 @@ public class BounceFly extends Module {
         );
     }
 
+    /**
+     * Checks whether Baritone may stand on a block.
+     *
+     * @param pos block position to check
+     * @return true when the block is clear, supported and not a portal
+     */
     private boolean standable(BlockPos pos) {
         BlockState state = this.mc.world.getBlockState(pos);
 
@@ -1317,6 +1378,11 @@ public class BounceFly extends Module {
         return blocked;
     }
 
+    /**
+     * Saves the breakable blocks from a trail column.
+     *
+     * @param pos lower block of the column
+     */
     private void collect(BlockPos pos) {
         for (int py = 0; py <= 2; py++) {
             BlockPos block = pos.up(py);
@@ -1335,6 +1401,11 @@ public class BounceFly extends Module {
 
 
 
+    /**
+     * Finds the closest obstacle along the highway direction.
+     *
+     * @return closest collision block, or null when undetected
+     */
     private BlockPos collision() {
         Vec3d front = new Vec3d(this.nx, 0, this.nz);
         Vec3d side = new Vec3d(-front.z, 0, front.x);
@@ -1378,6 +1449,11 @@ public class BounceFly extends Module {
         return closest;
     }
 
+    /**
+     * Raycasts between two points using block collision shapes.
+     *
+     * @return block raycast result
+     */
     private BlockHitResult ray(Vec3d start, Vec3d end) {
         return this.mc.world.raycast(new RaycastContext(
             start, end, RaycastContext.ShapeType.COLLIDER,
@@ -1497,16 +1573,31 @@ public class BounceFly extends Module {
         return this.point(px, pz);
     }
 
+    /**
+     * Projects a position onto the stored highway line.
+     *
+     * @return projected center block
+     */
     private BlockPos point(double px, double pz) {
         return this.dx == 0 || this.dz == 0 ?
             this.cardinal(px, pz) : this.diagonal(px, pz);
     }
 
+    /**
+     * Projects a position onto a cardinal highway line.
+     *
+     * @return projected center block
+     */
     private BlockPos cardinal(double px, double pz) {
         if (this.dx == 0) return this.block(this.px, pz);
         return this.block(px, this.pz);
     }
 
+    /**
+     * Projects a position onto the diagonal highway line.
+     *
+     * @return projected center block
+     */
     private BlockPos diagonal(double px, double pz) {
         boolean equal = this.dx == this.dz;
         double axis = equal ? px + pz : px - pz;
@@ -1523,6 +1614,12 @@ public class BounceFly extends Module {
         return this.trail(high) >= this.trail(low) ? high : low;
     }
 
+    /**
+     * Scores clear positions along the highway center line.
+     *
+     * @param level highway level to check
+     * @return number of valid center positions
+     */
     private int trail(int level) {
         int score = 0;
 
@@ -1539,10 +1636,20 @@ public class BounceFly extends Module {
 
 
 
+    /**
+     * Creates a block position on the highway level.
+     *
+     * @return block position on the highway level
+     */
     private BlockPos block(double px, double pz) {
         return this.block(px, this.level, pz);
     }
 
+    /**
+     * Creates a block position at a specific level.
+     *
+     * @return block position
+     */
     private BlockPos block(double px, int py, double pz) {
         return new BlockPos(
             (int) Math.round(px), py, (int) Math.round(pz)

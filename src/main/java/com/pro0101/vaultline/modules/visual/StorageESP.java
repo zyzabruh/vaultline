@@ -143,6 +143,11 @@ public class StorageESP extends Module {
         this.found.clear();
     }
 
+    /**
+     * Rescans the area at the configured interval.
+     *
+     * @param event post-tick event
+     */
     @EventHandler
     private void onTick(TickEvent.Post event) {
         if (this.mc.world == null || this.mc.player == null) return;

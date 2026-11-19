@@ -85,9 +85,6 @@ public class AutoPilot extends Module {
     private int columnBottom = Integer.MIN_VALUE;
     private boolean columnBlocked;
 
-    /**
-     * Defines the current travel stage.
-     */
     private enum State {
         Idle,
         Seek,
@@ -156,6 +153,11 @@ public class AutoPilot extends Module {
     }
 
 
+    /**
+     * Advances travel along the saved route.
+     *
+     * @param event pre-tick event
+     */
     @EventHandler
     private void tick(TickEvent.Pre event) {
         if (!this.valid()) return;
@@ -320,6 +322,11 @@ public class AutoPilot extends Module {
         this.target = navigation.point().toImmutable();
     }
 
+    /**
+     * Updates the route from the current position.
+     *
+     * @return true when route progress is available
+     */
     private boolean refresh() {
         Navigation navigation = this.navigation();
         if (navigation == null) return false;
@@ -339,6 +346,11 @@ public class AutoPilot extends Module {
         return true;
     }
 
+    /**
+     * Finds the closest remaining route leg.
+     *
+     * @return route leg index, or -1 when unavailable
+     */
     private int progress() {
         List<Leg> legs = this.route.legs();
 
@@ -393,6 +405,11 @@ public class AutoPilot extends Module {
         return segment.point(segment.projection(point));
     }
 
+    /**
+     * Finds a nearby point for entering a highway.
+     *
+     * @return closest point shifted forward along the leg
+     */
     private Vec2f entry(Route.Leg leg) {
         Vec2f position = Player.position();
         Segment segment = new Segment(leg.start(), leg.end());
@@ -494,6 +511,11 @@ public class AutoPilot extends Module {
         }
     }
 
+    /**
+     * Waits for the launch position before collecting blocks.
+     *
+     * @return true when the support column is ready
+     */
     private boolean settled() {
         if (!this.close(this.point, 1.5)) {
             this.goal = null;
@@ -823,6 +845,12 @@ public class AutoPilot extends Module {
         this.state = State.Exit;
     }
 
+    /**
+     * Prepares the transition after reaching a highway endpoint.
+     *
+     * @param exiting whether the route leaves the highway next
+     * @return true when the player can stop for the transition
+     */
     private boolean arrive(Route.Leg road, boolean exiting) {
         if (!this.aligned(road) ||
             !this.close(road.end(), proximity)) {
@@ -852,6 +880,12 @@ public class AutoPilot extends Module {
         return true;
     }
 
+    /**
+     * Waits before searching again for a highway exit.
+     *
+     * @param exiting whether the route leaves the highway next
+     * @return true while the retry delay is still active
+     */
     private boolean delay(boolean exiting) {
         return exiting && this.point == null
             && this.timer > 0 && --this.timer > 0;
@@ -926,6 +960,12 @@ public class AutoPilot extends Module {
 
 
 
+    /**
+     * Finds the nearest clear space below the player.
+     *
+     * @param start whether the first box starts from player
+     * @return closest point in a clear space, or null
+     */
     private BlockPos space(boolean start) {
         BlockPos origin = this.mc.player.getBlockPos();
 
@@ -992,6 +1032,12 @@ public class AutoPilot extends Module {
         return best;
     }
 
+    /**
+     * Searches the vertical positions at a horizontal offset.
+     *
+     * @param distance nearest distance already found
+     * @return closest clear position, or null
+     */
     private BlockPos vertical(BlockPos origin, int px,
         int pz, int base, int limit, double distance) {
 
@@ -1014,6 +1060,12 @@ public class AutoPilot extends Module {
         return best;
     }
 
+    /**
+     * Finds the closest point inside a tested box.
+     *
+     * @param center center of the tested box
+     * @return box point closest to the reference position
+     */
     private BlockPos closest(BlockPos center, BlockPos origin) {
         int minx = center.getX() - width / 2;
         int miny = center.getY() - height / 2;
@@ -1115,6 +1167,13 @@ public class AutoPilot extends Module {
 
 
 
+    /**
+     * Collects minable blocks in a selected vertical column.
+     *
+     * @param point upper position of the column
+     * @param bottom lowest included block level
+     * @return column blocks ordered from highest to lowest
+     */
     private List<BlockPos> column(BlockPos point, int bottom) {
         List<BlockPos> blocks = new ArrayList<>();
 
@@ -1138,6 +1197,11 @@ public class AutoPilot extends Module {
         return blocks;
     }
 
+    /**
+     * Moves toward and mines the highest remaining block.
+     *
+     * @return true when no blocks remain
+     */
     private boolean excavate() {
         if (this.blocks == null) return false;
 
@@ -1198,6 +1262,11 @@ public class AutoPilot extends Module {
         }
     }
 
+    /**
+     * Collects the blocks directly below the player.
+     *
+     * @return one to four fixed platform blocks
+     */
     private List<BlockPos> platform() {
         Box box = this.mc.player.getBoundingBox();
 
@@ -1218,6 +1287,11 @@ public class AutoPilot extends Module {
         return blocks;
     }
 
+    /**
+     * Places the saved landing platform.
+     *
+     * @return true when every required block is present
+     */
     private boolean support() {
         if (this.blocks == null || this.blocks.isEmpty()) {
             return false;
@@ -1231,6 +1305,12 @@ public class AutoPilot extends Module {
         return true;
     }
 
+    /**
+     * Places netherrack at a specific position.
+     *
+     * @param pos target block position
+     * @return true when the placement packet was sent
+     */
     private boolean place(BlockPos pos) {
         int slot = this.netherrack();
 
@@ -1240,6 +1320,12 @@ public class AutoPilot extends Module {
 
 
 
+    /**
+     * Starts Baritone elytra pathing toward a destination.
+     *
+     * @param exact whether Y must be part of the goal
+     * @return true when elytra pathing was started
+     */
     private boolean fly(BlockPos pos, boolean exact) {
         if (!Baritone.loaded() || !this.flight.normal()) {
             return false;
@@ -1263,6 +1349,11 @@ public class AutoPilot extends Module {
         }
     }
 
+    /**
+     * Starts normal Baritone pathing toward a destination.
+     *
+     * @param exact whether Y must be part of the goal
+     */
     private void walk(BlockPos pos, boolean exact) {
         if (this.goal != null && this.goal.equals(pos) &&
             this.pathing()) {
@@ -1309,6 +1400,11 @@ public class AutoPilot extends Module {
 
 
 
+    /**
+     * Moves toward the center of a block.
+     *
+     * @param pos block position to move toward
+     */
     private void toward(BlockPos pos) {
         this.release();
 
@@ -1346,6 +1442,11 @@ public class AutoPilot extends Module {
         Player.rotate((float) Math.toDegrees(yaw));
     }
 
+    /**
+     * Requests a firework for the current flight.
+     *
+     * @return true when the request was accepted
+     */
     private boolean rocket() {
         return this.mc.interactionManager != null
             && this.flight.request(Elytra::firework);
@@ -1371,27 +1472,54 @@ public class AutoPilot extends Module {
 
 
 
+    /**
+     * Returns the Navigation module.
+     *
+     * @return Navigation module, or null when unavailable
+     */
     private Navigation navigation() {
         return Modules.get().get(Navigation.class);
     }
 
+    /**
+     * Finds netherrack in the hotbar.
+     *
+     * @return hotbar slot, or -1 when unavailable
+     */
     private int netherrack() {
         return this.mc.player == null ? -1
             : Hotbar.find(Items.NETHERRACK);
     }
 
+    /**
+     * Checks horizontal proximity to a route point.
+     *
+     * @return true when the point is within range
+     */
     private boolean close(Vec2f point, double radius) {
         double px = point.x - this.mc.player.getX();
         double pz = point.y - this.mc.player.getZ();
         return px * px + pz * pz <= radius * radius;
     }
 
+    /**
+     * Checks horizontal proximity to a block position.
+     *
+     * @param pos block position
+     * @return true when the position is within range
+     */
     private boolean close(BlockPos pos, double radius) {
         double px = pos.getX() + 0.5 - this.mc.player.getX();
         double pz = pos.getZ() + 0.5 - this.mc.player.getZ();
         return px * px + pz * pz <= radius * radius;
     }
 
+    /**
+     * Checks the exact proximity to a block position.
+     *
+     * @param pos block position
+     * @return true when the position is within range
+     */
     private boolean reach(BlockPos pos, double radius) {
         double px = pos.getX() + 0.5 - this.mc.player.getX();
         double py = pos.getY() - this.mc.player.getY();
@@ -1422,6 +1550,11 @@ public class AutoPilot extends Module {
         return !state.getCollisionShape(this.mc.world, pos).isEmpty();
     }
 
+    /**
+     * Checks whether the required client state is available.
+     *
+     * @return true when ready to run the module
+     */
     private boolean valid() {
         return Client.ready() && Client.nether();
     }

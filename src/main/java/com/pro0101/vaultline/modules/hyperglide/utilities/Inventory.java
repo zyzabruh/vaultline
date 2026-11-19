@@ -9,9 +9,6 @@ import net.minecraft.screen.slot.SlotActionType;
 import java.util.function.Predicate;
 import java.util.function.ToIntFunction;
 
-/**
- * Handles common player inventory searches and slot actions.
- */
 public final class Inventory {
     private static final MinecraftClient client = MinecraftClient.getInstance();
 
@@ -21,6 +18,11 @@ public final class Inventory {
 
     private Inventory() {}
 
+    /**
+     * Checks whether the normal player inventory is active.
+     *
+     * @return true when player inventory slots can be used
+     */
     public static boolean ready() {
         return client.player.currentScreenHandler
             == client.player.playerScreenHandler;
@@ -47,6 +49,11 @@ public final class Inventory {
         return slot < 9 ? slot + 36 : slot;
     }
 
+    /**
+     * Finds an item in the player inventory.
+     *
+     * @return matching player inventory slot, or -1 when unavailable
+     */
     public static int find(Item item) {
         return find(stack -> stack.isOf(item));
     }
@@ -104,6 +111,11 @@ public final class Inventory {
         return slot;
     }
 
+    /**
+     * Finds the first matching player screen slot.
+     *
+     * @return matching screen slot, or -1 when unavailable
+     */
     public static int search(Predicate<ItemStack> predicate) {
         for (int slot = first; slot <= last; slot++) {
             if (predicate.test(stack(slot))) return slot;
@@ -111,6 +123,11 @@ public final class Inventory {
         return -1;
     }
 
+    /**
+     * Finds the highest scoring player screen stack.
+     *
+     * @return matching screen slot, or -1 when unavailable
+     */
     public static int search(
         Predicate<ItemStack> predicate,
         ToIntFunction<ItemStack> score) {
@@ -160,6 +177,11 @@ public final class Inventory {
         return count;
     }
 
+    /**
+     * Finds the first empty player screen slot.
+     *
+     * @return empty screen slot, or -1 when unavailable
+     */
     public static int empty() {
         return search(ItemStack::isEmpty);
     }
@@ -177,6 +199,11 @@ public final class Inventory {
         return -1;
     }
 
+    /**
+     * Finds the first two matching player screen slots.
+     *
+     * @return matching screen slots, or null when fewer than two exist
+     */
     public static int[] pair(Predicate<ItemStack> predicate) {
         int found = -1;
 
@@ -193,6 +220,11 @@ public final class Inventory {
         return null;
     }
 
+    /**
+     * Performs an action on a player inventory slot.
+     *
+     * @param button mouse button or action data
+     */
     public static void click(int slot, int button, SlotActionType action) {
         client.interactionManager.clickSlot(
             handler().syncId, slot, button, action, client.player
@@ -242,6 +274,11 @@ public final class Inventory {
         );
     }
 
+    /**
+     * Returns an item stack from the player inventory.
+     *
+     * @return item stack stored in the slot
+     */
     private static ItemStack item(int slot) {
         return client.player.getInventory().getStack(slot);
     }

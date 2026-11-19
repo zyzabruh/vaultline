@@ -145,6 +145,11 @@ public final class HandFx {
             return explicit == Look.OFF ? DEFAULT_LOOK : explicit;
         }
 
+        /**
+         * Whether a toggle selects a look explicitly.
+         *
+         * @return true when at least one toggle is on
+         */
         public boolean anyToggle() {
             return explicitLook() != Look.OFF;
         }
@@ -554,6 +559,11 @@ public final class HandFx {
         reset();
     }
 
+    /**
+     * Describes one look.
+     *
+     * @param depthWrite whether the look writes depth
+     */
     private static Spec spec(Look look, boolean depthWrite) {
         return new Spec(
             Identifier.of("vaultline", "pipeline/hand_" + look.id()),

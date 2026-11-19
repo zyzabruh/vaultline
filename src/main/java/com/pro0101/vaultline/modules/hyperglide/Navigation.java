@@ -228,9 +228,6 @@ public class Navigation extends Module {
     private double zoom = 1.0;
     private Vec2f offset = Vec2f.ZERO;
 
-    /**
-     * Controls how the map view is centered.
-     */
     private enum Mode {
         Free,
         Origin,
@@ -268,6 +265,11 @@ public class Navigation extends Module {
     }
 
 
+    /**
+     * Recalculates the route at a fixed tick interval.
+     *
+     * @param event post-tick event
+     */
     @EventHandler
     private void onTick(TickEvent.Post event) {
         if (!Client.nether() || this.mc.player == null) {
@@ -387,6 +389,11 @@ public class Navigation extends Module {
         this.calculate();
     }
 
+    /**
+     * Returns the current calculated route.
+     *
+     * @return current route, or null when unavailable
+     */
     public Route route() {
         return this.route;
     }
@@ -421,6 +428,11 @@ public class Navigation extends Module {
         );
     }
 
+    /**
+     * Returns the current world blocks per screen pixel.
+     *
+     * @return world blocks per screen pixel
+     */
     private double scale() {
         return span / this.size.get() / this.zoom;
     }
@@ -438,6 +450,11 @@ public class Navigation extends Module {
         return screen;
     }
 
+    /**
+     * Converts a map screen position to world coordinates.
+     *
+     * @return world block position
+     */
     private BlockPos world(Vec2f point, View view, double left, double top) {
         int scale = this.convert.get() ? 8 : 1;
         float size = this.size.get();
@@ -535,6 +552,11 @@ public class Navigation extends Module {
         API.border(context, left, top, size, size, color);
     }
 
+    /**
+     * Draws a world-space line inside the map.
+     *
+     * @param first line starting position
+     */
     private void draw(DrawContext context, Vec2f first, Vec2f second,
         View view, double left, double top, Color color, int width) {
 
@@ -549,6 +571,14 @@ public class Navigation extends Module {
         );
     }
 
+    /**
+     * Draws a clipped line with configurable thickness.
+     *
+     * @param x1 line starting X position
+     * @param y1 line starting Y position
+     * @param x2 line ending X position
+     * @param y2 line ending Y position
+     */
     private void line(DrawContext context, double x1, double y1, double x2, double y2,
         double left, double top, double right, double bottom, Color color, int width) {
 
@@ -566,6 +596,15 @@ public class Navigation extends Module {
         );
     }
 
+    /**
+     * Clips a line to the map rectangle.
+     *
+     * @param x1 line starting X position
+     * @param y1 line starting Y position
+     * @param x2 line ending X position
+     * @param y2 line ending Y position
+     * @return clipped coordinates, or null when outside
+     */
     private double[] clip(double x1, double y1, double x2, double y2,
         double left, double top, double right, double bottom) {
 
@@ -654,6 +693,11 @@ public class Navigation extends Module {
         }, left * gui, top * gui, false, gui);
     }
 
+    /**
+     * Returns the highway currently under the mouse.
+     *
+     * @return hovered highway, or null when none
+     */
     private Highways.Road road(Vec2f mouse, View view, double left, double top) {
         if (this.mc.currentScreen == null) return null;
 
@@ -698,6 +742,11 @@ public class Navigation extends Module {
         return (float) Math.sqrt(point.distanceSquared(closest));
     }
 
+    /**
+     * Draws centered information above or below the map.
+     *
+     * @param upper true to draw above the map
+     */
     private void box(HudRenderer renderer, String[] lines,
         double left, double top, boolean upper, double gui) {
 
@@ -775,6 +824,11 @@ public class Navigation extends Module {
         }
     }
 
+    /**
+     * Returns the currently pressed map drag button.
+     *
+     * @return mouse button, or -1 when dragging is inactive
+     */
     private int button() {
         if (this.mode.get() == Mode.Free &&
             Gui.pressed(GLFW.GLFW_MOUSE_BUTTON_LEFT)) {
@@ -848,6 +902,11 @@ public class Navigation extends Module {
         return margin + this.yoffset.get();
     }
 
+    /**
+     * Checks whether the mouse is inside the map.
+     *
+     * @return true when the mouse is inside the map
+     */
     private boolean hovered(double mx, double my) {
         double size = this.size.get();
 
@@ -957,6 +1016,11 @@ public class Navigation extends Module {
         return new Vec2f(this.point.getX(), this.point.getZ());
     }
 
+    /**
+     * Returns the highway speed used for route calculations.
+     *
+     * @return configured Bounce Fly highway speed
+     */
     private float speed() {
         BounceFly bounce = Modules.get().get(BounceFly.class);
         boolean faster = bounce != null && bounce.accelerated();
@@ -965,9 +1029,6 @@ public class Navigation extends Module {
 
 
 
-    /**
-     * Renders destination input with optional coordinate censorship.
-     */
     public static class Mask implements WTextBox.Renderer {
         @Override
         public void render(GuiRenderer renderer,
@@ -981,6 +1042,11 @@ public class Navigation extends Module {
         }
     }
 
+    /**
+     * Represents the current map center and world scale.
+     *
+     * @param scale world blocks per screen pixel
+     */
     private record View(Vec2f center, double scale) {}
 
 }

@@ -20,6 +20,18 @@ public final class Shapes {
     private Shapes() {
     }
 
+    /**
+     * Fills a rounded rectangle with a vertical gradient.
+     *
+     * @param renderer renderer to draw with
+     * @param x        left edge
+     * @param y        top edge
+     * @param width    width
+     * @param height   height
+     * @param radius   corner radius, clamped to half the shortest side
+     * @param top      colour at the top edge
+     * @param bottom   colour at the bottom edge
+     */
     public static void fill(GuiRenderer renderer, double x, double y, double width, double height,
                             double radius, Color top, Color bottom) {
         if (width <= 0 || height <= 0) return;
@@ -49,6 +61,17 @@ public final class Shapes {
         corner(renderer, x + r, midBottom, r, HALF_PI, top, bottom, y, height);
     }
 
+    /**
+     * Fills a rounded rectangle with one colour.
+     *
+     * @param renderer renderer to draw with
+     * @param x        left edge
+     * @param y        top edge
+     * @param width    width
+     * @param height   height
+     * @param radius   corner radius
+     * @param color    fill colour
+     */
     public static void fill(GuiRenderer renderer, double x, double y, double width, double height,
                             double radius, Color color) {
         fill(renderer, x, y, width, height, radius, color, color);
@@ -58,7 +81,13 @@ public final class Shapes {
      * Draws a rounded border as a ring, by filling the outer shape and then the inner one.
      *
      * @param renderer  renderer to draw with
+     * @param x         left edge
+     * @param y         top edge
+     * @param width     width
+     * @param height    height
+     * @param radius    corner radius
      * @param thickness border thickness in pixels
+     * @param border    border colour
      * @param top       fill colour at the top edge, drawn over the inner shape
      * @param bottom    fill colour at the bottom edge
      */
@@ -74,6 +103,10 @@ public final class Shapes {
      *
      * @param renderer renderer to draw with
      * @param x        left edge of the shape the halo surrounds
+     * @param y        top edge
+     * @param width    width
+     * @param height   height
+     * @param radius   corner radius
      * @param color    halo colour, its alpha is scaled down per layer
      * @param layers   number of layers, three is a soft edge
      */
