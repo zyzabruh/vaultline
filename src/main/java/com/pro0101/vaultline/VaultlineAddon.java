@@ -64,7 +64,7 @@ import com.pro0101.vaultline.modules.hyperglide.Navigation;
 import com.pro0101.vaultline.modules.hyperglide.Overview;
 import com.pro0101.vaultline.modules.stashorganizer.StashOrganizer;
 import com.pro0101.vaultline.modules.stashorganizer.StashSessionStore;
-import com.pro0101.vaultline.gui.FutureTheme;
+import com.pro0101.vaultline.gui.FuturisticTheme;
 import meteordevelopment.meteorclient.MeteorClient;
 import meteordevelopment.meteorclient.addons.GithubRepo;
 import com.pro0101.vaultline.gui.ZioTheme;
@@ -99,7 +99,7 @@ public class VaultlineAddon extends MeteorAddon {
         if (BaritoneCompat.isAvailable()) BaritoneCompat.register();
 
         // GUI themes, offered in Meteor's theme dropdown
-        GuiThemes.add(new FutureTheme());
+        GuiThemes.add(new FuturisticTheme());
         GuiThemes.add(new ZioTheme());
 
         // The ported ClickGUI, as its own tab next to the client's screens. It is the only way in:

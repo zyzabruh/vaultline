@@ -10,9 +10,9 @@ import meteordevelopment.meteorclient.utils.render.color.SettingColor;
  * accent to the second accent, and a body dark enough to read over any world. Every colour below is
  * a setting, so the palette can be changed without touching the code.
  */
-public class FutureTheme extends PresetTheme {
-    public FutureTheme() {
-        super("Future", new Palette(
+public class FuturisticTheme extends PresetTheme {
+    public FuturisticTheme() {
+        super("Futuristic", new Palette(
             false,
             new SettingColor(58, 208, 255),        // accent, #3AD0FF
             new SettingColor(122, 107, 255),       // accent-alt, #7A6BFF

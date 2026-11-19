@@ -44,7 +44,7 @@ finds on disk. BepHax's current `FlowESP` is not in the public GPL release, so t
 of the documented behaviour; no upstream source file is copied.
 
 The rest of the addon is original work: the Stash Organizer module and its planner, sorting, labelling, report and
-chest-placement code; `base-finder`, `flow-esp` and the render, particle and animation modules; the `Future` and `Zio`
+chest-placement code; `base-finder`, `flow-esp` and the render, particle and animation modules; the `Futuristic` and `Zio`
 themes; and the ClickGUI ported from the zio client (`open-zio-main`), rebuilt in `gui/zio` from that client's own
 layout values and colours.
 

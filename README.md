@@ -59,7 +59,7 @@ Author: **pro0101**
 
 ### GUI
 
-Two themes sit next to Meteor's own: `Future` (cyan and violet, flat corners, gradient title bars) and `Zio`, which
+Two themes sit next to Meteor's own: `Futuristic` (cyan and violet, flat corners, gradient title bars) and `Zio`, which
 opens the copied client's ClickGUI. That screen draws its own panels — 99 pixels wide, 14 pixel title bar, 13 pixel
 rows, the `+` / `-` indicator on the right, settings unfolded inside the panel on a right click — with that client's
 colours, its title-bar fade and its row gradient. Panels drag by their title bar, fold on a right click and scroll per
@@ -151,7 +151,7 @@ containers itself and draw the saved containers in the world.
 
 The rest is original work for this addon: `stash-organizer` and its planner, sorting, labelling, report and
 chest-placement code, `base-finder`, `flow-esp`, the `skybox`, `shaders`, `block-shader`, `weather`, `ambience`,
-particle, trail and animation modules, the `Future` and `Zio` themes and the ported ClickGUI.
+particle, trail and animation modules, the `Futuristic` and `Zio` themes and the ported ClickGUI.
 
 Two HUD elements live in the `Stash` group: `stash-organizer`, and `flight-status`, which lists the running flight
 modules with the `pitch-40` bounds and the `trail-follower` mode so that chain is not invisible.
