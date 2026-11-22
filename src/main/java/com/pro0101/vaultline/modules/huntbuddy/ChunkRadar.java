@@ -1413,17 +1413,16 @@ public class ChunkRadar extends Module {
      * "do these points make a line" without disturbing the one being followed.
      */
     private LineFit fitList(List<ChunkPos> points) {
-        LineFit fit = new LineFit();
-        if (points.size() < 2) return fit;
+        if (points.size() < 2) return new LineFit();
 
-        principalAxis(points, fit);
+        LineFit fit = principalAxis(points);
 
         List<ChunkPos> kept = new ArrayList<>();
         for (ChunkPos pos : points) {
             if (Math.abs(fit.lateral(pos.x, pos.z)) <= forkDistance.get()) kept.add(pos);
         }
 
-        if (kept.size() >= 2) principalAxis(kept, fit);
+        if (kept.size() >= 2) fit = principalAxis(kept);
 
         double min = Double.MAX_VALUE;
         double max = -Double.MAX_VALUE;
@@ -1446,7 +1445,9 @@ public class ChunkRadar extends Module {
         return fit;
     }
 
-    private static void principalAxis(List<ChunkPos> points, LineFit fit) {
+    private static LineFit principalAxis(List<ChunkPos> points) {
+        LineFit fit = new LineFit();
+
         double sumX = 0.0;
         double sumZ = 0.0;
 
@@ -1473,6 +1474,7 @@ public class ChunkRadar extends Module {
         double theta = 0.5 * Math.atan2(2.0 * sxz, sxx - szz);
         fit.dirX = Math.cos(theta);
         fit.dirZ = Math.sin(theta);
+        return fit;
     }
 
     /** Angle between two lines, which have no direction: never more than a right angle. */
@@ -1529,32 +1531,12 @@ public class ChunkRadar extends Module {
     }
 
     private void fitTo(List<ChunkPos> points) {
-        double sumX = 0.0;
-        double sumZ = 0.0;
+        LineFit fit = principalAxis(points);
 
-        for (ChunkPos pos : points) {
-            sumX += pos.x;
-            sumZ += pos.z;
-        }
-
-        originX = sumX / points.size();
-        originZ = sumZ / points.size();
-
-        double sxx = 0.0;
-        double szz = 0.0;
-        double sxz = 0.0;
-
-        for (ChunkPos pos : points) {
-            double dx = pos.x - originX;
-            double dz = pos.z - originZ;
-            sxx += dx * dx;
-            szz += dz * dz;
-            sxz += dx * dz;
-        }
-
-        double theta = 0.5 * Math.atan2(2.0 * sxz, sxx - szz);
-        dirX = Math.cos(theta);
-        dirZ = Math.sin(theta);
+        originX = fit.originX;
+        originZ = fit.originZ;
+        dirX = fit.dirX;
+        dirZ = fit.dirZ;
     }
 
     /**
