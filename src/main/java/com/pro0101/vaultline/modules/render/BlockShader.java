@@ -28,8 +28,10 @@ import net.minecraft.world.chunk.WorldChunk;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Draws a coloured box around the blocks the user lists, the block shader ESP of utility clients.
@@ -246,7 +248,8 @@ public class BlockShader extends Module {
             return;
         }
 
-        List<Block> wanted = this.blocks.get();
+        // A set, not the list: this is asked once per non-air block of the chunk.
+        Set<Block> wanted = new HashSet<>(this.blocks.get());
         List<BlockPos> found = new ArrayList<>();
         int base = this.mc.world.getBottomY();
         ChunkSection[] sections = chunk.getSectionArray();
