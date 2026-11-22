@@ -60,6 +60,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.IdentityHashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -143,6 +144,15 @@ public class ChunkRadar extends Module {
         .defaultValue(4)
         .min(1)
         .sliderRange(1, 16)
+        .build()
+    );
+
+    private final Setting<Integer> waypointsPerTick = sgGeneral.add(new IntSetting.Builder()
+        .name("waypoints-per-tick")
+        .description("Waypoint names and trail markers looked at each tick while the map is swept. A sweep is spread over several ticks instead of landing in one.")
+        .defaultValue(32)
+        .min(1)
+        .sliderRange(1, 128)
         .build()
     );
 
@@ -713,6 +723,22 @@ public class ChunkRadar extends Module {
     private String guidedTrailId;
     private String lastDimension;
     private long lastSweepMs;
+
+    /** Which half of a map sweep is running, or null when none is. */
+    private enum Sweep {
+        NAMES,
+        TRAILS
+    }
+
+    private Sweep sweep;
+    private final Set<String> sweepNames = new HashSet<>();
+    private final List<TrailStore.Trail> sweepMarked = new ArrayList<>();
+    private final List<TrailStore.Trail> sweepDoomed = new ArrayList<>();
+    private Iterator<WaypointSet> sweepSets;
+    private Iterator<Waypoint> sweepWaypoints;
+    private List<TrailStore.Trail> sweepTrails;
+    private String sweepDimension;
+    private int sweepIndex;
     private boolean cleanupPending;
     private boolean resumePending;
     private boolean denseNow;
@@ -925,6 +951,7 @@ public class ChunkRadar extends Module {
         guidedTrailId = null;
         lastDimension = null;
         lastSweepMs = 0L;
+        resetSweep();
         arrivals.clear();
         seen.clear();
         line.clear();
@@ -3073,23 +3100,6 @@ public class ChunkRadar extends Module {
         }
     }
 
-    private boolean waypointExists(String dimension, String name) {
-        if (name == null) return false;
-
-        MinimapWorld world = waypointWorld();
-
-        // No world means Xaero has not finished loading. Answering "gone" there
-        // would let a sweep run seconds after joining wipe everything.
-        if (world == null) return true;
-
-        for (WaypointSet set : world.getIterableWaypointSets()) {
-            for (Waypoint existing : set.getWaypoints()) {
-                if (name.equals(existing.getName())) return true;
-            }
-        }
-
-        return false;
-    }
 
     /**
      * Writes permanent waypoints to disk, on a timer.
@@ -3343,7 +3353,23 @@ public class ChunkRadar extends Module {
      * carries the trail id, so removing one trail's marker cannot take another
      * trail with it.
      */
+    /**
+     * Drops the memories whose start waypoint the player has deleted.
+     *
+     * <p>Deleting the waypoint is the gesture for "I am done with this one", and
+     * it is the only one that needs no command. Keyed on the stored name, which
+     * carries the trail id, so removing one trail's marker cannot take another
+     * trail with it.
+     *
+     * <p>No longer one pass: the names on the map are read a slice per tick, then the trails are
+     * checked a slice per tick, so the tick that starts a sweep costs what any other tick costs.
+     */
     private void sweepWaypoints() {
+        if (sweep != null) {
+            stepSweep();
+            return;
+        }
+
         long now = System.currentTimeMillis();
         if (now - lastSweepMs < WAYPOINT_SWEEP_MS) return;
         lastSweepMs = now;
@@ -3352,71 +3378,156 @@ public class ChunkRadar extends Module {
 
         if (!addWaypoints.get()) return;
 
-        // "Delete the start waypoint and the trail is forgotten" is a gesture, and
-        // a gesture needs a marker that survives long enough to be deleted on
-        // purpose. A temporary one is gone at every disconnect, so every
-        // reconnection read as the player having forgotten every trail — which is
-        // how a line followed for three hours came back as a file with one entry
-        // and twenty hits, and was announced as newly acquired instead of resumed.
-        if (temporaryWaypoints.get()) {
-            replaceTemporaryWaypoints();
-            return;
-        }
+        startSweep();
+    }
 
-        // Run here rather than straight after the file is read: Xaero has usually
-        // not finished loading its own waypoints at that point, and a cleanup that
-        // sees nothing would be a cleanup that removes nothing or, worse, believes
-        // everything is stale.
-        if (cleanupPending && waypointWorld() != null) {
-            cleanupPending = false;
-            dropRenamedWaypoints();
-        }
+    /**
+     * Opens a sweep by reading the waypoints of every set into a name index.
+     *
+     * <p>One pass over the map answers "is this marker still there" for every trail, where the
+     * lookup used to walk the whole map again per trail. Nothing is read here yet: the slices are.
+     */
+    private void startSweep() {
+        MinimapWorld world = waypointWorld();
 
-        String dimension = dim();
-        List<TrailStore.Trail> marked = new ArrayList<>();
-        List<TrailStore.Trail> doomed = new ArrayList<>();
+        // No world means Xaero has not finished loading. Answering "gone" there
+        // would let a sweep run seconds after joining wipe everything.
+        if (world == null) return;
 
-        for (TrailStore.Trail trail : store.forDimension(dimension)) {
-            if (trail.startWaypoint == null) continue;
-            marked.add(trail);
-            if (!waypointExists(dimension, trail.startWaypoint)) doomed.add(trail);
-        }
+        sweep = Sweep.NAMES;
+        sweepDimension = dim();
+        sweepNames.clear();
+        sweepMarked.clear();
+        sweepDoomed.clear();
+        sweepTrails = null;
+        sweepIndex = 0;
+        sweepSets = world.getIterableWaypointSets().iterator();
+        sweepWaypoints = null;
+    }
 
-        // Deleting one marker is a gesture; every marker vanishing at once is an
-        // accident somewhere else. Searching all the sets should already have made
-        // that impossible, and this is what stands behind it if it is not.
-        // One or a hundred: the memory is never emptied wholesale. And an
-        // accident is undone, not merely survived: the markers are put back
-        // where the file says they were, instead of warning every ten seconds
-        // for fourteen hours over a map with no start and no end on it. With a
-        // single trail in the file this also means deleting its marker cannot
-        // forget it -- the panel button and .trails forget are the way there.
-        if (!marked.isEmpty() && doomed.size() == marked.size()) {
-            VaultlineAddon.LOG.warn("ChunkRadar: every trail waypoint went missing at once, putting them back");
+    /** One tick's share of a sweep: a slice of names, then a slice of trails. */
+    private void stepSweep() {
+        int budget = waypointsPerTick.get();
 
-            for (TrailStore.Trail trail : doomed) {
-                putWaypoint(dimension, trail.startWaypoint, "T", 4, trail.startX, trail.startZ, false);
-                if (trail.endWaypoint != null) {
-                    putWaypoint(dimension, trail.endWaypoint, "E", 4, trail.endX, trail.endZ, false);
+        if (sweep == Sweep.NAMES) {
+            while (budget-- > 0) {
+                if (sweepWaypoints == null || !sweepWaypoints.hasNext()) {
+                    if (!sweepSets.hasNext()) {
+                        sweep = Sweep.TRAILS;
+                        sweepTrails = new ArrayList<>(store.forDimension(sweepDimension));
+                        sweepIndex = 0;
+
+                        // Run here rather than straight after the file is read: Xaero has usually
+                        // not finished loading its own waypoints at that point, and a cleanup that
+                        // sees nothing would be a cleanup that removes nothing or, worse, believes
+                        // everything is stale.
+                        if (!temporaryWaypoints.get() && cleanupPending && waypointWorld() != null) {
+                            cleanupPending = false;
+                            dropRenamedWaypoints();
+                        }
+
+                        return;
+                    }
+
+                    sweepWaypoints = sweepSets.next().getWaypoints().iterator();
+                    continue;
                 }
+
+                String name = sweepWaypoints.next().getName();
+                if (name != null) sweepNames.add(name);
             }
 
-            SupportMods.xaeroMinimap.requestWaypointsRefresh();
             return;
         }
 
-        boolean changed = false;
-        for (TrailStore.Trail trail : doomed) {
-            dropWaypoint(dimension, trail.endWaypoint);
-            store.remove(trail);
-            if (trail == current) current = null;
-            changed = true;
-        }
+        while (budget-- > 0) {
+            if (sweepIndex >= sweepTrails.size()) {
+                finishSweep();
+                return;
+            }
 
-        if (changed) {
-            SupportMods.xaeroMinimap.requestWaypointsRefresh();
-            store.save();
+            TrailStore.Trail trail = sweepTrails.get(sweepIndex++);
+            if (trail.startWaypoint == null) continue;
+
+            boolean exists = sweepNames.contains(trail.startWaypoint);
+
+            // "Delete the start waypoint and the trail is forgotten" is a gesture, and
+            // a gesture needs a marker that survives long enough to be deleted on
+            // purpose. A temporary one is gone at every disconnect, so every
+            // reconnection read as the player having forgotten every trail -- which is
+            // how a line followed for three hours came back as a file with one entry
+            // and twenty hits, and was announced as newly acquired instead of resumed.
+            if (temporaryWaypoints.get()) {
+                if (exists) continue;
+
+                putWaypoint(sweepDimension, trail.startWaypoint, "T", 4, trail.startX, trail.startZ, true);
+                if (trail.endWaypoint != null) {
+                    putWaypoint(sweepDimension, trail.endWaypoint, "E", 4, trail.endX, trail.endZ, true);
+                }
+
+                continue;
+            }
+
+            sweepMarked.add(trail);
+            if (!exists) sweepDoomed.add(trail);
         }
+    }
+
+    /** Applies what the slices found, and clears the sweep either way. */
+    private void finishSweep() {
+        try {
+            List<TrailStore.Trail> marked = sweepMarked;
+            List<TrailStore.Trail> doomed = sweepDoomed;
+
+            // Deleting one marker is a gesture; every marker vanishing at once is an
+            // accident somewhere else. Searching all the sets should already have made
+            // that impossible, and this is what stands behind it if it is not.
+            // One or a hundred: the memory is never emptied wholesale. And an
+            // accident is undone, not merely survived: the markers are put back
+            // where the file says they were, instead of warning every ten seconds
+            // for fourteen hours over a map with no start and no end on it. With a
+            // single trail in the file this also means deleting its marker cannot
+            // forget it -- the panel button and .trails forget are the way there.
+            if (!marked.isEmpty() && doomed.size() == marked.size()) {
+                VaultlineAddon.LOG.warn("ChunkRadar: every trail waypoint went missing at once, putting them back");
+
+                for (TrailStore.Trail trail : doomed) {
+                    putWaypoint(sweepDimension, trail.startWaypoint, "T", 4, trail.startX, trail.startZ, false);
+                    if (trail.endWaypoint != null) {
+                        putWaypoint(sweepDimension, trail.endWaypoint, "E", 4, trail.endX, trail.endZ, false);
+                    }
+                }
+
+                SupportMods.xaeroMinimap.requestWaypointsRefresh();
+                return;
+            }
+
+            boolean changed = false;
+            for (TrailStore.Trail trail : doomed) {
+                dropWaypoint(sweepDimension, trail.endWaypoint);
+                store.remove(trail);
+                if (trail == current) current = null;
+                changed = true;
+            }
+
+            if (changed) {
+                SupportMods.xaeroMinimap.requestWaypointsRefresh();
+                store.save();
+            }
+        } finally {
+            resetSweep();
+        }
+    }
+
+    private void resetSweep() {
+        sweep = null;
+        sweepSets = null;
+        sweepWaypoints = null;
+        sweepTrails = null;
+        sweepIndex = 0;
+        sweepNames.clear();
+        sweepMarked.clear();
+        sweepDoomed.clear();
     }
 
     /**
@@ -3464,27 +3575,6 @@ public class ChunkRadar extends Module {
         }
     }
 
-    /**
-     * Puts back the temporary markers of trails still in the file.
-     *
-     * <p>Xaero drops temporary waypoints at disconnect, so a remembered trail
-     * comes back with an entry and no marker on the map: the memory works and is
-     * invisible, which reads as the memory not working. Nothing is forgotten
-     * here — the marks are simply drawn again where the file says they were.
-     */
-    private void replaceTemporaryWaypoints() {
-        String dimension = dim();
-
-        for (TrailStore.Trail trail : store.forDimension(dimension)) {
-            if (trail.startWaypoint == null) continue;
-            if (waypointExists(dimension, trail.startWaypoint)) continue;
-
-            putWaypoint(dimension, trail.startWaypoint, "T", 4, trail.startX, trail.startZ, true);
-            if (trail.endWaypoint != null) {
-                putWaypoint(dimension, trail.endWaypoint, "E", 4, trail.endX, trail.endZ, true);
-            }
-        }
-    }
 
     /** Read by the {@code .trails} command. */
     public TrailStore trails() {
