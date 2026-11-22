@@ -890,15 +890,7 @@ public class ZioScreen extends TabScreen {
                 fade(colour, alpha));
         }
 
-        if (snake.gameOver()) {
-            String message = "Score " + snake.score() + ". Press R.";
-
-            text(context, message, x + gameWidth() / 2 - textWidth(message) / 2,
-                boardTop + gameBoardHeight() / 2, fade(TEXT_ENABLED, alpha));
-        } else {
-            ZioFontRenderer.drawScaled(context, String.valueOf(snake.score()), x + 1.5f,
-                boardTop + 1, fade(TEXT_ENABLED, alpha), 0.75f);
-        }
+        drawGameScore(context, x, boardTop, snake.score(), snake.gameOver());
     }
 
     /** Tetris: the settled board, the falling piece and its ghost, then the cleared lines. */
@@ -944,19 +936,27 @@ public class ZioScreen extends TabScreen {
             }
         }
 
-        if (tetris.gameOver()) {
-            String message = "Score " + tetris.clearedLines() + ". Press R.";
-
-            text(context, message, x + gameWidth() / 2 - textWidth(message) / 2,
-                boardTop + gameBoardHeight() / 2, fade(TEXT_ENABLED, alpha));
-        } else {
-            ZioFontRenderer.drawScaled(context, String.valueOf(tetris.clearedLines()), x + 1.5f,
-                boardTop + 1, fade(TEXT_ENABLED, alpha), 0.75f);
-        }
+        drawGameScore(context, x, boardTop, tetris.clearedLines(), tetris.gameOver());
     }
 
     private void drawGameCell(DrawContext context, int x, int y, int size, int argb) {
         context.fill(x, y, x + size, y + size, fade(argb, alpha));
+    }
+
+    /**
+     * Snake's and Tetris' score: small in the board's corner while the game runs, centred with the
+     * restart hint once it is over. Both games showed the same pair of branches.
+     */
+    private void drawGameScore(DrawContext context, int x, int boardTop, int score, boolean over) {
+        if (over) {
+            String message = "Score " + score + ". Press R.";
+
+            text(context, message, x + gameWidth() / 2 - textWidth(message) / 2,
+                boardTop + gameBoardHeight() / 2, fade(TEXT_ENABLED, alpha));
+        } else {
+            ZioFontRenderer.drawScaled(context, String.valueOf(score), x + 1.5f, boardTop + 1,
+                fade(TEXT_ENABLED, alpha), 0.75f);
+        }
     }
 
     /** Handles a click meant for the game button or the game panel. Returns whether it was one. */
