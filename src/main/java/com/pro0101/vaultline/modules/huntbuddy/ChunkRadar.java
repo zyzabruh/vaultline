@@ -2942,35 +2942,33 @@ public class ChunkRadar extends Module {
 
         if (!toDiscord || !webhook.get() || webhookLink.get().trim().isEmpty()) return;
 
-        // Per type, and nothing is dropped. A single cooldown across all events
-        // meant a loss twenty seconds behind an acquisition was swallowed whole;
-        // now each kind waits its own turn and the newest of a kind held back is
-        // sent when that turn comes.
+        if (!sendIfDue(title, message)) heldByType.put(title, message);
+    }
+
+    /**
+     * Sends now unless this kind of event is still waiting out its own cooldown, and says whether it
+     * went.
+     *
+     * <p>Per type, and nothing is dropped. A single cooldown across all events meant a loss twenty
+     * seconds behind an acquisition was swallowed whole; now each kind waits its own turn and the
+     * newest of a kind held back is sent when that turn comes.
+     */
+    private boolean sendIfDue(String title, String message) {
         long now = System.currentTimeMillis();
         Long last = lastSentByType.get(title);
 
-        if (last != null && now - last < alertCooldown.get() * 1000L) {
-            heldByType.put(title, message);
-            return;
-        }
+        if (last != null && now - last < alertCooldown.get() * 1000L) return false;
 
         lastSentByType.put(title, now);
         send(title, message);
+        return true;
     }
 
     private void flushHeldAlerts() {
         if (heldByType.isEmpty()) return;
 
-        long now = System.currentTimeMillis();
-        long cooldown = alertCooldown.get() * 1000L;
-
         for (Map.Entry<String, String> entry : new ArrayList<>(heldByType.entrySet())) {
-            Long last = lastSentByType.get(entry.getKey());
-            if (last != null && now - last < cooldown) continue;
-
-            heldByType.remove(entry.getKey());
-            lastSentByType.put(entry.getKey(), now);
-            send(entry.getKey(), entry.getValue());
+            if (sendIfDue(entry.getKey(), entry.getValue())) heldByType.remove(entry.getKey());
         }
     }
 
