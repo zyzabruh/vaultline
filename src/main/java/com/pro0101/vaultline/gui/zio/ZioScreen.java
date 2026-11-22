@@ -815,10 +815,7 @@ public class ZioScreen extends TabScreen {
         text(context, gameType.gameName(), x + 2, y + HEADER_HEIGHT / 2 - ZioFontRenderer.lineHeight() / 2,
             fade(0xFFFFFFFF, alpha));
 
-        context.fill(x - 1, y - 1, right, y, outline);
-        context.fill(x - 1, bottom - 1, right, bottom, outline);
-        context.fill(x - 1, y - 1, x, bottom, outline);
-        context.fill(right, y - 1, right + 1, bottom, outline);
+        frame(context, x - 1, y - 1, right + 1, bottom, outline);
     }
 
     /** The minefield: its own header line, then the cells of the client's sprite sheet. */
@@ -1102,10 +1099,7 @@ public class ZioScreen extends TabScreen {
         int edge = fade(COLOR, alpha * (presetNameFocused ? 1 : 0.5));
 
         context.fill(x + 4, fieldTop, right - 4, fieldTop + ROW_HEIGHT, fade(BACKGROUND, alpha));
-        context.fill(x + 4, fieldTop, right - 4, fieldTop + 1, edge);
-        context.fill(x + 4, fieldTop + ROW_HEIGHT - 1, right - 4, fieldTop + ROW_HEIGHT, edge);
-        context.fill(x + 4, fieldTop, x + 5, fieldTop + ROW_HEIGHT, edge);
-        context.fill(right - 5, fieldTop, right - 4, fieldTop + ROW_HEIGHT, edge);
+        frame(context, x + 4, fieldTop, right - 4, fieldTop + ROW_HEIGHT, edge);
 
         boolean cursor = presetNameFocused && ((System.currentTimeMillis() - editStart) / 500) % 2 == 0;
         boolean empty = presetName.isEmpty();
@@ -1727,20 +1721,26 @@ public class ZioScreen extends TabScreen {
         return 0xFF000000 | (r << 16) | (g << 8) | b;
     }
 
-    /** A one pixel square marker, three pixels half size. */
-    /** A one pixel rectangle, as the copied client's {@code drawRectOutline} draws it. */
-    private static void outlineRect(DrawContext context, ZioEnumBox.Rect rect, int colour) {
-        context.fill(rect.left(), rect.top(), rect.right(), rect.top() + 1, colour);
-        context.fill(rect.left(), rect.bottom() - 1, rect.right(), rect.bottom(), colour);
-        context.fill(rect.left(), rect.top(), rect.left() + 1, rect.bottom(), colour);
-        context.fill(rect.right() - 1, rect.top(), rect.right(), rect.bottom(), colour);
+    /**
+     * A one pixel frame, as the copied client's {@code drawRectOutline} draws it.
+     *
+     * <p>Every field, list and panel edge in this screen is this shape; the four fills used to be
+     * written out at each of them.
+     */
+    private static void frame(DrawContext context, int left, int top, int right, int bottom, int colour) {
+        context.fill(left, top, right, top + 1, colour);
+        context.fill(left, bottom - 1, right, bottom, colour);
+        context.fill(left, top, left + 1, bottom, colour);
+        context.fill(right - 1, top, right, bottom, colour);
     }
 
+    private static void outlineRect(DrawContext context, ZioEnumBox.Rect rect, int colour) {
+        frame(context, rect.left(), rect.top(), rect.right(), rect.bottom(), colour);
+    }
+
+    /** A one pixel square marker, three pixels half size. */
     private static void outline(DrawContext context, int x, int y, int half, int colour) {
-        context.fill(x - half, y - half, x + half + 1, y - half + 1, colour);
-        context.fill(x - half, y + half, x + half + 1, y + half + 1, colour);
-        context.fill(x - half, y - half, x - half + 1, y + half + 1, colour);
-        context.fill(x + half, y - half, x + half + 1, y + half + 1, colour);
+        frame(context, x - half, y - half, x + half + 1, y + half + 1, colour);
     }
 
     // List settings
@@ -1908,10 +1908,7 @@ public class ZioScreen extends TabScreen {
         context.fill(x, searchTop, right, searchTop + LIST_SEARCH_HEIGHT, fade(BACKGROUND, alpha));
 
         int edge = fade(COLOR, alpha * (row.listSearchFocused ? 1 : 0.5));
-        context.fill(x, searchTop, right, searchTop + 1, edge);
-        context.fill(x, searchTop + LIST_SEARCH_HEIGHT - 1, right, searchTop + LIST_SEARCH_HEIGHT, edge);
-        context.fill(x, searchTop, x + 1, searchTop + LIST_SEARCH_HEIGHT, edge);
-        context.fill(right - 1, searchTop, right, searchTop + LIST_SEARCH_HEIGHT, edge);
+        frame(context, x, searchTop, right, searchTop + LIST_SEARCH_HEIGHT, edge);
 
         boolean cursor = row.listSearchFocused && ((System.currentTimeMillis() - editStart) / 500) % 2 == 0;
         boolean empty = row.listSearch.isEmpty();
