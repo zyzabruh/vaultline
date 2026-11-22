@@ -786,9 +786,9 @@ public class TrailFollower extends Module {
                     this.baritoneSetGoalTicks--;
                     this.retargetTicks++;
 
-                    // A turn used to retarget on its own, and every retarget cancels a path calculation. In the
-                    // nether that calculation runs in Baritone's native pathfinder, so the churn is also a crash
-                    // surface: never retarget more than once a second, however fast the trail bends.
+                    // A retarget on every turn cancels a path calculation each time. In the nether that
+                    // calculation runs in Baritone's native pathfinder, so the churn is also a crash surface:
+                    // never retarget more than once a second, however fast the trail bends.
                     if (this.baritoneSetGoalTicks <= 0
                         || this.retargetTicks >= 20 && this.headingMoved()) {
                         this.baritoneSetGoalTicks = this.baritoneUpdateTicks.get();

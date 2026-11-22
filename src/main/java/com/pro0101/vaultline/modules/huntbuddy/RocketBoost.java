@@ -888,7 +888,7 @@ public class RocketBoost extends Module {
     * Whether a teleport actually moved us, rather than agreeing with where we already are.
     *
     * <p>The server sends this same packet for plain position resyncs, which agree with where you
-    * already are, and each one used to cost sixty ticks back at vanilla speed plus a flushed
+    * already are; taken as setbacks they cost sixty ticks back at vanilla speed plus a flushed
     * boost. Those are what this filters. A portal or a dimension change moves you far and still
     * reads as a setback - that is not fixed here, and a real setback in flight moves you further
     * than a tick of gliding, so it is never missed. Axes flagged relative carry a delta rather
@@ -1009,10 +1009,10 @@ public class RocketBoost extends Module {
    /**
     * Gives up on a rocket whose destroy packet is never coming.
     *
-    * <p>This test used to live inside the debug handler, behind the debug toggle and behind a five
-    * second gate on the last event - and with max-track-time defaulting to five seconds too, it
-    * could not fire. A rocket that leaves render distance is never destroyed for us, and without
-    * this the boost stays held open with the pongs queued behind it.
+    * <p>Inside the debug handler, behind the debug toggle and behind a five second gate on the
+    * last event, this test cannot fire: max-track-time defaults to five seconds too. A rocket that
+    * leaves render distance is never destroyed for us, and without this the boost stays held open
+    * with the pongs queued behind it.
     */
    @EventHandler
    private void onTickWatchdog(TickEvent.Post event) {

@@ -816,8 +816,8 @@ public class BounceFly extends Module {
     }
 
     public boolean jumping() {
-        // A stale launch flag used to survive a handover to Baritone, and the key mixin kept answering the
-        // jump as pressed while the player was walking. The input is only ours while the module drives movement.
+        // A stale launch flag survives a handover to Baritone, and the key mixin then answers the jump
+        // as pressed while the player is walking. The input is only ours while the module drives movement.
         return this.launch && this.enabled() && this.ready();
     }
 
@@ -1189,9 +1189,9 @@ public class BounceFly extends Module {
     /**
      * Keeps a Baritone goal inside terrain the client already has.
      *
-     * <p>The recovery goal used to be projected further along the highway whether or not those
-     * chunks were loaded. Baritone's pathfinder is native and answers a chunk missing in front of
-     * it with a segfault rather than an exception (cabaletta/baritone#4830), so the goal now stops
+     * <p>A recovery goal projected further along the highway, whether or not those chunks are
+     * loaded, crashes: Baritone's pathfinder is native and answers a chunk missing in front of it
+     * with a segfault rather than an exception (cabaletta/baritone#4830). The goal therefore stops
      * at the last loaded, standable, non-portal block between the player and the request.
      *
      * @param target requested goal
