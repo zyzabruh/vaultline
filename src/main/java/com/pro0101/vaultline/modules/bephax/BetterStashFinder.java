@@ -388,6 +388,17 @@ public class BetterStashFinder extends Module
 
     private RegistryKey<World> lastDimension;
 
+    /**
+     * Ticks between two writes of the stash files.
+     *
+     * <p>A burst of matching chunks must not rewrite the whole list once per chunk. The files are
+     * written from the tick loop instead, and this is all a crash can cost.
+     */
+    private static final int SAVE_INTERVAL_TICKS = 20;
+
+    private boolean saveDirty;
+    private int ticksSinceSave;
+
     public BetterStashFinder()
     {
         super(VaultlineAddon.CATEGORY, "better-stash-finder", "Meteors StashFinder but with more features.");
@@ -403,7 +414,12 @@ public class BetterStashFinder extends Module
     @Override
     public void onDeactivate() {
         XaeroPlus.EVENT_BUS.unregister(this);
-        if (clearDisable.get()) chunks.clear();
+        if (clearDisable.get())
+        {
+            chunks.clear();
+            this.saveDirty = true;
+        }
+        flushSave();
         this.lastDimension = null;
     }
 
@@ -463,8 +479,7 @@ public class BetterStashFinder extends Module
             if (i < 0) chunks.add(chunk);
             else prevChunk = chunks.set(i, chunk);
 
-            saveJson();
-            saveCsv();
+            requestSave();
 
             if (!chunk.equals(prevChunk) || !chunk.countsEqual(prevChunk)) {
                 if (sendNotifications.get())
@@ -566,6 +581,15 @@ public class BetterStashFinder extends Module
 
         int bottom = this.mc.world.getBottomY() + scanBottom.get();
         int top = this.mc.world.getTopYInclusive() - scanTop.get();
+
+        // Nothing can match here: the window is empty, or no list is both enabled and filled.
+        // Asked before the walk, which reads every block of the chunk.
+        if (top < bottom) return false;
+
+        boolean anyActive = (firstList.get() && !firstBlocks.get().isEmpty())
+            || (secondList.get() && !secondBlocks.get().isEmpty())
+            || (thirdList.get() && !thirdBlocks.get().isEmpty());
+        if (!anyActive) return false;
 
         List<List<Block>> lists = List.of(firstBlocks.get(), secondBlocks.get(), thirdBlocks.get());
         boolean[] active = {firstList.get(), secondList.get(), thirdList.get()};
@@ -682,6 +706,8 @@ public class BetterStashFinder extends Module
     @meteordevelopment.orbit.EventHandler
     private void onTick(TickEvent.Pre event) {
         if (this.mc.world == null || this.mc.player == null) return;
+
+        if (this.saveDirty && ++this.ticksSinceSave >= SAVE_INTERVAL_TICKS) flushSave();
 
         RegistryKey<World> dimension = this.mc.world.getRegistryKey();
 
@@ -827,6 +853,21 @@ public class BetterStashFinder extends Module
 
         // Nothing is written to Xaero here: the waypoints follow the save-to-waypoints setting, which
         // adds one for each new find and backfills the chunks already loaded when it is switched on.
+    }
+
+    /** Marks the files as out of date; the tick loop writes them once, not once per chunk. */
+    private void requestSave() {
+        this.saveDirty = true;
+    }
+
+    /** Writes both files when a chunk changed since the last write. */
+    private void flushSave() {
+        if (!this.saveDirty) return;
+
+        this.saveDirty = false;
+        this.ticksSinceSave = 0;
+        saveJson();
+        saveCsv();
     }
 
     private void saveCsv() {
