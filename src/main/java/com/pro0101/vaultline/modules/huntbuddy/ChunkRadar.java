@@ -3534,82 +3534,8 @@ public class ChunkRadar extends Module {
         return out;
     }
 
-    /** Half-width of the corridor the line is followed in, in chunks. */
-    public double corridorChunks() {
-        return forkDistance.get();
-    }
-
-    /** How far out the server is sending you chunks, in chunks. */
-    public int reachChunks() {
-        return loadedRadius.get();
-    }
-
-    /** True while a highway, spawn or an old region is keeping the module quiet. */
-    public boolean silenced() {
-        return denseNow || onHighwayOrSpawn();
-    }
-
-    public boolean isAcquired() {
-        return acquired;
-    }
-
-    /** Your own course over the last ten seconds, or NaN before you have one. */
-    public double smoothedCourse() {
-        return courseHeading();
-    }
-
     // One set of colours to tune. The map reads these unless it has been told to
     // diverge, so a trail is the same colour wherever you look at it.
-
-    public SettingColor trailColour() {
-        return trailColor.get();
-    }
-
-    public SettingColor looseColour() {
-        return looseColor.get();
-    }
-
-    public SettingColor nearMissColour() {
-        return redColor.get();
-    }
-
-    public SettingColor storedColour() {
-        return storedColor.get();
-    }
-
-    public SettingColor memoryColour() {
-        return memoryColor.get();
-    }
-
-    public SettingColor lineColour() {
-        return lineColor.get();
-    }
-
-    /**
-     * The line that has been let go, while it fades.
-     *
-     * <p>{@code {originX, originZ, dirX, dirZ, fade}} in chunk coordinates, or
-     * null. The map fades it out exactly as the world does, so the two never
-     * disagree about what is still being followed.
-     */
-    public double[] releasedLine() {
-        if (!released) return null;
-
-        double age = System.currentTimeMillis() - releasedAt;
-        if (age >= RELEASE_FADE_MS) return null;
-
-        return new double[]{relOriginX, relOriginZ, relDirX, relDirZ, 1.0 - age / RELEASE_FADE_MS};
-    }
-
-    /** Guide geometry in Nether chunk coordinates, or null when there is nothing to follow. */
-    public double[] guideLine() {
-        return guideGeometry();
-    }
-
-    /** How far a memory is projected past its ends, in chunks, for the map to match the world. */
-    public int memoryProjectionChunks() {
-        return renderMemory.get() ? memoryProjection.get() : 0;
-    }
 
     public List<TrailStore.Trail> memories() {
         List<TrailStore.Trail> out = new ArrayList<>();
@@ -4120,20 +4046,6 @@ public class ChunkRadar extends Module {
         return playerLateral();
     }
 
-    public double headingOrNaN() {
-        return hasLine() ? heading() : Double.NaN;
-    }
-
-    /** Ownership, the same answer {@link #isInlier} gives, so the map and the count agree. */
-    public int onLineCount() {
-        return line.size();
-    }
-
-    /** Whether this chunk is one of the remembered hits — the profiler's trail key asks. */
-    public boolean isHit(ChunkPos pos) {
-        return line.contains(pos) || pool.contains(pos);
-    }
-
     /**
      * Everything still in play. Allocates, so the map draws from {@link #line()}
      * and {@link #pool()} instead: colouring a combined list by asking each chunk
@@ -4155,16 +4067,8 @@ public class ChunkRadar extends Module {
         return pool;
     }
 
-    public int hitCount() {
-        return line.size() + pool.size();
-    }
-
     public List<ChunkPos> nearMisses() {
         return nearMisses;
-    }
-
-    public List<ChunkPos> storedChunks() {
-        return stored;
     }
 
     /** Owned by the live line, which is what the map draws bright. */
@@ -4172,22 +4076,8 @@ public class ChunkRadar extends Module {
         return line.contains(pos);
     }
 
-    /** Whether the radar is reading this dimension's own chunks rather than a projection. */
-    public boolean liveHere() {
-        return live();
-    }
-
     public boolean hasLine() {
         return fitted && !released;
-    }
-
-    /** Point on the fitted line at a distance along it, in chunk coordinates. */
-    public double[] linePoint(double alongChunks) {
-        return new double[]{originX + dirX * alongChunks, originZ + dirZ * alongChunks};
-    }
-
-    public double alongOf(double chunkX, double chunkZ) {
-        return along(chunkX, chunkZ);
     }
 
     // Log
