@@ -110,7 +110,6 @@ public class ZioScreen extends TabScreen {
 
     /** The completion is {@code ChatFormatting.GRAY}, which is a lighter grey than the hint's. */
     private static final int SEARCH_COMPLETION = 0xFFAAAAAA;
-    private static final int SEARCH_HINT_MARGIN = 2;
 
     /** How many rows may stand open at once; a fourth closes the oldest, as the copied client does. */
     private static final int MAX_OPEN_ROWS = 3;
@@ -138,9 +137,8 @@ public class ZioScreen extends TabScreen {
     private static final int LIST_SEARCH_HEIGHT = 13;
     private static final int LIST_HEIGHT = ZioListLayout.LIST_HEIGHT;
 
-    // The game panel: an eight pixel cell, a header line above the board, one tile of a 128x32 sheet.
+    // The game panel: a header line above the board, one tile of a 128x32 sheet.
     private static final Identifier GAME_TEXTURE = Identifier.of("vaultline", "textures/gui/game.png");
-    private static final int GAME_CELL = 8;
     private static final int GAME_TILE = 16;
     private static final int GAME_TEXTURE_WIDTH = 128;
     private static final int GAME_TEXTURE_HEIGHT = 32;
@@ -314,8 +312,6 @@ public class ZioScreen extends TabScreen {
     private String presetName = "";
     private int presetSelected = -1;
     private double presetScroll;
-
-    private int layoutHeight = -1;
 
     public ZioScreen(GuiTheme theme, Tab tab) {
         super(theme, tab);
@@ -3065,11 +3061,6 @@ public class ZioScreen extends TabScreen {
             }
 
             return (int) Math.round(height);
-        }
-
-        /** Height of the whole list as it is drawn, scrolled. */
-        private int contentHeight() {
-            return (int) Math.round(totalHeight() - scroll);
         }
 
         private int height(int heightLimit) {
