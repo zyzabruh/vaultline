@@ -837,6 +837,9 @@ public class ChunkRadar extends Module {
         syncXaero();
     }
 
+    private boolean enabledPaletteNewChunks;
+    private boolean warnedVersionUpgraded;
+
     /**
      * Puts XaeroPlus's own switches where these settings say they should be.
      *
@@ -851,9 +854,6 @@ public class ChunkRadar extends Module {
      * server on its way to 1.19 reads as brand new, and a trail through it is
      * invisible.
      */
-        private boolean enabledPaletteNewChunks;
-    private boolean warnedVersionUpgraded;
-
     private void syncXaero() {
         if (!include119.get()) {
             this.restoreXaero();
