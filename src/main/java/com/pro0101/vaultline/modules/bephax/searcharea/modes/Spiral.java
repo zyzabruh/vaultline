@@ -28,7 +28,7 @@ public class Spiral extends SearchAreaMode
             startTime = System.nanoTime();
             goingToStart = true;
             File file = getJsonFile(super.toString());
-            if (file == null || !file.exists())
+            if (!file.exists())
             {
                 pd = new PathingDataSpiral(mc.player.getBlockPos(), mc.player.getBlockPos(), -90.0f, true, 0, 0);
             }

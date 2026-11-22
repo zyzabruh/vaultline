@@ -43,57 +43,25 @@ public class SearchAreaMode
         setPressed(mc.options.forwardKey, false);
     }
 
-    // stolen from autowalk
-
-
     public void onMessageReceive(ReceiveMessageEvent event)
     {
-        Text message = event.getMessage();
-        if (message.getString().contains("joined the game"))
+        if (event.getMessage().getString().contains("joined the game"))
         {
-            // why is it a double???
             paused = (long) (System.nanoTime() + 1e10);
         }
-        if (searchArea.webhookMode.get() != SearchArea.WebhookSettings.Off)
-        {
-            String title;
-            boolean ping = false;
-            if (searchArea.pingForStashFinder.get() &&
-                (message.getString().contains("Possible build") || message.getString().contains("Stash Finder")))
-            {
-                if (!(searchArea.webhookMode.get() == SearchArea.WebhookSettings.LogBoth || searchArea.webhookMode.get() == SearchArea.WebhookSettings.LogStashes)) return;
-                title = "Something Found!";
-                ping = true;
-            }
-            else
-            {
-                if (!(searchArea.webhookMode.get() == SearchArea.WebhookSettings.LogBoth || searchArea.webhookMode.get() == SearchArea.WebhookSettings.LogChat)) return;
-                title = "Chat Message";
-            }
-        }
-
     }
 
     protected File getJsonFile(String fileName) {
-        try
-        {
-            return new File(new File(new File(MeteorClient.FOLDER, "search-area"), searchArea.saveLocation.get()), fileName + ".json");
-        }
-        catch (NullPointerException e)
-        {
-            return null;
-        }
+        return new File(new File(new File(MeteorClient.FOLDER, "search-area"), searchArea.saveLocation.get()), fileName + ".json");
     }
 
     protected void saveToJson(boolean goingToStart, PathingData pd)
     {
-        // Fix issue where "null" gets saved to the file creating crashes when it gets loaded next time.
         if (pd == null) return;
-        // last pos doesn't matter if disconnecting while going to start
+        // The last position does not matter when disconnecting on the way to the start.
         if (!goingToStart) pd.currPos = mc.player.getBlockPos();
         try {
             File file = getJsonFile(type.toString());
-            if (file == null) return;
             file.getParentFile().mkdirs();
             Writer writer = new FileWriter(file);
             GSON.toJson(pd, writer);
@@ -113,8 +81,7 @@ public class SearchAreaMode
 
     public void clear()
     {
-        File file = getJsonFile(type.toString());
-        file.delete();
+        clear(type.toString());
     }
 
     public void clear(String mode)
@@ -131,6 +98,7 @@ public class SearchAreaMode
         }
     }
 
+    @Override
     public String toString()
     {
         return type.toString();

@@ -31,7 +31,7 @@ public class Rectangle extends SearchAreaMode
     {
         goingToStart = true;
         File file = getJsonFile(super.toString());
-        if (file == null || !file.exists())
+        if (!file.exists())
         {
             // set currPos to startpos if it is not read from file, so that the bot travels to the startpoint and not where the player currently is
             pd = new PathingDataRectangle(searchArea.startPos.get(), searchArea.targetPos.get(), searchArea.startPos.get(), 90, true, (int)mc.player.getZ());
