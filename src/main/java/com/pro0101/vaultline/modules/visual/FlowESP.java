@@ -39,6 +39,7 @@ import java.nio.file.Files;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -153,10 +154,19 @@ public class FlowESP extends Module {
 
     private final Setting<Integer> interval = this.general.add(new IntSetting.Builder()
         .name("interval")
-        .description("Ticks between two scans. Lower finds flows sooner and costs more.")
+        .description("Ticks between two sweeps over the range. Lower finds flows sooner.")
         .defaultValue(40)
         .range(10, 200)
         .sliderRange(10, 100)
+        .build()
+    );
+
+    private final Setting<Integer> chunksPerTick = this.general.add(new IntSetting.Builder()
+        .name("chunks-per-tick")
+        .description("Chunks of the sweep read each tick. Every chunk costs a full block walk, so a sweep takes several ticks.")
+        .defaultValue(2)
+        .range(1, 12)
+        .sliderRange(1, 8)
         .build()
     );
 
@@ -380,6 +390,7 @@ public class FlowESP extends Module {
 
     private final Map<String, Flow> flows = new HashMap<>();
     private final BlockPos.Mutable mutable = new BlockPos.Mutable();
+    private final Deque<ChunkPos> sweep = new ArrayDeque<>();
 
     private String lastDimension;
     private int ticks;
@@ -406,7 +417,10 @@ public class FlowESP extends Module {
     }
 
     /**
-     * Scans the loaded chunks around the player and saves the cache now and then.
+     * Scans the loaded chunks around the player a few at a time, and saves the cache now and then.
+     *
+     * <p>The range holds over a hundred chunks and each one costs a full block walk, so the sweep is
+     * queued and drained a few chunks per tick instead of running in one.
      *
      * @param event post-tick event
      */
@@ -420,6 +434,7 @@ public class FlowESP extends Module {
             this.lastDimension = dimension;
         } else if (!this.lastDimension.equals(dimension)) {
             this.lastDimension = dimension;
+            this.sweep.clear();
             if (this.clearOnWorldChange.get()) this.flows.clear();
         }
 
@@ -428,34 +443,50 @@ public class FlowESP extends Module {
             this.save();
         }
 
-        if (++this.ticks < this.interval.get()) return;
-        this.ticks = 0;
-
         boolean nether = dimension.equals(World.NETHER.getValue().toString());
-        boolean overworld = dimension.equals(World.OVERWORLD.getValue().toString());
 
-        if (nether && !this.scanNether.get()) return;
-        if (overworld && !this.scanOverworld.get()) return;
-        if (!nether && !overworld) return;
+        if (this.sweep.isEmpty()) {
+            if (++this.ticks < this.interval.get()) return;
+            this.ticks = 0;
 
+            boolean overworld = dimension.equals(World.OVERWORLD.getValue().toString());
+
+            if (nether && !this.scanNether.get()) return;
+            if (overworld && !this.scanOverworld.get()) return;
+            if (!nether && !overworld) return;
+
+            this.refill();
+        }
+
+        int budget = this.chunksPerTick.get();
+
+        while (budget-- > 0) {
+            ChunkPos pos = this.sweep.poll();
+            if (pos == null) break;
+
+            if (!this.mc.world.getChunkManager().isChunkLoaded(pos.x, pos.z)) continue;
+
+            WorldChunk chunk = this.mc.world.getChunk(pos.x, pos.z);
+            if (chunk == null) continue;
+
+            this.scanChunk(chunk, pos.x, pos.z, dimension, nether);
+        }
+
+        if (this.sweep.isEmpty()) this.trim();
+    }
+
+    /** Queues the chunks of the configured radius for the next sweep. */
+    private void refill() {
         int radius = (int) Math.ceil(this.range.get() / 16.0);
         ChunkPos centre = this.mc.player.getChunkPos();
 
+        this.sweep.clear();
+
         for (int dx = -radius; dx <= radius; dx++) {
             for (int dz = -radius; dz <= radius; dz++) {
-                int chunkX = centre.x + dx;
-                int chunkZ = centre.z + dz;
-
-                if (!this.mc.world.getChunkManager().isChunkLoaded(chunkX, chunkZ)) continue;
-
-                WorldChunk chunk = this.mc.world.getChunk(chunkX, chunkZ);
-                if (chunk == null) continue;
-
-                this.scanChunk(chunk, chunkX, chunkZ, dimension, nether);
+                this.sweep.add(new ChunkPos(centre.x + dx, centre.z + dz));
             }
         }
-
-        this.trim();
     }
 
     /**
