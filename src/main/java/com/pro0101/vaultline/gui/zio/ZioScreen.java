@@ -2711,9 +2711,7 @@ public class ZioScreen extends TabScreen {
         // A listening bind line takes the next key, and Escape clears the bind instead of leaving the
         // screen — the copied client's KeybindComponent does the same.
         if (bindingRow != null) {
-            bindingRow.module.keybind.set(input.key() == GLFW.GLFW_KEY_ESCAPE
-                ? Keybind.none()
-                : Keybind.fromKeys(input.key(), input.modifiers()));
+            bindingRow.module.keybind.set(bindOf(input));
 
             bindingRow = null;
 
@@ -2763,10 +2761,7 @@ public class ZioScreen extends TabScreen {
             case EDIT_CLEAR -> setActiveText("");
             case EDIT_PASTE -> setActiveText(paste(activeText(), activeTextLimit()));
             case BIND_KEY -> {
-                ((KeybindSetting) bindingSetting.setting).set(input.key() == GLFW.GLFW_KEY_ESCAPE
-                    ? Keybind.none()
-                    : Keybind.fromKeys(input.key(), input.modifiers()));
-
+                ((KeybindSetting) bindingSetting.setting).set(bindOf(input));
                 bindingSetting = null;
             }
             case SCREEN_SEARCH_CLOSE -> {
@@ -2809,6 +2804,13 @@ public class ZioScreen extends TabScreen {
         }
 
         return true;
+    }
+
+    /** The key a listening bind line takes: Escape clears it, anything else becomes the bind. */
+    private static Keybind bindOf(KeyInput input) {
+        return input.key() == GLFW.GLFW_KEY_ESCAPE
+            ? Keybind.none()
+            : Keybind.fromKeys(input.key(), input.modifiers());
     }
 
     /** What currently holds the keyboard, in the order the router asks about it. */
