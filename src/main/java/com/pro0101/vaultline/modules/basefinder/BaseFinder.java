@@ -28,7 +28,6 @@ import net.minecraft.entity.projectile.thrown.EnderPearlEntity;
 import net.minecraft.entity.vehicle.BoatEntity;
 import net.minecraft.entity.vehicle.ChestBoatEntity;
 import net.minecraft.item.Items;
-import net.minecraft.network.packet.s2c.play.ChunkData;
 import net.minecraft.network.packet.s2c.play.ChunkDataS2CPacket;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKey;
@@ -47,6 +46,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -67,6 +67,7 @@ public class BaseFinder extends Module {
         "storage", "valuables", "furniture", "decorative", "redstone", "lighting", "custom"
     };
     private static final int[] LIST_COUNTS = {4, 4, 5, 12, 8, 12, 1};
+    private static final int ARRIVAL_LIMIT = 2048;
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgDetectors = settings.createGroup("Detectors");
@@ -338,6 +339,15 @@ public class BaseFinder extends Module {
         .build()
     );
 
+    private final Setting<Integer> chunksPerTick = sgCache.add(new IntSetting.Builder()
+        .name("chunks-per-tick")
+        .description("Chunks read each tick. Every chunk costs a full block walk, so a burst of arrivals is spread over several ticks instead of landing in one.")
+        .defaultValue(2)
+        .range(1, 16)
+        .sliderRange(1, 8)
+        .build()
+    );
+
     private final Setting<Boolean> save = sgCache.add(new BoolSetting.Builder()
         .name("save")
         .description("Writes every find to the base-finder folder.")
@@ -367,6 +377,14 @@ public class BaseFinder extends Module {
     );
 
     private final Set<ChunkPos> baseChunks = Collections.synchronizedSet(new LinkedHashSet<>());
+
+    /**
+     * Chunks a packet announced and that are not read yet.
+     *
+     * <p>The packet arrives before the chunk manager holds the chunk. Deferring the read means the
+     * real chunk is walked, decoded once by the client instead of a second time here.
+     */
+    private final Queue<ChunkPos> arrivals = new ConcurrentLinkedQueue<>();
 
     private RegistryKey<World> lastDimension;
     private ChunkPos lastFound;
@@ -420,12 +438,14 @@ public class BaseFinder extends Module {
         messageTicks = 0;
 
         baseChunks.clear();
+        arrivals.clear();
         if (load.get()) loadFinds();
     }
 
     @Override
     public void onDeactivate() {
         if (clearDisable.get()) baseChunks.clear();
+        arrivals.clear();
         lastDimension = null;
     }
 
@@ -434,30 +454,32 @@ public class BaseFinder extends Module {
         if (!(event.packet instanceof ChunkDataS2CPacket packet) || mc.world == null) return;
         if (mc.world.getChunkManager().getChunk(packet.getChunkX(), packet.getChunkZ()) != null) return;
 
-        ChunkPos pos = new ChunkPos(packet.getChunkX(), packet.getChunkZ());
-        World world = mc.world;
+        if (arrivals.size() >= ARRIVAL_LIMIT) return;
 
-        mc.execute(() -> {
-            if (mc.world != world) return;
+        arrivals.add(new ChunkPos(packet.getChunkX(), packet.getChunkZ()));
+    }
 
-            WorldChunk chunk = new WorldChunk(world, pos);
+    /**
+     * Reads a few of the chunks the packets announced.
+     *
+     * <p>Deferred to here on purpose: by now the chunk manager holds the chunk the client decoded,
+     * so nothing is decoded twice and the block walk is spread over ticks instead of landing in the
+     * same frame as the arrival burst.
+     */
+    private void readArrivals() {
+        int budget = chunksPerTick.get();
 
-            try {
-                ChunkData data = packet.getChunkData();
-                chunk.loadFromPacket(
-                    data.getSectionsDataBuf(),
-                    data.getHeightmap(),
-                    data.getBlockEntities(packet.getChunkX(), packet.getChunkZ())
-                );
-            } catch (Exception failure) {
-                VaultlineAddon.LOG.warn("Could not decode chunk {},{}; it is skipped", packet.getChunkX(), packet.getChunkZ(),
-                    failure);
+        while (budget-- > 0) {
+            ChunkPos pos = arrivals.poll();
+            if (pos == null) return;
 
-                return;
-            }
+            if (!mc.world.getChunkManager().isChunkLoaded(pos.x, pos.z)) continue;
+
+            WorldChunk chunk = mc.world.getChunk(pos.x, pos.z);
+            if (chunk == null || !chunk.getStatus().isAtLeast(ChunkStatus.FULL)) continue;
 
             scanBlocks(chunk);
-        });
+        }
     }
 
     private void scanBlocks(WorldChunk chunk) {
@@ -723,6 +745,8 @@ public class BaseFinder extends Module {
             if (load.get()) loadFinds();
         }
 
+        readArrivals();
+
         if (entityDelay.get() > 0) {
             entityTicks++;
             if (entityTicks < entityDelay.get()) return;
@@ -735,6 +759,7 @@ public class BaseFinder extends Module {
     @EventHandler
     private void onGameLeft(GameLeftEvent event) {
         if (clearWorld.get()) baseChunks.clear();
+        arrivals.clear();
         lastDimension = null;
     }
 
