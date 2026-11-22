@@ -10,19 +10,6 @@ final class SorterSafety {
     static final long RESUME_DELAY_NANOS = 5_000_000_000L;
 
     String waitingReason(boolean ignoreFriends) {
-        String driver = driverReason();
-        return driver != null ? driver : visiblePlayerReason(ignoreFriends);
-    }
-
-    /**
-     * The imported sorter used to pause while two of its own addon's modules were running. Those modules are not part
-     * of this addon, so the sorter no longer has a driver to wait for; the hook stays for the callers above.
-     */
-    String driverReason() {
-        return null;
-    }
-
-    String visiblePlayerReason(boolean ignoreFriends) {
         if (mc.world == null || mc.player == null) {
             return null;
         }

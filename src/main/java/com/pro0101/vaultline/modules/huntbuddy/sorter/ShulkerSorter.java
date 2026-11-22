@@ -1399,7 +1399,7 @@ public class ShulkerSorter extends Module {
     }
 
     void stopPathing() {
-        if (pathingStarted && BaritoneHelper.isAvailable() && safety.driverReason() == null) {
+        if (pathingStarted && BaritoneHelper.isAvailable()) {
             BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior().cancelEverything();
         }
         pathingStarted = false;
