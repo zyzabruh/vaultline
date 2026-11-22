@@ -36,7 +36,6 @@ public final class ShulkerUnpacker {
     private static final int CLOSE_BREAK = 11;
     private static final int BREAK = 12;
     private static final int PICK_UP = 13;
-    private static final int ADVANCE = 14;
 
     private final StashSession session;
     private final StepScript script = new StepScript(

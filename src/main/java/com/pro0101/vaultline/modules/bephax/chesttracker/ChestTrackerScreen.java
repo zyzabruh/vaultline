@@ -23,7 +23,6 @@ public class ChestTrackerScreen extends Screen {
     private int maxScroll = 0;
     private static final int ITEM_SIZE = 18;
     private static final int ITEMS_PER_ROW = 16;
-    private static final int PADDING = 10;
     private static final int TOP_PADDING = 70;
     private static final int BOTTOM_PADDING = 35;
     private static final int SCROLLBAR_WIDTH = 8;

@@ -130,12 +130,10 @@ public class ZioScreen extends TabScreen {
     private static final int COLOUR_PADDING = 3;
     private static final int COLOUR_SLIDER = 6;
     private static final int COLOUR_SQUARE = PANEL_WIDTH - COLOUR_PADDING * 2;
-    private static final int COLOUR_PICKER_HEIGHT = ZioListLayout.COLOUR_PICKER_HEIGHT;
 
     // An open list: a search field and six checked entries, scrolled inside that box.
     private static final int LIST_ROWS = ZioListLayout.LIST_ROWS;
     private static final int LIST_SEARCH_HEIGHT = 13;
-    private static final int LIST_HEIGHT = ZioListLayout.LIST_HEIGHT;
 
     // The game panel: a header line above the board, one tile of a 128x32 sheet.
     private static final Identifier GAME_TEXTURE = Identifier.of("vaultline", "textures/gui/game.png");

@@ -10,7 +10,6 @@ import java.util.List;
 /** Finds every supported storage block in range and opens it to read its contents. */
 public final class StashScanner {
     private static final int RESET = 0;
-    private static final int OPEN = 1;
 
     private final StashSession session;
     private final StepScript script = new StepScript(this::resetTarget, this::openTarget);

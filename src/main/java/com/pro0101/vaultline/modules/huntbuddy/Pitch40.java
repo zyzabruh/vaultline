@@ -218,7 +218,6 @@ public class Pitch40 extends Module {
    private boolean userDisabledElytraFly = false;
    private boolean wasElytraFlyActive = false;
    private int elytraFlyRetryDelay = 0;
-   private static final int ELYTRA_FLY_RETRY_DELAY_TICKS = 20;
    private volatile Hand chestSwapBurstHand = null;
    private volatile long chestSwapNextBurst = 0L;
    private String chestSwapBlockedReason = null;

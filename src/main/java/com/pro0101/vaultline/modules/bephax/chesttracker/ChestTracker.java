@@ -227,7 +227,6 @@ public class ChestTracker extends Module {
     private static final int AWAITING_TIMEOUT = 40;
     private final Map<BlockPos, Integer> blockedContainers = new HashMap<>();
     private static final int BLOCKED_COOLDOWN_TICKS = 100;
-    private static final int MAX_FAILED_ATTEMPTS = 3;
     public ChestTracker() {
         super(VaultlineAddon.CATEGORY, "chest-tracker", "Tracks items in containers and searches the saved index.");
         this.data = new ChestTrackerData();

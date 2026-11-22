@@ -33,7 +33,6 @@ public final class ItemSorter {
     private static final int D_DEPOSIT = 3;
     private static final int D_CLOSE = 4;
 
-    private static final int E_WALK = 0;
     private static final int E_OPEN = 1;
     private static final int E_TAKE = 2;
     private static final int E_CLOSE = 3;

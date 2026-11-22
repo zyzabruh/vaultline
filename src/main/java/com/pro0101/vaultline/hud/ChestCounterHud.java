@@ -42,7 +42,6 @@ public class ChestCounterHud extends HudElement {
     );
 
     private static final Color BACKGROUND = new Color(0, 0, 0, 120);
-    private static final Color LINE_COLOR = new Color(170, 170, 170);
     private static final Color DOUBLE_COLOR = new Color(120, 230, 160);
     private static final Color SINGLE_COLOR = new Color(220, 220, 220);
     private static final double PADDING = 2;
