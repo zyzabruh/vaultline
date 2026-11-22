@@ -747,7 +747,7 @@ public class ChunkRadar extends Module {
         }
 
         double heading() {
-            return MathHelper.wrapDegrees((float) (Math.toDegrees(Math.atan2(dirZ, dirX)) - 90.0));
+            return headingOf(dirX, dirZ);
         }
     }
 
@@ -1402,7 +1402,7 @@ public class ChunkRadar extends Module {
         }
 
         double heading() {
-            return MathHelper.wrapDegrees((float) (Math.toDegrees(Math.atan2(dirZ, dirX)) - 90.0));
+            return headingOf(dirX, dirZ);
         }
     }
 
@@ -1663,6 +1663,11 @@ public class ChunkRadar extends Module {
     }
 
     private double heading() {
+        return headingOf(dirX, dirZ);
+    }
+
+    /** Compass heading of a direction, in degrees: the three places that wrote it out. */
+    private static double headingOf(double dirX, double dirZ) {
         return MathHelper.wrapDegrees((float) (Math.toDegrees(Math.atan2(dirZ, dirX)) - 90.0));
     }
 
