@@ -678,13 +678,13 @@ public class ChunkRadar extends Module {
      * Hits the live line owns, hits waiting to mean something, and hits that
      * belonged to a line already let go.
      *
-     * <p>They used to be one list, refitted whole on every arrival. Follow one
-     * trail, turn onto another crossing it, and the second trail's hits went
-     * straight into the first one's fit: the first pass drew a diagonal between
-     * them, the second threw nearly everything out, and the line became noise
-     * until the sixty-second release rescued it. A hit now joins the line it is
-     * near or waits in the pool, and the pool gets its own fit — which is what
-     * lets a turn be recognised in seconds instead of a minute and a quarter.
+     * <p>One list refitted whole on every arrival cannot hold two trails that
+     * cross: follow one, turn onto another crossing it, and the second trail's
+     * hits go straight into the first one's fit — the first pass draws a diagonal
+     * between them, the second throws nearly everything out, and the line stays
+     * noise until the sixty-second release. A hit therefore joins the line it is
+     * near or waits in the pool, and the pool gets its own fit, which is what lets
+     * a turn be recognised in seconds rather than in a minute and a quarter.
      */
     private final List<ChunkPos> line = new ArrayList<>();
     private final List<ChunkPos> pool = new ArrayList<>();
@@ -1790,8 +1790,8 @@ public class ChunkRadar extends Module {
         // A zone is a dense square in sparse ground. When the ring around the
         // square is as thick as the square itself, this is simply an old region
         // -- the density gate sees those too, but only after a few seconds of
-        // chunks, and those few seconds used to fire three or four zones at the
-        // edge of every pocket.
+        // chunks, and until then the edge of every pocket fires three or four
+        // zones.
         if (ring >= zoneHits.get()) return;
 
         if (onHighwayOrSpawn()) return;
@@ -1811,8 +1811,8 @@ public class ChunkRadar extends Module {
         if (!wide) return;
 
         // One zone per place, not one per five-by-five cell: a single cluster
-        // spans two or three cells, and used to be announced once for each --
-        // three blue markers a hundred blocks apart for one spot.
+        // spans two or three cells, so the cell rule alone announces it once per
+        // cell -- three blue markers a hundred blocks apart for one spot.
         for (ChunkPos mark : zoneMarks) {
             int dx = mark.x - centre.x;
             int dz = mark.z - centre.z;
@@ -2477,11 +2477,10 @@ public class ChunkRadar extends Module {
     /**
      * Drops everything that has fallen a long way behind.
      *
-     * <p>Memory used to be bounded by count alone, so a trail followed for an hour
-     * kept feeding chunks from the far side of the world into the fit — and a
-     * second trail met later had to argue with the first one. Distance is the
-     * honest bound: what is five hundred chunks behind you is not evidence about
-     * where you are.
+     * <p>A bound by count alone lets a trail followed for an hour keep feeding
+     * chunks from the far side of the world into the fit, and a second trail met
+     * later has to argue with the first one. Distance is the honest bound: what is
+     * five hundred chunks behind you is not evidence about where you are.
      *
      * <p>The forgotten chunks leave the seen map as well. Without that, flying
      * back over the same ground would find every chunk already answered and the
@@ -2541,9 +2540,8 @@ public class ChunkRadar extends Module {
      * Moves the live line's hits into the archive.
      *
      * <p>They are drawn while the fade runs, then gone, and they never take part
-     * in another fit: leaving them in play was how a line that had been let go
-     * kept pulling the next one back onto it. The seen map is untouched — this is
-     * about the fit, not about memory.
+     * in another fit: a released line left in play pulls the next one back onto
+     * it. The seen map is untouched — this is about the fit, not about memory.
      */
     private void archiveLine() {
         if (line.isEmpty()) return;
@@ -2558,7 +2556,7 @@ public class ChunkRadar extends Module {
      * Lets a line go without pretending it was lost.
      *
      * <p>Losing a trail is a claim about the trail. This is a claim about the
-     * radar: it no longer has the evidence to say anything, so it stops saying it.
+     * radar: without the evidence to say anything, it stops saying it.
      * The geometry is frozen for the fade, everything that made it authoritative
      * is cleared, and the next alignment starts from nothing — which is what makes
      * the next "Trail acquired" mean the new trail's heading rather than the old
@@ -2600,11 +2598,10 @@ public class ChunkRadar extends Module {
     /**
      * Picks a known trail back up on connecting, without flying it again.
      *
-     * <p>A daily restart used to mean two fresh clusters before the line came
-     * back, and a "Trail acquired" for a road already in the file. If you come
-     * back standing on a trail that is remembered — on its segment or on the line
-     * it projects — its own chunks rebuild the live line and it is simply picked
-     * up, quietly: one line in chat, nothing on Discord.
+     * <p>Without this a daily restart costs two fresh clusters before the line
+     * comes back, plus a "Trail acquired" for a road already in the file. Standing
+     * on a remembered trail — on its segment or on the line it projects — its own
+     * chunks rebuild the live line, quietly: one line in chat, nothing on Discord.
      */
     private void resumeFromMemory() {
         if (acquired || mc.player == null) return;
@@ -2881,7 +2878,7 @@ public class ChunkRadar extends Module {
         if (out == offLine) {
             driftSince = 0L;
 
-            // Sixty seconds outside the corridor and the line is no longer about
+            // Sixty seconds outside the corridor and the line stops being about
             // where you are. Let go without waiting for the distance rule.
             if (offLine && offLineAt != 0L && now - offLineAt >= OFF_LINE_RELEASE_MS) {
                 awaitingReturn = true;
@@ -3168,8 +3165,8 @@ public class ChunkRadar extends Module {
      * Announces an acquisition, and knows the difference between finding a trail
      * and coming back to one.
      *
-     * <p>A three minute detour used to end in "Trail acquired" on Discord for a
-     * trail already followed for two hours. Picking a known one back up is worth a
+     * <p>A "Trail acquired" on Discord for a trail already followed for two hours,
+     * after a three minute detour, is noise. Picking a known one back up is worth a
      * line in chat; it is only worth a phone buzzing if that trail has been quiet
      * for a while, which is what resume-quiet measures.
      */
@@ -3246,11 +3243,11 @@ public class ChunkRadar extends Module {
         if (first == null || last == null) return;
 
         // The start anchor is pinned where the trail was first acquired --
-        // written once, when the entry has no marker yet, and never again. It
-        // used to be rewritten from the window's oldest chunk on every adoption
-        // and every rename, so a road followed for twenty thousand chunks kept
-        // an anchor pair barely a window apart, and the chord the Nether guide
-        // rides never grew straighter than the last few hundred chunks.
+        // written once, when the entry has no marker yet, and never again. Rewriting
+        // it from the window's oldest chunk on every adoption and every rename would
+        // leave a road followed for twenty thousand chunks with an anchor pair barely
+        // a window apart, and a Nether guide chord no straighter than the last few
+        // hundred chunks.
         if (current.startWaypoint == null) {
             current.startX = (first.x << 4) + 8;
             current.startZ = (first.z << 4) + 8;
@@ -4012,8 +4009,8 @@ public class ChunkRadar extends Module {
      * <p>The fit runs on chunk indices, so a point at t along it is the chunk
      * {@code origin + dir*t}, whose centre block is that times sixteen plus eight.
      * The Nether block is that block divided by eight — which is
-     * {@code (origin + dir*t) * 2 + 1}, not {@code ... * 2 + 8}. The old form was
-     * seven blocks out in x and in z, fifty-six blocks once you climbed back up.
+     * {@code (origin + dir*t) * 2 + 1}, not {@code ... * 2 + 8}: the second form is
+     * seven blocks out in x and in z, fifty-six blocks once you climb back up.
      */
     public static double[] netherBlockAt(double[] guide, double alongChunks) {
         return new double[]{
@@ -4198,18 +4195,18 @@ public class ChunkRadar extends Module {
     /**
      * One row per classified chunk, modern ones included.
      *
-     * <p>They used to be dropped as noise. They are not: the density gate divides
-     * hits by everything that arrived, so without them the one number that decides
-     * whether the radar speaks at all cannot be recomputed from the file. A flight
-     * costs a few thousand extra rows and buys a log that can be replayed.
+     * <p>Dropping them as noise costs the replay: the density gate divides hits by
+     * everything that arrived, so without them the one number that decides whether
+     * the radar speaks at all cannot be recomputed from the file. A flight costs a
+     * few thousand extra rows and buys a log that can be replayed.
      */
     private void writeChunk(ChunkPos pos, Kind kind, int[] counts) {
         int others = 0;
         int otherMax = 0;
 
         // Counted exactly as classify counts them -- deepslate excluded and given
-        // its own column. The two used to disagree, which made every offline
-        // calibration read one thing while the rule read another.
+        // its own column. A second counting rule here makes every offline
+        // calibration read one thing while the rule reads another.
         for (int i = 0; i < MARKER_COUNT; i++) {
             if (i == COPPER || i == TUFF || i == DEEPSLATE_HIGH || counts[i] == 0) continue;
             others++;
