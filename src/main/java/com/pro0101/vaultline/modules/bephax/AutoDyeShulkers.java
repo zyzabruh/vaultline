@@ -175,8 +175,8 @@ public class AutoDyeShulkers extends Module {
 
     private int getUnoccupiedSlot(int occupied, int inputEnd) {
         // The input range is at least two slots wide, so a random pick can always avoid the
-        // occupied one. A range of one slot used to loop forever, or throw when the end was not
-        // above the start: a stonecutter has a single input, which is exactly that case.
+        // occupied one. A range of one slot loops forever, or throws when the end is not above the
+        // start: a stonecutter has a single input, which is exactly that case.
         if (inputEnd <= 2) return occupied == 1 ? Math.max(1, inputEnd - 1) : 1;
 
         for (int attempt = 0; attempt < 16; attempt++) {

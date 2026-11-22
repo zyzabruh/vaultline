@@ -1722,8 +1722,7 @@ public class ZioScreen extends TabScreen {
     /**
      * A one pixel frame, as the copied client's {@code drawRectOutline} draws it.
      *
-     * <p>Every field, list and panel edge in this screen is this shape; the four fills used to be
-     * written out at each of them.
+     * <p>Every field, list and panel edge in this screen is this shape.
      */
     private static void frame(DrawContext context, int left, int top, int right, int bottom, int colour) {
         context.fill(left, top, right, top + 1, colour);

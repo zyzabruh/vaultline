@@ -478,8 +478,8 @@ public final class ItemSorter {
             int inventoryIndex = entry.getKey();
             ItemStack stack = session.inventory.stack(inventoryIndex);
 
-            // A slot that now holds something else no longer carries this stack: forget it instead
-            // of depositing whatever took its place.
+            // A slot holding something else does not carry this stack: forget it instead of
+            // depositing whatever took its place.
             if (stack.isEmpty() || stack.getItem() != carried.item()) {
                 iterator.remove();
                 continue;
@@ -769,7 +769,7 @@ public final class ItemSorter {
      * The container that takes the most stacks of the buffer, so one walk delivers as much as
      * possible instead of one stack per trip. {@code depositStep} accepts a stack with the very
      * same predicate: with a stack of 1 here and the real stack there, a chest with only a
-     * partial slot left used to be chosen, refuse the deposit and be reopened forever.
+     * partial slot left would be chosen, refuse the deposit, and be reopened forever.
      */
     private StashContainer bestDestination() {
         StashContainer best = null;

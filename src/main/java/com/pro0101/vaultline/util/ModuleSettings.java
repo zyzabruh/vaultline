@@ -6,8 +6,8 @@ import meteordevelopment.meteorclient.systems.modules.Module;
 /**
  * Typed access to another module's settings.
  *
- * <p>Meteor hands back {@code Setting<?>}, so every reader used to cast at the call site. Routing those reads through
- * one named method keeps the unchecked cast in a single documented place instead of scattered through the flight code.
+ * <p>Meteor hands back {@code Setting<?>}; routing the reads through one named method keeps the unchecked cast in a
+ * single documented place instead of scattering it through the flight code.
  */
 public final class ModuleSettings {
     private ModuleSettings() {}

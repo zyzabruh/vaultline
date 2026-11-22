@@ -9,9 +9,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * One worker for every Discord webhook the addon sends.
  *
- * <p>The modules used to spawn a thread per notification, which on a stash-dense server means dozens of threads
- * competing to POST. A single daemon worker with a bounded backlog keeps the cost flat, and dropping instead of
- * queueing forever is the right failure mode for a notification.
+ * <p>A thread per notification, on a stash-dense server, means dozens of threads competing to POST. A single daemon
+ * worker with a bounded backlog keeps the cost flat, and dropping instead of queueing forever is the right failure
+ * mode for a notification.
  */
 public final class WebhookQueue {
     private static final int MAX_PENDING = 32;

@@ -125,7 +125,7 @@ public final class MinecraftContainerAccess implements ContainerAccess {
 
     /**
      * Finds a face of the container that the player can actually see. Chests standing above the
-     * player's feet cannot be clicked on their top face, which is what the old code always used.
+     * player's feet cannot be clicked on their top face, which is why the faces are tried in turn.
      */
     private BlockHitResult findHitResult(BlockPos pos) {
         Vec3d eye = mc().player.getEyePos();

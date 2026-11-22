@@ -43,8 +43,8 @@ public final class ZioListLayout {
     /**
      * Which line sits at {@code position} of a block of lines, or -1 past the last one.
      *
-     * <p>Lines are no longer all the same height, so a click cannot be resolved by dividing by the
-     * row height: the heights are walked in order until the position falls inside one.
+     * <p>Lines are not all the same height, so a click cannot be resolved by dividing by the row
+     * height: the heights are walked in order until the position falls inside one.
      */
     public static int indexAt(double position, int[] heights) {
         double offset = 0;

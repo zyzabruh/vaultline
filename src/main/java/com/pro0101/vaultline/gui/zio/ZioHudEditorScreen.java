@@ -38,8 +38,8 @@ import java.util.List;
  * </ul>
  *
  * <p>The resize handle is this addon's addition, and it sticks: Meteor elements report the size they
- * measure at the end of every render through {@code HudElement.setSize}, which used to overwrite the
- * handle on the next frame. {@link ZioHudSizes} now answers that call with the size this editor set
+ * measure at the end of every render through {@code HudElement.setSize}, which would overwrite the
+ * handle on the next frame. {@link ZioHudSizes} answers that call with the size this editor set
  * (see {@code HudElementSizeMixin}), so the element keeps the forced size for good — until it is
  * cleared here with a right click, after which the element measures itself again.
  */
